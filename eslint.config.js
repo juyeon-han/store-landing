@@ -56,6 +56,7 @@ export default [
           ignoreRestSiblings: true,
         },
       ],
+      'prefer-const': 0,
     },
   },
   {
