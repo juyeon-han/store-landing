@@ -5,6 +5,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 .logo {
@@ -16,6 +19,12 @@
   gap: 32px;
   margin-left: 48px;
   margin-right: auto;
+
+  a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: 600;
+  }
 }
 
 .button {
