@@ -26,7 +26,14 @@ const Gnb = forwardRef<GnbHandle, GnbProps>((props, ref) => {
     );
 
     if (matchedPage) {
-      matchedPage.scrollIntoView({ behavior: 'smooth' });
+      const targetPosition =
+        matchedPage.getBoundingClientRect().top + window.scrollY;
+      const navHeight = 84;
+
+      window.scrollTo({
+        top: targetPosition - navHeight,
+        behavior: 'smooth',
+      });
     } else {
       console.warn(`No element found for data-page: ${menuHash}`);
     }
