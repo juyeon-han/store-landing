@@ -1,0 +1,16 @@
+@use '@/styles/scss/mixin.scss' as *;
+
+.wrapper {
+  @include flex-column(space-between, center);
+
+  .category {
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  .title {
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 60px;
+  }
+}
