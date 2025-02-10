@@ -1,14 +1,7 @@
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import GlobalContextContainer from '@/context/GlobalContext';
-import Router from '@/routes';
+import Home from '@/pages';
 
 function App() {
-  return (
-    <GlobalContextContainer>
-      <Router />
-      <ReactQueryDevtools />
-    </GlobalContextContainer>
-  );
+  return <Home />;
 }
 
 export default App;
