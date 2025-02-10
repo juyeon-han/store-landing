@@ -1,8 +1,9 @@
+import Gnb from '@/components/nav/Gnb';
+
 function Home() {
   return (
     <div>
-      <h1>Home Page</h1>
-      <button>click</button>
+      <Gnb />
     </div>
   );
 }
