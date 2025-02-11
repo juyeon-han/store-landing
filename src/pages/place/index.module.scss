@@ -1,3 +1,64 @@
+@use '@/styles/scss/mixin.scss' as *;
+
 .container {
+  @include flex-column(center);
+  background: #f4f4f5;
+
   padding: 120px 0;
+
+  .address {
+    margin-top: 8px;
+    margin-bottom: 48px;
+    font-size: 16px;
+  }
+
+  .ledger_wrapper {
+    @include flex-row(center);
+    gap: 52px;
+    margin-top: 140px;
+    margin-bottom: 120px;
+    height: 280px;
+
+    .img {
+      width: 230px;
+      height: 100%;
+      border-radius: 8px;
+    }
+
+    .ledger_info {
+      @include flex-column(flex-start, start);
+      height: 100%;
+      width: 100%;
+
+      .name {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 16px;
+      }
+
+      .info_wrapper {
+        @include flex-row(flex-start);
+
+        font-size: 16px;
+        gap: 12px;
+        margin-bottom: 12px;
+
+        .icon {
+          width: 20px;
+          height: 20px;
+          background: #e4e4e7;
+        }
+      }
+
+      .button {
+        margin-top: auto;
+        padding: 8px 16px;
+        font-size: 18px;
+        line-height: 27px;
+        font-weight: 600;
+        background: #e4e4e7;
+        border-radius: 6px;
+      }
+    }
+  }
 }
