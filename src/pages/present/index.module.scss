@@ -1,3 +1,12 @@
+@use '@/styles/scss/mixin.scss' as *;
+
 .container {
+  @include flex-column(center);
   padding: 120px 160px;
+  background: #e4e4e7;
+
+  .promotion_card {
+    @include flex-column(center);
+    gap: 40px;
+  }
 }

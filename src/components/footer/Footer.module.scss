@@ -1,11 +1,9 @@
 @use '@/styles/scss/mixin.scss' as *;
 
 .container {
-  width: 100%;
-  background: #e4e4e7;
-  display: flex;
-  flex-direction: column;
+  @include flex-column();
   gap: 24px;
+  background: #e4e4e7;
   padding: 40px;
 }
 
@@ -16,6 +14,7 @@
 
 .wrapper {
   @include flex-column();
+  width: 100%;
 
   .title {
     font-weight: 700;

@@ -5,7 +5,7 @@
   align-items: $align;
 }
 
-@mixin flex-column($justify: space-between, $align: flex-start) {
+@mixin flex-column($align: flex-start, $justify: space-between) {
   display: flex;
   flex-direction: column;
   justify-content: $justify;

@@ -1,0 +1,40 @@
+@use '@/styles/scss/mixin.scss' as *;
+
+.wrapper {
+  @include flex-column(center);
+  width: 100%;
+  max-width: 960px;
+  background: white;
+  padding-top: 40px;
+  padding-bottom: 80px;
+
+  .tag {
+    border-radius: 6px;
+    padding: 8px 16px;
+    background: #e4e4e7;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 32px;
+  }
+
+  .content {
+    @include flex-column(center);
+
+    .condition {
+      font-size: 28px;
+      font-weight: 600;
+    }
+
+    .product {
+      font-size: 40px;
+      font-weight: 700;
+    }
+
+    .image {
+      width: 400px;
+      height: 400px;
+      background: #e4e4e7;
+      margin-top: 40px;
+    }
+  }
+}
