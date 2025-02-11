@@ -8,5 +8,6 @@
   .promotion_card {
     @include flex-column(center);
     gap: 40px;
+    width: 100%;
   }
 }

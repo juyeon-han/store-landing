@@ -110,7 +110,7 @@ section {
 }
 body {
   line-height: 1.8;
-  font-family: 'pretendard';
+  font-family: 'pretendard', sans-serif;
   color: #0e0e0e;
 }
 ol,
@@ -131,4 +131,8 @@ q:after {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+
+* {
+  font-family: inherit;
 }
