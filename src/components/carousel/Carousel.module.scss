@@ -1,0 +1,56 @@
+@use '@/styles/scss/mixin.scss' as *;
+
+.container {
+  @include flex-column(center);
+  gap: 24px;
+
+  .mainImgWrapper {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+
+    .dir_btn {
+      position: absolute;
+      top: 50%;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: #f4f4f5;
+      opacity: 0.7;
+      cursor: pointer;
+
+      &:first-child {
+        left: 16px;
+      }
+      &:last-child {
+        right: 16px;
+      }
+    }
+
+    .mainImg {
+      width: 100%;
+      height: 400px;
+      border-radius: 8px;
+      background: #e4e4e7;
+    }
+  }
+
+  .subImgWrapper {
+    @include flex-row(center);
+    gap: 16px;
+
+    .subImg {
+      width: 100px;
+      height: 100px;
+      border-radius: 8px;
+      background: #e4e4e7;
+      position: relative;
+      cursor: pointer;
+
+      &.selected {
+        border: 2px solid #71717a;
+      }
+    }
+  }
+}
