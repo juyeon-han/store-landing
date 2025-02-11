@@ -26,28 +26,21 @@ const Gnb = forwardRef<GnbHandle, GnbProps>((props, ref) => {
     );
 
     if (matchedPage) {
-      const targetPosition =
-        matchedPage.getBoundingClientRect().top + window.scrollY;
-      const navHeight = 84;
-
-      window.scrollTo({
-        top: targetPosition - navHeight,
-        behavior: 'smooth',
-      });
+      matchedPage.scrollIntoView({ behavior: 'smooth' });
     } else {
       console.warn(`No element found for data-page: ${menuHash}`);
     }
   };
 
   useEffect(() => {
-    const careSection = document.getElementById('care');
+    const careSection = document.querySelector('[data-page="care"]');
     if (!careSection) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsFirstPage(entry.isIntersecting);
       },
-      { threshold: 0 }
+      { threshold: 0.1 }
     );
 
     observer.observe(careSection);
