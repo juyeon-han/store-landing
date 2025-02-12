@@ -1,5 +1,6 @@
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
+import LazyImage from '@/components/image/LazyImage';
 import Icon from '@/styles/icons/icons';
 import styles from './Carousel.module.scss';
 
@@ -41,7 +42,7 @@ const Carousel = forwardRef<CarouselHandle, CarouselProps>((props, ref) => {
     setShowImgIdx(idx);
   };
 
-  const thumbImgLength = imgArr.length < subImgNum ? imgArr.length : subImgNum;
+  const thumbImgLength = Math.min(imgArr.length, subImgNum);
 
   useEffect(() => {
     const thumbIdxArr = Array.from(
@@ -72,11 +73,13 @@ const Carousel = forwardRef<CarouselHandle, CarouselProps>((props, ref) => {
         <button className={cx('dir_btn')} onClick={() => handleImgIdx('left')}>
           <Icon name="ArrowLeft" />
         </button>
-        <div
-          aria-label={`main-image-${showImg.alt}`}
+        <LazyImage
+          src={showImg.url}
+          alt={`main-image-${showImg.alt}`}
+          width={'100%'}
+          height={'400px'}
           className={cx('main_img')}
-          style={{ backgroundImage: `url(${showImg.url})` }}
-        ></div>
+        />
         <button className={cx('dir_btn')} onClick={() => handleImgIdx('right')}>
           <Icon name="ArrowRight" />
         </button>
@@ -87,12 +90,15 @@ const Carousel = forwardRef<CarouselHandle, CarouselProps>((props, ref) => {
         }).map((_, index) => {
           const srcIdx = (thumbStartIdx + index) % imgArr.length;
           return (
-            <div
+            <LazyImage
+              src={imgArr[srcIdx].url}
+              alt={imgArr[srcIdx].alt}
+              width={'100px'}
+              height={'100px'}
               key={index}
-              className={cx('sub_image', { selected: srcIdx === showImgIdx })}
               onClick={() => handleSubImg(srcIdx)}
-              style={{ backgroundImage: `url(${imgArr[srcIdx].url})` }}
-            ></div>
+              className={cx('sub_image', { selected: srcIdx === showImgIdx })}
+            />
           );
         })}
       </div>

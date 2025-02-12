@@ -1,10 +1,14 @@
 import { Property } from 'csstype';
 import ArrowLeft from './svg/arrowLeft.svg?react';
 import ArrowRight from './svg/arrowRight.svg?react';
+import Clock from './svg/clock.svg?react';
+import Phone from './svg/phone.svg?react';
 
 export const icons = {
   ArrowLeft,
   ArrowRight,
+  Clock,
+  Phone,
 };
 
 export type IconNameType = keyof typeof icons;

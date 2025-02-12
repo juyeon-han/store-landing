@@ -1,4 +1,5 @@
 import { forwardRef } from 'react';
+import LazyImage from '@/components/image/LazyImage';
 import styles from './PromotionCard.module.scss';
 
 interface PromotionCardHandle extends HTMLDivElement {}
@@ -26,7 +27,7 @@ const PromotionCard = forwardRef<PromotionCardHandle, PromotionCardProps>(
           <p aria-label="promotion-condition" className={styles.product}>
             {product}
           </p>
-          <img src={imgUrl} alt="promotion" className={styles.image} />
+          <LazyImage src={imgUrl} alt="promotion" className={styles.image} />
         </div>
       </div>
     );

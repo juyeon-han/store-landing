@@ -1,5 +1,6 @@
 import classNames from 'classnames/bind';
 import Carousel from '@/components/carousel/Carousel';
+import LazyImage from '@/components/image/LazyImage';
 import PageTitle from '@/components/title/PageTitle';
 import Icon from '@/styles/icons/icons';
 import styles from './index.module.scss';
@@ -68,11 +69,13 @@ const PlacePage = () => {
       <p className={cx('address')}>{storeInfo.address}</p>
       <Carousel imgArr={imgArr} />
       <div className={cx('ledger_wrapper')}>
-        <div
-          aria-label="원장님 이미지"
-          style={{ backgroundImage: `url(${storeInfo.imgUrl})` }}
+        <LazyImage
+          src={storeInfo.imgUrl}
+          alt="원장님 이미지"
+          width={'230px'}
+          height={'280px'}
           className={cx('ledger_img')}
-        ></div>
+        />
         <div className={cx('ledger_info')}>
           <p className={cx('name')}>{storeInfo.ledger} 원장</p>
           <p className={cx('intro')}>{storeInfo.intro}</p>
