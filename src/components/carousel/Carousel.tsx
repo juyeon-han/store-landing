@@ -72,11 +72,11 @@ const Carousel = forwardRef<CarouselHandle, CarouselProps>((props, ref) => {
         <button className={cx('dir_btn')} onClick={() => handleImgIdx('left')}>
           <Icon name="ArrowLeft" />
         </button>
-        <img
-          src={showImg.url}
-          alt={showImg.alt}
+        <div
+          aria-label={`main-image-${showImg.alt}`}
           className={cx('main_img')}
-        ></img>
+          style={{ backgroundImage: `url(${showImg.url})` }}
+        ></div>
         <button className={cx('dir_btn')} onClick={() => handleImgIdx('right')}>
           <Icon name="ArrowRight" />
         </button>
@@ -86,14 +86,13 @@ const Carousel = forwardRef<CarouselHandle, CarouselProps>((props, ref) => {
           length: thumbImgLength,
         }).map((_, index) => {
           const srcIdx = (thumbStartIdx + index) % imgArr.length;
-
           return (
-            <img
-              src={imgArr[srcIdx].url}
+            <div
               key={index}
-              className={cx('sub_img', srcIdx === showImgIdx && 'selected')}
+              className={cx('sub_image', { selected: srcIdx === showImgIdx })}
               onClick={() => handleSubImg(srcIdx)}
-            ></img>
+              style={{ backgroundImage: `url(${imgArr[srcIdx].url})` }}
+            ></div>
           );
         })}
       </div>

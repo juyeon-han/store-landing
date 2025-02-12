@@ -1,6 +1,7 @@
 import classNames from 'classnames/bind';
 import Carousel from '@/components/carousel/Carousel';
 import PageTitle from '@/components/title/PageTitle';
+import Icon from '@/styles/icons/icons';
 import styles from './index.module.scss';
 
 const PlacePage = () => {
@@ -48,6 +49,8 @@ const PlacePage = () => {
     name: '건대점',
     address: '서울특별시 광진구 아차산로 229 한림타워 4층 405호',
     ledger: '정진연',
+    intro:
+      '약손명가 건대점은 건대입구역 5분거리에 있습니다. \n 건강한 삶을 위한 다양한 치료를 제공합니다. 약손명가 건대점은 건대입구역 5분거리에 있습니다. \n 건강한 삶을 위한 다양한 치료를 제공합니다.',
     imgUrl:
       'https://plus.unsplash.com/premium_photo-1671656349322-41de944d259b?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bWFufGVufDB8fDB8fHww',
     businessHours:
@@ -65,24 +68,27 @@ const PlacePage = () => {
       <p className={cx('address')}>{storeInfo.address}</p>
       <Carousel imgArr={imgArr} />
       <div className={cx('ledger_wrapper')}>
-        <img
-          className={cx('img')}
-          src={storeInfo.imgUrl}
-          alt="store-ledger-img"
-        />
+        <div
+          aria-label="원장님 이미지"
+          style={{ backgroundImage: `url(${storeInfo.imgUrl})` }}
+          className={cx('ledger_img')}
+        ></div>
         <div className={cx('ledger_info')}>
           <p className={cx('name')}>{storeInfo.ledger} 원장</p>
+          <p className={cx('intro')}>{storeInfo.intro}</p>
           <div className={cx('info_wrapper')}>
-            <div className={cx('icon')}></div>
+            <Icon name="Clock" />
             <p>{storeInfo.businessHours}</p>
           </div>
           <div className={cx('info_wrapper')}>
-            <div className={cx('icon')}></div>
+            <Icon name="Phone" />
             <p>{storeInfo.tel}</p>
           </div>
           <button className={cx('button')}>채팅 상담하기</button>
         </div>
       </div>
+
+      <div className={cx('element')}></div>
     </div>
   );
 };
