@@ -9,10 +9,13 @@
     "lint": "eslint src --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "vitest",
-    "postinstall": "husky"
+    "postinstall": "husky",
+    "clean": "rm -rf node_modules yarn.lock && yarn cache clean"
   },
   "dependencies": {
     "classnames": "^2.5.1",
+    "embla-carousel-autoplay": "^8.5.2",
+    "embla-carousel-react": "^8.5.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-error-boundary": "^5.0.0",

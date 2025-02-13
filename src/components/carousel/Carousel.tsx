@@ -1,109 +1,103 @@
-import { forwardRef, useEffect, useRef, useState } from 'react';
-import classNames from 'classnames/bind';
-import LazyImage from '@/components/image/LazyImage';
-import Icon from '@/styles/icons/icons';
-import styles from './Carousel.module.scss';
+import React, { useCallback, useEffect, useState } from 'react';
+import { EmblaOptionsType } from 'embla-carousel';
+import Autoplay from 'embla-carousel-autoplay';
+import useEmblaCarousel from 'embla-carousel-react';
+import CarouselThumb from '@/components/carousel/Thumb';
 
-interface CarouselHandle extends HTMLDivElement {}
+type PropType = {
+  slides: { url: string; alt: string }[];
+  options?: EmblaOptionsType;
+};
 
-interface ImgType {
-  url: string;
-  alt: string;
-}
+const EmblaCarousel: React.FC<PropType> = (props) => {
+  const { slides, options } = props;
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [emblaMainRef, emblaMainApi] = useEmblaCarousel(
+    {
+      loop: true,
+      ...options,
+    },
+    [Autoplay({ delay: 3000 })]
+  );
+  const [emblaThumbsRef, emblaThumbsApi] = useEmblaCarousel({
+    containScroll: 'keepSnaps',
+    dragFree: true,
+  });
 
-export interface CarouselType {
-  imgArr: ImgType[];
-  width?: number;
-  subImgNum?: number;
-}
+  const onThumbClick = useCallback(
+    (index: number) => {
+      if (!emblaMainApi || !emblaThumbsApi) return;
+      emblaMainApi.scrollTo(index);
+    },
+    [emblaMainApi, emblaThumbsApi]
+  );
 
-interface CarouselProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    CarouselType {}
-
-const Carousel = forwardRef<CarouselHandle, CarouselProps>((props, ref) => {
-  const cx = classNames.bind(styles);
-  const { width = '100%', imgArr, subImgNum = 5, ...otherProps } = props;
-
-  const [showImgIdx, setShowImgIdx] = useState<number>(0);
-  const [thumbStartIdx, setThumbStartIdx] = useState<number>(0);
-
-  const showImg = imgArr[showImgIdx];
-
-  const handleImgIdx = (dir: 'left' | 'right') => {
-    if (dir === 'right') {
-      setShowImgIdx((prev) => (prev + 1) % imgArr.length);
-    } else {
-      setShowImgIdx((prev) => (prev - 1 + imgArr.length) % imgArr.length);
-    }
-  };
-
-  const handleSubImg = (idx: number) => {
-    setShowImgIdx(idx);
-  };
-
-  const thumbImgLength = Math.min(imgArr.length, subImgNum);
+  const onSelect = useCallback(() => {
+    if (!emblaMainApi || !emblaThumbsApi) return;
+    setSelectedIndex(emblaMainApi.selectedScrollSnap());
+    emblaThumbsApi.scrollTo(emblaMainApi.selectedScrollSnap());
+  }, [emblaMainApi, emblaThumbsApi, setSelectedIndex]);
 
   useEffect(() => {
-    const thumbIdxArr = Array.from(
-      { length: thumbImgLength },
-      (_, i) => (thumbStartIdx + i) % imgArr.length
-    );
-    const thumbEndIdx = thumbIdxArr[thumbIdxArr.length - 1];
-    if (!thumbIdxArr.includes(showImgIdx)) {
-      // right
-      if (showImgIdx === (thumbEndIdx + 1) % imgArr.length) {
-        setThumbStartIdx((prev) => (prev + 1) % imgArr.length);
-      }
-      //left
-      if (showImgIdx === (thumbStartIdx - 1 + imgArr.length) % imgArr.length) {
-        setThumbStartIdx((prev) => (prev - 1 + imgArr.length) % imgArr.length);
-      }
-    }
-  }, [showImgIdx, thumbStartIdx]);
+    if (!emblaMainApi) return;
+    onSelect();
+
+    emblaMainApi.on('select', onSelect).on('reInit', onSelect);
+  }, [emblaMainApi, onSelect]);
+
+  useEffect(() => {
+    if (!emblaMainApi) return;
+
+    const viewport = emblaMainApi?.rootNode();
+    if (!viewport) return;
+
+    const handleMouseEnter = () => {
+      emblaMainApi.plugins()?.autoplay?.stop();
+    };
+
+    const handleMouseLeave = () => {
+      emblaMainApi.plugins()?.autoplay?.play();
+    };
+
+    viewport.addEventListener('mouseenter', handleMouseEnter);
+    viewport.addEventListener('mouseleave', handleMouseLeave);
+
+    return () => {
+      viewport.removeEventListener('mouseenter', handleMouseEnter);
+      viewport.removeEventListener('mouseleave', handleMouseLeave);
+    };
+  }, [emblaMainApi]);
 
   return (
-    <div
-      className={cx('container')}
-      style={{ width }}
-      {...otherProps}
-      ref={ref}
-    >
-      <div className={cx('main_img_wrapper')}>
-        <button className={cx('dir_btn')} onClick={() => handleImgIdx('left')}>
-          <Icon name="ArrowLeft" />
-        </button>
-        <LazyImage
-          src={showImg.url}
-          alt={`main-image-${showImg.alt}`}
-          width={'100%'}
-          height={'400px'}
-          className={cx('main_img')}
-        />
-        <button className={cx('dir_btn')} onClick={() => handleImgIdx('right')}>
-          <Icon name="ArrowRight" />
-        </button>
+    <div className="embla">
+      <div className="embla__viewport" ref={emblaMainRef}>
+        <div className="embla__container">
+          {slides.map((el, idx) => (
+            <div className="embla__slide" key={idx}>
+              <div
+                className="embla__slide__img"
+                style={{ backgroundImage: `url(${el.url})` }}
+              ></div>
+            </div>
+          ))}
+        </div>
       </div>
-      <div className={cx('sub_img_wrapper')}>
-        {Array.from({
-          length: thumbImgLength,
-        }).map((_, index) => {
-          const srcIdx = (thumbStartIdx + index) % imgArr.length;
-          return (
-            <LazyImage
-              src={imgArr[srcIdx].url}
-              alt={imgArr[srcIdx].alt}
-              width={'100px'}
-              height={'100px'}
-              key={index}
-              onClick={() => handleSubImg(srcIdx)}
-              className={cx('sub_image', { selected: srcIdx === showImgIdx })}
-            />
-          );
-        })}
+      <div className="embla-thumbs">
+        <div className="embla-thumbs__viewport" ref={emblaThumbsRef}>
+          <div className="embla-thumbs__container">
+            {slides.map((el, idx) => (
+              <CarouselThumb
+                key={idx}
+                onClick={() => onThumbClick(idx)}
+                selected={idx === selectedIndex}
+                src={el.url}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
-});
+};
 
-export default Carousel;
+export default EmblaCarousel;

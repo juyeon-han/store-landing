@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import Carousel from '@/components/carousel/Carousel';
+import EmblaCarousel from '@/components/carousel/Carousel';
 import LazyImage from '@/components/image/LazyImage';
 import PageTitle from '@/components/title/PageTitle';
 import Icon from '@/styles/icons/icons';
@@ -67,7 +67,7 @@ const PlacePage = () => {
         style={{ marginBottom: 0 }}
       />
       <p className={cx('address')}>{storeInfo.address}</p>
-      <Carousel imgArr={imgArr} />
+      <EmblaCarousel slides={imgArr} />
       <div className={cx('ledger_wrapper')}>
         <LazyImage
           src={storeInfo.imgUrl}
