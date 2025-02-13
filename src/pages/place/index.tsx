@@ -72,8 +72,6 @@ const PlacePage = () => {
         <LazyImage
           src={storeInfo.imgUrl}
           alt="원장님 이미지"
-          width={'230px'}
-          height={'280px'}
           className={cx('ledger_img')}
         />
         <div className={cx('ledger_info')}>

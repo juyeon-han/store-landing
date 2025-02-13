@@ -1,26 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
-import { Property } from 'csstype';
 import styles from './LazyImage.module.scss';
 
 interface LazyImageType extends React.ImgHTMLAttributes<HTMLDivElement> {
   src: string;
   alt: string;
-  width?: Property.Width;
-  height?: Property.Height;
 }
 
 const LazyImage = (props: LazyImageType) => {
   const cx = classNames.bind(styles);
-  const {
-    src,
-    alt,
-    width = '400px',
-    height = '400px',
-    style,
-    className,
-    ...otherProps
-  } = props;
+  const { src, alt, style, className, children, ...otherProps } = props;
   const [isVisible, setIsVisible] = useState(false);
   const imgRef = useRef(null);
 
@@ -47,21 +36,21 @@ const LazyImage = (props: LazyImageType) => {
   }, []);
 
   return (
-    <div ref={imgRef} style={{ minHeight: '300px' }}>
+    <div ref={imgRef}>
       {isVisible ? (
         <div
           aria-label={alt}
           style={{
             ...style,
             backgroundImage: `url(${src})`,
-            width,
-            height,
           }}
           className={cx('lazy_img', className)}
           {...otherProps}
-        ></div>
+        >
+          {children}
+        </div>
       ) : (
-        <div style={{ width, height }} className={cx('skeleton')}></div>
+        <div className={cx('skeleton', className)}></div>
       )}
     </div>
   );
