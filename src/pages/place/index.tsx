@@ -78,11 +78,11 @@ const PlacePage = () => {
           <p className={cx('name')}>{storeInfo.ledger} 원장</p>
           <p className={cx('intro')}>{storeInfo.intro}</p>
           <div className={cx('info_wrapper')}>
-            <Icon name="Clock" />
+            <Icon name="Clock" color="#52525B" />
             <p>{storeInfo.businessHours}</p>
           </div>
           <div className={cx('info_wrapper')}>
-            <Icon name="Phone" />
+            <Icon name="Phone" color="#52525B" />
             <p>{storeInfo.tel}</p>
           </div>
           <button className={cx('button')}>채팅 상담하기</button>
