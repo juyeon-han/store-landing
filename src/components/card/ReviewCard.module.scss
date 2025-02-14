@@ -1,0 +1,41 @@
+.review_card {
+  --card-size: 240px;
+  --main-color: #fff;
+  width: var(--card-size);
+  position: relative;
+  width: var(--card-size);
+  height: var(--card-size);
+  border-radius: 6px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #f5f5f5;
+  user-select: none;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  .category {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    border-radius: 1000px;
+    border: 1px solid var(--main-color);
+    padding: 6px 12px;
+    background-color: rgba(var(--main-color), 0.4);
+    color: var(--main-color);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 21px;
+  }
+
+  .text {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 27px;
+    color: var(--main-color);
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+}

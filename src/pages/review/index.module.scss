@@ -1,3 +1,8 @@
-.container {
+.wrapper {
   padding: 120px 0;
+}
+
+.card_container {
+  display: flex;
+  justify-content: center;
 }

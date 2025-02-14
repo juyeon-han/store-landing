@@ -125,3 +125,42 @@
     z-index: 1;
   }
 }
+
+.embla_review {
+  max-width: 100%;
+  margin: auto;
+  --review-spacing: 24px;
+  --review-size: 240px;
+}
+.embla__review_viewport {
+  overflow: hidden;
+
+  position: relative;
+  &::before {
+    z-index: 999;
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(
+      90deg,
+      white 1%,
+      transparent 10%,
+      transparent 90%,
+      white 99%
+    );
+    pointer-events: none;
+  }
+}
+.embla__review_container {
+  display: flex; // 가로 슬라이드
+  touch-action: pan-y pinch-zoom;
+}
+.embla__review_slide {
+  transform: translate3d(0, 0, 0);
+  flex: 0 0 var(--review-size);
+  min-width: 0;
+  margin-right: var(--review-spacing);
+}
