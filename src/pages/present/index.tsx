@@ -29,7 +29,7 @@ const PresentPage = () => {
     },
   ];
   return (
-    <div data-page="promotion" className={styles.container}>
+    <section className={styles.container} id="promotion" data-page="promotion">
       <PageTitle
         category="Present"
         title="아름다움을 위한 약손명가의 특별한 선물"
@@ -45,7 +45,7 @@ const PresentPage = () => {
           />
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 

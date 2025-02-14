@@ -3,13 +3,14 @@ import styles from './index.module.scss';
 
 const CarePage = () => {
   return (
-    <div
+    <section
+      id="care"
       data-page="care"
       className={styles.container}
       style={{ height: '200vh', background: 'red' }}
     >
       <PageTitle category="Care" title="약손명가의 특별한 관리법" />
-    </div>
+    </section>
   );
 };
 

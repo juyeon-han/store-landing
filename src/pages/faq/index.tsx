@@ -28,10 +28,10 @@ const FaqPage = () => {
     },
   ];
   return (
-    <div data-page="qna" className={styles.container}>
+    <section id="qna" data-page="qna" className={styles.container}>
       <PageTitle category="FAQ" title="프로그램 문의사항" />
       <Accordion data={data} />
-    </div>
+    </section>
   );
 };
 

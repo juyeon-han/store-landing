@@ -59,12 +59,12 @@ const ReviewPage = () => {
   const cx = classNames.bind(styles);
 
   return (
-    <div data-page="review" className={cx('wrapper')}>
+    <section className={cx('wrapper')} id="review" data-page="review">
       <PageTitle category="Review" title="리뷰로 증명된 가치" />
       <div className={cx('card_container')}>
         <ReviewCard data={data} />
       </div>
-    </div>
+    </section>
   );
 };
 

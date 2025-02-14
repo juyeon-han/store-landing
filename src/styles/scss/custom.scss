@@ -137,7 +137,7 @@
 
   position: relative;
   &::before {
-    z-index: 999;
+    z-index: 10;
     position: absolute;
     content: '';
     top: 0;

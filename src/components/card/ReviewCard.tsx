@@ -1,9 +1,9 @@
 import { forwardRef } from 'react';
 import classNames from 'classnames/bind';
-import LazyImage from '@/components/image/LazyImage';
-import styles from './ReviewCard.module.scss';
 import { EmblaOptionsType } from 'embla-carousel';
 import useEmblaCarousel from 'embla-carousel-react';
+import LazyImage from '@/components/image/LazyImage';
+import styles from './ReviewCard.module.scss';
 
 export interface ReviewCardType {
   imgUrl: string;
@@ -28,7 +28,7 @@ const ReviewCard = forwardRef<ReviewCardHandle, ReviewCardProps>(
     });
 
     return (
-      <section className="embla_review">
+      <div className="embla_review" ref={ref}>
         <div className="embla__review_viewport" ref={emblaRef}>
           <div className="embla__review_container">
             {data.map((item, index) => (
@@ -46,7 +46,7 @@ const ReviewCard = forwardRef<ReviewCardHandle, ReviewCardProps>(
             ))}
           </div>
         </div>
-      </section>
+      </div>
     );
   }
 );

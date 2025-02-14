@@ -1,74 +1,128 @@
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
+import classNames from 'classnames/bind';
 import styles from './Gnb.module.scss';
 
-interface GnbHandle extends HTMLDivElement {}
-interface GnbProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface GnbMenusType {
+  id: string;
+  name: string;
+}
+interface GnbHandle extends HTMLUListElement {}
+interface GnbProps extends React.HTMLAttributes<HTMLUListElement> {
+  menus: GnbMenusType[];
+}
 
 const Gnb = forwardRef<GnbHandle, GnbProps>((props, ref) => {
+  const cx = classNames.bind(styles);
+  const { menus, ...otherProps } = props;
+  const [activeMenu, setActiveMenu] = useState<string>('');
   const [isFirstPage, setIsFirstPage] = useState<boolean>(false);
 
-  const menuData = [
-    { id: 'care', name: '약손명가 관리' },
-    { id: 'promotion', name: '프로모션' },
-    { id: 'review', name: '리뷰' },
-    { id: 'intro', name: '지점 & 원장님 소개' },
-    { id: 'qna', name: 'Q&A' },
-  ];
+  const handleLogo = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
-  const onClickMenu = (e: React.SyntheticEvent<HTMLAnchorElement>) => {
+  const handleMenu = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
-
-    const targetElement = e.target as HTMLAnchorElement;
-    const menuHash = targetElement.hash;
-
-    const matchedPage = document.querySelector(
-      `[data-page="${menuHash.replace('#', '')}"]`
-    );
-
-    if (matchedPage) {
-      matchedPage.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      console.warn(`No element found for data-page: ${menuHash}`);
+    const target = document.getElementById(id);
+    if (target) {
+      window.scrollTo({
+        top: target.offsetTop,
+        behavior: 'smooth',
+      });
     }
   };
 
   useEffect(() => {
-    const careSection = document.querySelector('[data-page="care"]');
-    if (!careSection) return;
+    const sections = document.querySelectorAll('[data-page]');
+    let ticking = false; // requestAnimationFrame 중복 실행 방지
+    let debounceTimeout: NodeJS.Timeout | null = null;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsFirstPage(entry.isIntersecting);
-      },
-      { threshold: 0.1 }
-    );
+    const handleScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(() => {
+          let maxVisibleHeight = 0;
+          let mostVisibleSection = '';
+          let isFirstPage = false;
 
-    observer.observe(careSection);
+          sections.forEach((section, index) => {
+            const rect = section.getBoundingClientRect();
+            const visibleHeight =
+              Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
 
-    return () => observer.disconnect();
+            if (visibleHeight > maxVisibleHeight) {
+              maxVisibleHeight = visibleHeight;
+              mostVisibleSection = section.id;
+
+              if (index === 0) {
+                isFirstPage = true;
+              }
+            }
+          });
+
+          if (isFirstPage) {
+            setIsFirstPage(true);
+          } else {
+            setIsFirstPage(false);
+          }
+
+          if (debounceTimeout) {
+            clearTimeout(debounceTimeout);
+          }
+
+          debounceTimeout = setTimeout(() => {
+            if (mostVisibleSection) {
+              setActiveMenu(mostVisibleSection);
+            }
+          }, 100);
+
+          ticking = false;
+        });
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   return (
-    <div
-      className={styles.wrapper}
-      style={{ background: isFirstPage ? 'none' : 'white' }}
-      {...props}
+    <ul
+      className={cx('wrapper', { first_page: isFirstPage })}
+      {...otherProps}
       ref={ref}
     >
-      <img
-        className={styles.logo}
-        src="/src/assets/images/yakson_logo.png"
-        alt="logo"
-      />
-      <div className={styles.menus}>
-        {menuData.map((menu) => (
-          <a key={menu.id} href={`#${menu.id}`} onClick={onClickMenu}>
+      <button
+        className={cx('logo_btn')}
+        onClick={handleLogo}
+        type="button"
+        aria-label="홈으로 이동"
+      >
+        <img
+          src="/src/assets/images/yakson_logo.png"
+          alt="로고"
+          aria-hidden="true"
+        />
+      </button>
+
+      <li className={cx('menus')}>
+        {menus.map((menu) => (
+          <a
+            className={cx({ active_menu: activeMenu === menu.id })}
+            key={menu.id}
+            href={`#${menu.id}`}
+            onClick={(e) => handleMenu(e, menu.id)}
+            aria-current={activeMenu === menu.id ? 'page' : undefined}
+          >
             {menu.name}
           </a>
         ))}
-      </div>
-      <button className={styles.button}>예약하기</button>
-    </div>
+      </li>
+      <button className={cx('button')}>예약하기</button>
+    </ul>
   );
 });
 

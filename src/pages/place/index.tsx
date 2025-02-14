@@ -60,7 +60,7 @@ const PlacePage = () => {
   };
 
   return (
-    <div data-page="intro" className={cx('container')}>
+    <section className={cx('container')} id="intro" data-page="intro">
       <PageTitle
         category="Place"
         title={`약손명가 ${storeInfo.name}`}
@@ -90,7 +90,7 @@ const PlacePage = () => {
       </div>
 
       <div className={cx('element')}></div>
-    </div>
+    </section>
   );
 };
 
