@@ -1,3 +1,9 @@
 .container {
   padding: 120px 100px;
+  background: #f4f4f5;
+
+  .tab_container {
+    display: flex;
+    justify-content: center;
+  }
 }

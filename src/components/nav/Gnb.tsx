@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Gnb.module.scss';
 
