@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import classNames from 'classnames/bind';
-import { formatNumberWithCommas } from '@/utils/number';
+import { formatMinutesToHours, formatNumberWithCommas } from '@/utils/number';
 import styles from './PayCard.module.scss';
 
 export interface PayCardType {
@@ -18,19 +18,6 @@ interface PayCardProps extends React.HTMLAttributes<HTMLDivElement> {
 const PayCard = forwardRef<PayCardHandle, PayCardProps>((props, ref) => {
   const cx = classNames.bind(styles);
   const { data, className, ...otherProps } = props;
-
-  const formatMinutesToHours = (minutes: number): string => {
-    const hours = Math.floor(minutes / 60);
-    const remainingMinutes = minutes % 60;
-
-    if (hours > 0 && remainingMinutes > 0) {
-      return `${hours}시간 ${remainingMinutes}분`;
-    } else if (hours > 0) {
-      return `${hours}시간`;
-    } else {
-      return `${remainingMinutes}분`;
-    }
-  };
 
   return (
     <div ref={ref} {...otherProps} className={cx('container', className)}>
