@@ -23,6 +23,7 @@ const Gnb = forwardRef<GnbHandle, GnbProps>((props, ref) => {
 
   const handleMenu = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
+    setActiveMenu(id);
     const target = document.getElementById(id);
     if (target) {
       window.scrollTo({
