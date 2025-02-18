@@ -1,31 +1,14 @@
 import { Property } from 'csstype';
-import ArrowLeft from './svg/arrowLeft.svg?react';
-import ArrowRight from './svg/arrowRight.svg?react';
-import Clock from './svg/clock.svg?react';
-import Close from './svg/close.svg?react';
-import Customers from './svg/customers.svg?react';
-import Location from './svg/location.svg?react';
-import Phone from './svg/phone.svg?react';
-import Sessions from './svg/sessions.svg?react';
-import Year from './svg/year.svg?react';
-
-export const icons = {
-  ArrowLeft,
-  ArrowRight,
-  Clock,
-  Close,
-  Customers,
-  Location,
-  Phone,
-  Sessions,
-  Year,
-};
-
-export type IconNameType = keyof typeof icons;
+import {
+  colors,
+  IconColorType,
+  IconNameType,
+  icons,
+} from '@/styles/icons/iconType';
 
 interface IconProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-  color?: Property.Color;
+  color?: Property.Color | IconColorType;
   name: IconNameType;
   // onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
@@ -40,6 +23,9 @@ const Icon = (props: IconProps) => {
     lg: 32,
     xl: 40,
   };
+  const colorValue = colors[color as IconColorType]
+    ? `var(${colors[color as IconColorType]})`
+    : color;
 
   return (
     <div
@@ -53,7 +39,7 @@ const Icon = (props: IconProps) => {
       {...otherProps}
     >
       <IconElement
-        fill={color}
+        fill={colorValue}
         style={{
           width: sizeMap[size],
           height: sizeMap[size],

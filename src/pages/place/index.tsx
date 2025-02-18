@@ -75,7 +75,7 @@ const PlacePage = () => {
         style={{ marginBottom: 0 }}
       />
       <div className={cx('address')}>
-        <Icon name="Location" color="#665646" size="sm" />
+        <Icon name="Location" color="brown700" size="sm" />
         <p>{storeInfo.address}</p>
       </div>
       <div className={cx('store_card')}>
@@ -97,11 +97,11 @@ const PlacePage = () => {
           <p className={cx('name')}>{storeInfo.ledger} 원장</p>
           <p className={cx('intro')}>{storeInfo.intro}</p>
           <div className={cx('info_wrapper')}>
-            <Icon name="Clock" color="#52525B" size="xs" />
+            <Icon name="Clock" color="brown700" size="xs" />
             <p>{storeInfo.businessHours}</p>
           </div>
           <div className={cx('info_wrapper')}>
-            <Icon name="Phone" color="#52525B" size="xs" />
+            <Icon name="Phone" color="brown700" size="xs" />
             <p>{storeInfo.tel}</p>
           </div>
           <button className={cx('button')}>
