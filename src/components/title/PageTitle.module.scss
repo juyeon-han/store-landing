@@ -2,15 +2,19 @@
 
 .wrapper {
   @include flex-column(center);
+  gap: 4px;
   margin-bottom: 64px;
   .category {
-    font-weight: 600;
-    font-size: 16px;
+    font-size: 20px;
+    font-weight: 700;
+    font-family: 'Butler';
+    color: var(--Brand-color-400, #f16370);
   }
 
   .title {
-    font-weight: 600;
+    color: var(--Gray-Scale-900, #18181b);
     font-size: 40px;
-    line-height: 60px;
+    font-weight: 500;
+    letter-spacing: -0.4px;
   }
 }

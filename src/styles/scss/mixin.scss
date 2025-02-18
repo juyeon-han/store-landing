@@ -11,3 +11,14 @@
   justify-content: $justify;
   align-items: $align;
 }
+
+@mixin button-status() {
+  color: var(--Gray-Scale-White, #fff);
+  background: var(--brand-color-300-main, #ff808b);
+  &:hover {
+    background: var(--Brand-color-400, #f16370);
+  }
+  &:active {
+    background: var(--Brand-color-500, #ee5462);
+  }
+}

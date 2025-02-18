@@ -1,3 +1,5 @@
+@use '@/styles/scss/mixin.scss' as *;
+
 .wrapper {
   width: 100%;
   height: 84px;
@@ -49,20 +51,11 @@
     align-items: center;
     gap: 4px;
     border-radius: 6px;
-    background: var(--brand-color-300-main, #ff808b);
-    color: var(--Gray-Scale-White, #fff);
     font-size: 16px;
     font-weight: 600;
     line-height: 150%; /* 24px */
     letter-spacing: -0.16px;
-
-    &:hover {
-      background: var(--Brand-color-400, #f16370);
-    }
-
-    &:active {
-      background: var(--Brand-color-500, #ee5462);
-    }
+    @include button-status();
   }
 }
 

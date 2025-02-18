@@ -1,4 +1,5 @@
 import classNames from 'classnames/bind';
+import StoreCard from '@/components/card/store-card/StoreCard';
 import EmblaCarousel from '@/components/carousel/Carousel';
 import LazyImage from '@/components/image/LazyImage';
 import PageTitle from '@/components/title/PageTitle';
@@ -51,7 +52,7 @@ const PlacePage = () => {
     address: '서울특별시 광진구 아차산로 229 한림타워 4층 405호',
     ledger: '정진연',
     intro:
-      '약손명가 건대점은 건대입구역 5분거리에 있습니다. \n 건강한 삶을 위한 다양한 치료를 제공합니다. 약손명가 건대점은 건대입구역 5분거리에 있습니다. \n 건강한 삶을 위한 다양한 치료를 제공합니다.',
+      '약손명가 건대점은 건대입구역 5분거리에 있습니다. 건강한 삶을 위한 다양한 치료를 제공합니다. 약손명가 건대점은 건대입구역 5분거리에 있습니다. 건강한 삶을 위한 다양한 치료를 제공합니다. ',
     imgUrl:
       'https://plus.unsplash.com/premium_photo-1671656349322-41de944d259b?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bWFufGVufDB8fDB8fHww',
     businessHours:
@@ -59,14 +60,32 @@ const PlacePage = () => {
     tel: '02-456-7890',
   };
 
+  const storeData = {
+    customers: 5000,
+    sessions: 20000,
+    year: 10,
+  };
+
   return (
     <section className={cx('container')} id="intro" data-page="intro">
+      <div className={cx('background')} />
       <PageTitle
-        category="Place"
+        category="Location & Director"
         title={`약손명가 ${storeInfo.name}`}
         style={{ marginBottom: 0 }}
       />
-      <p className={cx('address')}>{storeInfo.address}</p>
+      <div className={cx('address')}>
+        <Icon name="Location" color="#665646" size="sm" />
+        <p>{storeInfo.address}</p>
+      </div>
+      <div className={cx('store_card')}>
+        <StoreCard data={storeData} />
+      </div>
+      <p className={cx('store_intro')}>
+        <span className={cx('point')}>전문성</span>과{' '}
+        <span className={cx('point')}>정성</span>이 깃든 공간, <br />
+        약손명가 {storeInfo.name}을 소개합니다.
+      </p>
       <EmblaCarousel slides={imgArr} />
       <div className={cx('ledger_wrapper')}>
         <LazyImage
@@ -78,17 +97,19 @@ const PlacePage = () => {
           <p className={cx('name')}>{storeInfo.ledger} 원장</p>
           <p className={cx('intro')}>{storeInfo.intro}</p>
           <div className={cx('info_wrapper')}>
-            <Icon name="Clock" color="#52525B" />
+            <Icon name="Clock" color="#52525B" size="xs" />
             <p>{storeInfo.businessHours}</p>
           </div>
           <div className={cx('info_wrapper')}>
-            <Icon name="Phone" color="#52525B" />
+            <Icon name="Phone" color="#52525B" size="xs" />
             <p>{storeInfo.tel}</p>
           </div>
-          <button className={cx('button')}>채팅 상담하기</button>
+          <button className={cx('button')}>
+            채팅 상담하기
+            <Icon name="ArrowRight" color="white" size="sm" />
+          </button>
         </div>
       </div>
-
       <div className={cx('element')}></div>
     </section>
   );
