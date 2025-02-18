@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import ReviewCard from '@/components/card/ReviewCard';
+import ReviewCard from '@/components/card/review-card/ReviewCard';
 import PageTitle from '@/components/title/PageTitle';
 import styles from './index.module.scss';
 
