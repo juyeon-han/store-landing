@@ -216,10 +216,6 @@
   }
 }
 .embla__tab_button {
-  -webkit-tap-highlight-color: transparent; // 모바일에서 터치 시 기본 하이라이트 제거 또는 변경
-  -webkit-appearance: none; // WebKit 브라우저에서 기본 UI 스타일 제거
-  appearance: none; // 모든 브라우저에서 기본 UI 스타일 제거
-  touch-action: manipulation; // 터치할 때 스크롤은 허용하되 확대(줌) 방지
   border: 0;
   padding: 0;
   margin: 0;
