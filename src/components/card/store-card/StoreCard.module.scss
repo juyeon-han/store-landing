@@ -1,0 +1,37 @@
+@use '@/styles/scss/mixin.scss' as *;
+
+.container {
+  @include flex-row();
+  padding: 40px 32px;
+  flex: 1 0 0;
+  border-radius: 8px;
+  background-color: var(--Gray-Scale-White, #fff);
+  opacity: 0.8;
+
+  .wrapper {
+    @include flex-column(center);
+    gap: 16px;
+    width: 200px;
+
+    color: var(--Gray-Scale-700, #3f3f46);
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.16px;
+
+    .data_text {
+      color: var(--brand-color-300-main, #ff808b);
+      text-align: center;
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.32px;
+    }
+  }
+
+  .divider {
+    width: 1.5px;
+    height: 40px;
+    background-color: var(--Brand-color-200, #ffccd1);
+    border: none;
+  }
+}
