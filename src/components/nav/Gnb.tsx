@@ -15,7 +15,7 @@ const Gnb = forwardRef<GnbHandle, GnbProps>((props, ref) => {
   const cx = classNames.bind(styles);
   const { menus, ...otherProps } = props;
   const [activeMenu, setActiveMenu] = useState<string>('');
-  const [isFirstPage, setIsFirstPage] = useState<boolean>(false);
+  const [isTopPage, setIsTopPage] = useState<boolean>(false);
 
   const handleLogo = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -43,7 +43,8 @@ const Gnb = forwardRef<GnbHandle, GnbProps>((props, ref) => {
         requestAnimationFrame(() => {
           let maxVisibleHeight = 0;
           let mostVisibleSection = '';
-          let isFirstPage = false;
+
+          setIsTopPage(window.scrollY === 0);
 
           sections.forEach((section, index) => {
             const rect = section.getBoundingClientRect();
@@ -53,18 +54,8 @@ const Gnb = forwardRef<GnbHandle, GnbProps>((props, ref) => {
             if (visibleHeight > maxVisibleHeight) {
               maxVisibleHeight = visibleHeight;
               mostVisibleSection = section.id;
-
-              if (index === 0) {
-                isFirstPage = true;
-              }
             }
           });
-
-          if (isFirstPage) {
-            setIsFirstPage(true);
-          } else {
-            setIsFirstPage(false);
-          }
 
           if (debounceTimeout) {
             clearTimeout(debounceTimeout);
@@ -91,7 +82,7 @@ const Gnb = forwardRef<GnbHandle, GnbProps>((props, ref) => {
 
   return (
     <ul
-      className={cx('wrapper', { first_page: isFirstPage })}
+      className={cx('wrapper', { top_page: isTopPage })}
       {...otherProps}
       ref={ref}
     >
