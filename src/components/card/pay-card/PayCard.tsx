@@ -26,9 +26,13 @@ const PayCard = forwardRef<PayCardHandle, PayCardProps>((props, ref) => {
         <div className={cx('info_wrapper')}>
           <p>
             <span>1회 관리</span>{' '}
-            <span className={cx('discount_rate')}>
-              {data.type_num === 1 ? '정가' : `${data.discount_per}% 할인`}
-            </span>
+            {data.type_num === 1 ? (
+              '정가'
+            ) : (
+              <span className={cx('discount_rate')}>
+                {`${data.discount_per}% 할인`}
+              </span>
+            )}
           </p>
           <p>{formatMinutesToHours(data.duration)} 관리</p>
         </div>

@@ -49,13 +49,13 @@ const ScrollTab = forwardRef<ScrollTabHandle, ScrollTabProps>((props, ref) => {
           <div className="embla__tab_container">
             {tabs.map((tab) => (
               <div className="embla__tab_slide" key={tab.id}>
-                <div
-                  className={classNames('embla__tab_slide__content', {
-                    active: tab.id === selectedId,
+                <button
+                  className={cx('embla__tab_slide__content', {
+                    active_tab: tab.id === selectedId,
                   })}
                 >
                   {tab.name}
-                </div>
+                </button>
               </div>
             ))}
           </div>

@@ -1,4 +1,11 @@
+@use '@/styles/scss/mixin.scss' as *;
+
 .tab_container {
   display: flex;
   justify-content: center;
+}
+
+.active_tab {
+  background: var(--brand-color-300-main, #ff808b);
+  color: var(--Gray-Scale-White, #fff);
 }

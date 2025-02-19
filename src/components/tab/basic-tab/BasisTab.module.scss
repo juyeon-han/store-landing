@@ -8,13 +8,33 @@
 
 .tab_btn {
   padding: 8px 20px;
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 27px;
   background: none;
   flex-shrink: 0;
+  color: var(--Gray-Scale-400, #a1a1aa);
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.18px;
+  line-height: 150%; /* 27px */
+
+  &:hover {
+    color: var(--Brand-color-400, #f16370);
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.18px;
+  }
+
+  &:active {
+    color: var(--Brand-color-400, #f16370);
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.18px;
+  }
 
   &.active {
-    border-bottom: 1px solid black;
+    color: var(--Brand-color-400, #f16370);
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.18px;
+    border-bottom: 1px solid var(--brand-color-300-main, #ff808b);
   }
 }

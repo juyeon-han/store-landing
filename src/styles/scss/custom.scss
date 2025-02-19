@@ -165,7 +165,11 @@
   &::before {
     @include before();
     z-index: 10;
-    background-image: linear-gradient(90deg, transparent 97%, #f4f4f5 100%);
+    background-image: linear-gradient(
+      90deg,
+      transparent 97%,
+      var(--Gray-Scale-White, #fff) 100%
+    );
   }
 }
 .embla__tab_container {
@@ -180,28 +184,46 @@
   cursor: pointer;
 }
 .embla__tab_slide__content {
-  background: #e4e4e7;
+  @include flex-row();
   padding: 12px 24px;
+  border-radius: 6px;
+  background: var(--Gray-Scale-50, #fafafa);
   border-radius: 6px;
   margin-right: 16px;
   font-size: 18px;
   font-weight: 600;
   line-height: 27px;
   user-select: none;
+  color: var(--Gray-Scale-700, #3f3f46);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.18px;
 
-  &.active {
-    background: #b5b5b5;
+  &:hover {
+    background: var(--Brand-color-50, #fff2f3);
+    color: var(--Brand-color-500, #ee5462);
+  }
+
+  &:active {
+    background: var(--Brand-color-200, #ffccd1);
+    color: var(--Brand-color-500, #ee5462);
   }
 }
 .embla__tab_button {
+  @include flex-row(center);
   border: 0;
   padding: 0;
   margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: white;
+  background: var(--Gray-Scale-100, #f4f4f5);
   border-radius: 999px;
   min-width: 40px;
   height: 40px;
+
+  &:hover {
+    background: var(--Gray-Scale-200, #e4e4e7);
+  }
+
+  &:active {
+    background: var(--Gray-Scale-300, #d4d4d8);
+  }
 }
