@@ -3,7 +3,7 @@ import Gnb, { GnbMenusType } from '@/components/nav/Gnb';
 import CarePage from '@/pages/care';
 import FaqPage from '@/pages/faq';
 import PlacePage from '@/pages/place';
-import PresentPage from '@/pages/present';
+import PromotionPage from '@/pages/promotion';
 import ReviewPage from '@/pages/review';
 
 function Home() {
@@ -20,7 +20,7 @@ function Home() {
       <Gnb menus={menus} />
       <PlacePage />
       <ReviewPage />
-      <PresentPage />
+      <PromotionPage />
       <CarePage />
       <FaqPage />
       <Footer />

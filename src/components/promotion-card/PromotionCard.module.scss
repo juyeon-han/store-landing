@@ -3,35 +3,100 @@
 .wrapper {
   @include flex-column(center);
   width: 100%;
-  max-width: 960px;
+  max-width: 880px;
   background: white;
-  padding-top: 40px;
-  padding-bottom: 80px;
+  padding: 64px 0px 50px 0px;
+  border-radius: 16px;
+  background: var(--Gray-Scale-White, #fff);
+  box-shadow: 0px 4px 13px 0px rgba(43, 36, 31, 0.04);
+  position: relative;
+  overflow: hidden;
 
-  .tag {
-    border-radius: 6px;
-    padding: 8px 16px;
-    background: #e4e4e7;
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 32px;
+  .sticker {
+    @include flex-row(center);
+    position: absolute;
+    top: 28px;
+    left: 28px;
+    border-radius: 9999px;
+    background: var(--brand-color-300-main, #ff808b);
+    width: 110px;
+    height: 110px;
+
+    .sticker_inner {
+      @include flex-row(center);
+      font-family: 'Butler';
+      width: 100px;
+      height: 100px;
+      border-radius: 9999px;
+      border: 1px solid var(--Gray-Scale-White, #fff);
+      color: var(--Gray-Scale-White, #fff);
+      font-size: 20px;
+      font-weight: 700;
+      text-align: center;
+    }
   }
 
   .content {
     @include flex-column(center);
+    z-index: 10;
+
+    .event_date {
+      @include flex-row();
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--brand-color-300-main, #ff808b);
+      color: var(--Brand-color-500, #ee5462);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -0.16px;
+      margin-bottom: 16px;
+    }
 
     .condition {
-      font-size: 28px;
-      font-weight: 600;
+      color: var(--Gray-Scale-700, #3f3f46);
+      text-align: center;
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: -0.24px;
+      margin-bottom: 7px;
     }
 
     .product {
+      @include flex-row();
+      gap: 8px;
+      color: var(--Gray-Scale-800, #27272a);
+      text-align: center;
       font-size: 40px;
-      font-weight: 700;
+      font-weight: 500;
+      letter-spacing: -0.4px;
+
+      .stress {
+        @include flex-row();
+        gap: 6px;
+        height: 44px;
+        color: var(--Brand-color-400, #f16370);
+        background: #fff2f3;
+      }
     }
 
     .image {
       margin-top: 40px;
+      border-radius: 8px;
+      width: 500px;
+      height: 500px;
     }
   }
+
+  .back_circle {
+    width: 880px;
+    height: 880px;
+    position: absolute;
+    bottom: -468px;
+    border-radius: 880px;
+    background: linear-gradient(180deg, #f7f6f2 0%, #fff 100%);
+  }
+}
+
+.wrapper_with_date {
+  padding: 50px 0;
 }
