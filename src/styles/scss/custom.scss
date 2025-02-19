@@ -1,3 +1,5 @@
+@use '@/styles/scss/mixin.scss' as *;
+
 .embla {
   --slide-size: 100%;
   --slide-max-size: 800px;
@@ -99,29 +101,17 @@
   position: relative;
 
   &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: var(--thumbs-img-size);
-    height: var(--thumbs-img-size);
+    @include before();
     border-radius: var(--thumbs-img-border);
     background: rgba(255, 255, 255, 0.4);
-    pointer-events: none;
     z-index: 1;
   }
 }
 .embla-thumbs__slide--selected .embla-thumbs__slide__img {
   &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: var(--thumbs-img-size);
-    height: var(--thumbs-img-size);
+    @include before();
     border-radius: var(--thumbs-img-border);
     background: rgba(0, 0, 0, 0.4);
-    pointer-events: none;
     z-index: 1;
   }
 }
@@ -138,13 +128,8 @@
 
   position: relative;
   &::before {
+    @include before();
     z-index: 10;
-    position: absolute;
-    content: '';
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     background-image: linear-gradient(
       90deg,
       white 1%,
@@ -152,7 +137,6 @@
       transparent 90%,
       white 99%
     );
-    pointer-events: none;
   }
 }
 .embla__review_container {
@@ -179,15 +163,9 @@
   overflow: hidden;
   position: relative;
   &::before {
+    @include before();
     z-index: 10;
-    position: absolute;
-    content: '';
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     background-image: linear-gradient(90deg, transparent 97%, #f4f4f5 100%);
-    pointer-events: none;
   }
 }
 .embla__tab_container {
