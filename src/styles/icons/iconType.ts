@@ -1,9 +1,15 @@
 import Variables from '@/styles/scss/variables.module.scss';
 import ArrowLeft from './svg/arrowLeft.svg?react';
 import ArrowRight from './svg/arrowRight.svg?react';
+import CareEggFace from './svg/care-egg-face.svg?react';
+import CareHead from './svg/care-head.svg?react';
+import CareSmallFace from './svg/care-small-face.svg?react';
+import Check from './svg/check.svg?react';
 import Clock from './svg/clock.svg?react';
 import Close from './svg/close.svg?react';
 import Customers from './svg/customers.svg?react';
+import Dots from './svg/dots.svg?react';
+import Line from './svg/line.svg?react';
 import Location from './svg/location.svg?react';
 import Phone from './svg/phone.svg?react';
 import Sessions from './svg/sessions.svg?react';
@@ -12,9 +18,15 @@ import Year from './svg/year.svg?react';
 export const icons = {
   ArrowLeft,
   ArrowRight,
+  CareEggFace,
+  CareHead,
+  CareSmallFace,
+  Check,
   Clock,
   Close,
   Customers,
+  Dots,
+  Line,
   Location,
   Phone,
   Sessions,
