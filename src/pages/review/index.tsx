@@ -9,28 +9,28 @@ const ReviewPage = () => {
       imgUrl:
         'https://images.unsplash.com/photo-1738584672973-f33b662c05d4?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzfHx8ZW58MHx8fHx8',
       alt: 'test',
-      category: 'category',
-      text: '맞춤관리 1회 받고 전후비교까지! 약손명가 청담골드스타점 솔직 후기',
+      category: '스페셜 웨딩 관리',
+      text: '이*정님 Before & after',
     },
     {
       imgUrl:
         'https://images.unsplash.com/photo-1738584672973-f33b662c05d4?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzfHx8ZW58MHx8fHx8',
       alt: 'test',
-      category: 'category',
-      text: '약손명가 솔직후기 ✨\n동탄웨딩관리로 힐링 제대로\n즐기기',
+      category: 'K-BEAUTY 연예인 관리 A',
+      text: '김*헌님 Before & after',
     },
     {
       imgUrl:
         'https://images.unsplash.com/photo-1738584672973-f33b662c05d4?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzfHx8ZW58MHx8fHx8',
       alt: 'test',
-      category: 'category',
-      text: '맞춤관리 1회 받고 전후비교까지! 약손명가 청담골드스타점 솔직 후기',
+      category: '작은 얼굴 관리',
+      text: '박*언님 Before & after',
     },
     {
       imgUrl:
         'https://images.unsplash.com/photo-1738584672973-f33b662c05d4?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzfHx8ZW58MHx8fHx8',
       alt: 'test',
-      category: 'category',
+      category: '맞춤 관리 A',
       text: '약손명가 솔직후기 ✨\n동탄웨딩관리로 힐링 제대로\n즐기기',
     },
     {
@@ -60,7 +60,10 @@ const ReviewPage = () => {
 
   return (
     <section className={cx('wrapper')} id="review" data-page="review">
-      <PageTitle category="Review" title="리뷰로 증명된 가치" />
+      <PageTitle
+        category="Real Review"
+        title="눈으로 확인하는 Before & After"
+      />
       <div className={cx('card_container')}>
         <ReviewCard data={data} />
       </div>
