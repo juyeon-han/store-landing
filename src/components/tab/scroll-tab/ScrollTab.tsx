@@ -1,5 +1,4 @@
 import { forwardRef, useCallback } from 'react';
-import classNames from 'classnames';
 import classNameBind from 'classnames/bind';
 import useEmblaCarousel from 'embla-carousel-react';
 import Icon from '@/styles/icons/icons';

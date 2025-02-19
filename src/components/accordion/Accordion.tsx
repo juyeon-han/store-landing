@@ -38,7 +38,11 @@ const Accordion = forwardRef<AccordionHandle, AccordionProps>((props, ref) => {
               aria-expanded={isActive}
               aria-controls={`answer-${idx}`}
             >
-              <Icon name="Close" className={cx('icon', { active: isActive })} />
+              <Icon
+                name="Plus"
+                size="sm"
+                className={cx('icon', { active: isActive })}
+              />
               <span>{item.question}</span>
             </button>
             <p
