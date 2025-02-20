@@ -1,61 +1,125 @@
 import { forwardRef } from 'react';
+import classNames from 'classnames/bind';
+import { LINKS } from '@/enum/link';
+import Icon from '@/styles/icons/icons';
+import { IconNameType } from '@/styles/icons/iconType';
 import styles from './Footer.module.scss';
 
 interface FooterHandle extends HTMLDivElement {}
 interface FooterProps extends React.HTMLAttributes<HTMLDivElement> {}
 
+const text_link = [
+  {
+    id: '스타고객',
+    link: LINKS.STAR_CUSTOMER,
+  },
+  {
+    id: '이벤트',
+    link: LINKS.EVENT,
+  },
+  {
+    id: '고객의 소리',
+    link: LINKS.CUSTOMER_VOICE,
+  },
+  {
+    id: '고객님의 아이디어',
+    link: LINKS.CUSTOMER_IDEA,
+  },
+];
+const icons_link = [
+  {
+    id: 'Facebook',
+    link: LINKS.FACEBOOK,
+  },
+  {
+    id: 'Instagram',
+    link: LINKS.INSTAGRAM,
+  },
+  {
+    id: 'Cafe',
+    link: LINKS.CAFE,
+  },
+  {
+    id: 'Kakaotalk',
+    link: LINKS.KAKAOTALK,
+  },
+  {
+    id: 'Youtube',
+    link: LINKS.YOUTUBE,
+  },
+];
 const Footer = forwardRef<FooterHandle, FooterProps>((props, ref) => {
+  const cx = classNames.bind(styles);
   return (
-    <footer className={styles.container} {...props} ref={ref}>
+    <footer className={cx('container')} {...props} ref={ref}>
       <img
-        className={styles.logo}
+        className={cx('logo')}
         src="/src/assets/images/yakson_logo.png"
         alt="logo"
       ></img>
-      <div className={styles.wrapper}>
-        <div className={styles.footer_top}>
+      <div className={cx('wrapper')}>
+        <div className={cx('footer_top')}>
           <div>
-            <span className={styles.title}>상담전화</span>
-            <span className={styles.text}>
+            <span className={cx('title')}>상담전화</span>
+            <span className={cx('text')}>
               1566-8500 (평일 오전 9시 ~ 오후 8시, 토/공휴일 오전 9시 ~ 오후
               4시)
             </span>
           </div>
-          <div className={styles.link}>
-            <a>스타고객</a>
-            <a>이벤트</a>
-            <a>고객의 소리</a>
-            <a>고객님의 아이디어</a>
+          <div className={cx('link')}>
+            {text_link.map((text) => (
+              <a
+                key={text.id}
+                href={text.link}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {text.id}
+              </a>
+            ))}
           </div>
         </div>
         <hr />
-        <div className={styles.footer_info}>
+        <div className={cx('footer_info')}>
           <div>
-            <span className={styles.title}>대표</span>
-            <span className={styles.text}>이병철</span>
-            <span className={styles.title}>개인정보관리 책임자</span>
-            <span className={styles.text}>김현숙</span>
-            <span className={styles.title}>본사</span>
-            <span className={styles.text}>
+            <span className={cx('title')}>대표</span>
+            <span className={cx('text')}>이병철</span>
+            <span className={cx('title')}>개인정보관리 책임자</span>
+            <span className={cx('text')}>김현숙</span>
+            <span className={cx('title')}>본사</span>
+            <span className={cx('text')}>
               서울특별시 강남구 영동대로142길 29 약손명가 빌딩 2층
             </span>
           </div>
           <div>
-            <span className={styles.title}>사업자등록번호</span>
-            <span className={styles.text}>211-88-34433</span>
-            <span className={styles.title}>Tel</span>
-            <span className={styles.text}>02-546-1600</span>
-            <span className={styles.title}>Fax</span>
-            <span className={styles.text}>02-6052-1608</span>
+            <span className={cx('title')}>사업자등록번호</span>
+            <span className={cx('text')}>211-88-34433</span>
+            <span className={cx('title')}>Tel</span>
+            <span className={cx('text')}>02-546-1600</span>
+            <span className={cx('title')}>Fax</span>
+            <span className={cx('text')}>02-6052-1608</span>
           </div>
           <div>
-            <span className={styles.text}>개인정보취급방침</span>
+            <span className={cx('text')}>개인정보취급방침</span>
           </div>
         </div>
-        <div className={styles.footer_bottom}>
-          <span className={styles.copyright}>
+        <div className={cx('footer_bottom')}>
+          <span className={cx('copyright')}>
             COPYRIGHT 2021. YAKSON ALL RIGHT RESERVED
           </span>
+          <div className={cx('icon_btn_wrapper')}>
+            {icons_link.map((icon) => (
+              <a
+                key={icon.id}
+                className={cx('icon_btn')}
+                href={icon.link}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Icon name={icon.id as IconNameType} size={40} />
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </footer>
