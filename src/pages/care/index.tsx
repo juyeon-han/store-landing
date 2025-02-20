@@ -2,8 +2,8 @@ import classNames from 'classnames/bind';
 import PayCard from '@/components/card/pay-card/PayCard';
 import RecommendCard from '@/components/card/recommend-card/RecommendCard';
 import BasisTab from '@/components/tab/basic-tab/BasisTab';
-import { useBasisTabController } from '@/components/tab/basic-tab/basisTabController';
 import ScrollTab, { TabsType } from '@/components/tab/scroll-tab/ScrollTab';
+import { useTabController } from '@/components/tab/tabController';
 import PageTitle from '@/components/title/PageTitle';
 import Icon from '@/styles/icons/icons';
 import styles from './index.module.scss';
@@ -91,9 +91,20 @@ const steps = [
 
 const CarePage = () => {
   const cx = classNames.bind(styles);
-  const { activeTabId, handleActiveTab } = useBasisTabController({
+  const {
+    activeTabId: activeBasisTabId,
+    handleActiveTab: handleActiveBasisTab,
+  } = useTabController({
     initTabId: basis_tabs[0].id,
   });
+
+  const {
+    activeTabId: activeScrollTabId,
+    handleActiveTab: handleActiveScrollTab,
+  } = useTabController({
+    initTabId: basis_tabs[0].id,
+  });
+
   return (
     <section id="care" data-page="care" className={cx('container')}>
       <PageTitle category="Care" title="약손명가의 특별한 관리법" />
@@ -103,13 +114,14 @@ const CarePage = () => {
             <BasisTab
               className={cx('basis_tab')}
               tabs={basis_tabs}
-              activeTabId={activeTabId}
-              handleActiveTab={handleActiveTab}
+              activeTabId={activeBasisTabId}
+              handleActiveTab={handleActiveBasisTab}
             />
             <ScrollTab
               className={cx('scroll_tab')}
               tabs={scroll_tabs}
-              selectedId="2"
+              activeTabId={activeScrollTabId}
+              handleActiveTab={handleActiveScrollTab}
             />
             <div className={cx('program_wrapper')}>
               <div

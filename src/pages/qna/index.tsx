@@ -1,8 +1,8 @@
 import classNames from 'classnames/bind';
 import Accordion from '@/components/accordion/Accordion';
 import BasisTab from '@/components/tab/basic-tab/BasisTab';
-import { useBasisTabController } from '@/components/tab/basic-tab/basisTabController';
 import { TabsType } from '@/components/tab/scroll-tab/ScrollTab';
+import { useTabController } from '@/components/tab/tabController';
 import PageTitle from '@/components/title/PageTitle';
 import { NOTICE_DATA, QUESTION_DATA } from '@/constants/faq';
 import styles from './index.module.scss';
@@ -14,7 +14,7 @@ const tabs: TabsType[] = [
 
 const QnaPage = () => {
   const cx = classNames.bind(styles);
-  const { activeTabId, handleActiveTab } = useBasisTabController({
+  const { activeTabId, handleActiveTab } = useTabController({
     initTabId: tabs[0].id,
   });
   return (

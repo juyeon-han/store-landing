@@ -9,7 +9,7 @@ interface Controller {
   handleActiveTab: (id: string) => void;
 }
 
-export const useBasisTabController = (props: ControllerInit): Controller => {
+export const useTabController = (props: ControllerInit): Controller => {
   const { initTabId } = props;
   const [activeTabId, setActiveTabId] = useState<string>(initTabId);
 

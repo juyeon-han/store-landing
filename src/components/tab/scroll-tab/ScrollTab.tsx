@@ -12,12 +12,14 @@ export interface TabsType {
 interface ScrollTabHandle extends HTMLDivElement {}
 interface ScrollTabProps extends React.HTMLAttributes<HTMLDivElement> {
   tabs: TabsType[];
-  selectedId?: TabsType['id'];
+  activeTabId?: TabsType['id'];
+  handleActiveTab: (id: string) => void;
 }
 
 const ScrollTab = forwardRef<ScrollTabHandle, ScrollTabProps>((props, ref) => {
   const cx = classNameBind.bind(styles);
-  const { tabs, selectedId, className, ...otherProps } = props;
+  const { tabs, activeTabId, handleActiveTab, className, ...otherProps } =
+    props;
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
     dragFree: true,
@@ -50,8 +52,9 @@ const ScrollTab = forwardRef<ScrollTabHandle, ScrollTabProps>((props, ref) => {
               <div className="embla__tab_slide" key={tab.id}>
                 <button
                   className={cx('embla__tab_slide__content', {
-                    active_tab: tab.id === selectedId,
+                    active_tab: tab.id === activeTabId,
                   })}
+                  onClick={() => handleActiveTab(tab.id)}
                 >
                   {tab.name}
                 </button>
