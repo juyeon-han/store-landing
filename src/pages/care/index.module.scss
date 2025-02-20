@@ -23,6 +23,7 @@
     border-radius: 40px;
     border: 1px solid var(--Brown-Scale-Color-50, #f7f6f2);
     background: var(--Gray-Scale-White, #fff);
+    z-index: 10;
 
     .border {
       width: 100%;
@@ -36,174 +37,174 @@
         border-radius: 24px;
         border: 2px solid var(--Brown-Scale-Color-200, #dedaca);
         padding: 30px 40px;
-      }
-    }
-  }
 
-  .basis_tab {
-    margin-bottom: 40px;
-  }
-
-  .scroll_tab {
-    margin-bottom: 24px;
-  }
-
-  .program_wrapper {
-    display: flex;
-    align-items: flex-start;
-    gap: 24px;
-    align-self: stretch;
-    margin-bottom: 24px;
-
-    .program_card {
-      display: flex;
-      width: 440px;
-      height: 560px;
-      padding: 40px;
-      flex-direction: column;
-      justify-content: flex-end;
-      align-items: flex-start;
-      gap: 20px;
-      border-radius: 6px;
-      background-position: center;
-      background-size: cover;
-      background-repeat: no-repeat;
-      color: var(--Gray-Scale-White, #fff);
-      text-shadow: 0px 4px 15px rgba(43, 36, 31, 0.12);
-
-      position: relative;
-      &::before {
-        @include before();
-        border-radius: 6px;
-        background: linear-gradient(
-          180deg,
-          rgba(0, 0, 0, 0) 18.99%,
-          rgba(0, 0, 0, 0.6) 93.99%
-        );
-      }
-
-      .title {
-        align-self: stretch;
-        font-size: 24px;
-        font-weight: 500;
-        line-height: 150%; /* 36px */
-        letter-spacing: -0.24px;
-        z-index: 10;
-      }
-
-      .text {
-        align-self: stretch;
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 150%; /* 24px */
-        letter-spacing: -0.16px;
-        z-index: 10;
-      }
-    }
-
-    .pay_card_wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 16px;
-      flex: 1 0 0;
-    }
-  }
-
-  .recommend_wrapper {
-    @include flex-column(center);
-    padding-top: 32px;
-    gap: 40px;
-    margin-bottom: 96px;
-
-    .recommend_text {
-      @include flex-column(center);
-      gap: 16px;
-      color: var(--Gray-Scale-900, #18181b);
-      text-align: center;
-      font-size: 24px;
-      font-weight: 500;
-      line-height: 150%; /* 36px */
-      letter-spacing: -0.24px;
-    }
-
-    .needs_wrapper {
-      @include flex-row();
-      gap: 32px;
-    }
-  }
-
-  .step_wrapper {
-    @include flex-column(center);
-    padding: 0 40px;
-    width: 100%;
-
-    .info_text {
-      color: var(--Gray-Scale-900, #18181b);
-      font-size: 24px;
-      font-weight: 500;
-      letter-spacing: -0.24px;
-      margin-bottom: 32px;
-    }
-
-    .block {
-      @include flex-row(center);
-      width: 100%;
-      height: 43px;
-      padding: 8px 12px;
-      background: var(--Brand-color-50, #fff2f3);
-      margin-bottom: 16px;
-
-      color: var(--Brand-color-500, #ee5462);
-      font-size: 18px;
-      font-weight: 500;
-      letter-spacing: -0.18px;
-    }
-
-    .step_container {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr); /* 2개의 동일한 너비 컬럼 */
-      grid-template-rows: repeat(4, auto); /* 4개의 행을 생성 */
-      column-gap: 24px; /* 열 간 간격 */
-      row-gap: 16px; /* 행 간 간격 */
-      grid-auto-flow: column; /* 세로로 채운 후, 첫번째 열을 채우고 두번째 열로 넘어감 */
-      width: 100%;
-      margin-bottom: 28px;
-
-      .step {
-        @include flex-row(flex-start);
-        gap: 16px;
-        border-radius: 6px;
-        border: 1px solid var(--Gray-Scale-50, #fafafa);
-        background: var(--Gray-Scale-50, #fafafa);
-        padding: 16px 24px;
-
-        color: var(--Gray-Scale-800, #27272a);
-        font-size: 18px;
-        font-weight: 500;
-        letter-spacing: -0.18px;
-
-        .divider {
-          width: 1.5px;
-          height: 28px;
-          background: #d4d4d8;
-          border: none;
-          margin: 0;
+        .basis_tab {
+          margin-bottom: 40px;
         }
-        .stress {
-          width: 80px;
-          color: var(--brand-color-300-main, #ff808b);
+
+        .scroll_tab {
+          margin-bottom: 24px;
+        }
+
+        .program_wrapper {
+          display: flex;
+          align-items: flex-start;
+          gap: 24px;
+          align-self: stretch;
+          margin-bottom: 24px;
+
+          .program_card {
+            display: flex;
+            width: 440px;
+            height: 560px;
+            padding: 40px;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-start;
+            gap: 20px;
+            border-radius: 6px;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            color: var(--Gray-Scale-White, #fff);
+            text-shadow: 0px 4px 15px rgba(43, 36, 31, 0.12);
+
+            position: relative;
+            &::before {
+              @include before();
+              border-radius: 6px;
+              background: linear-gradient(
+                180deg,
+                rgba(0, 0, 0, 0) 18.99%,
+                rgba(0, 0, 0, 0.6) 93.99%
+              );
+            }
+
+            .title {
+              align-self: stretch;
+              font-size: 24px;
+              font-weight: 500;
+              line-height: 150%; /* 36px */
+              letter-spacing: -0.24px;
+              z-index: 10;
+            }
+
+            .text {
+              align-self: stretch;
+              font-size: 16px;
+              font-weight: 400;
+              line-height: 150%; /* 24px */
+              letter-spacing: -0.16px;
+              z-index: 10;
+            }
+          }
+
+          .pay_card_wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+            flex: 1 0 0;
+          }
+        }
+
+        .recommend_wrapper {
+          @include flex-column(center);
+          padding-top: 32px;
+          gap: 40px;
+          margin-bottom: 96px;
+
+          .recommend_text {
+            @include flex-column(center);
+            gap: 16px;
+            color: var(--Gray-Scale-900, #18181b);
+            text-align: center;
+            font-size: 24px;
+            font-weight: 500;
+            line-height: 150%; /* 36px */
+            letter-spacing: -0.24px;
+          }
+
+          .needs_wrapper {
+            @include flex-row();
+            gap: 32px;
+          }
+        }
+
+        .step_wrapper {
+          @include flex-column(center);
+          padding: 0 40px;
+          width: 100%;
+
+          .info_text {
+            color: var(--Gray-Scale-900, #18181b);
+            font-size: 24px;
+            font-weight: 500;
+            letter-spacing: -0.24px;
+            margin-bottom: 32px;
+          }
+
+          .block {
+            @include flex-row(center);
+            width: 100%;
+            height: 43px;
+            padding: 8px 12px;
+            background: var(--Brand-color-50, #fff2f3);
+            margin-bottom: 16px;
+
+            color: var(--Brand-color-500, #ee5462);
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: -0.18px;
+          }
+
+          .step_container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2개의 동일한 너비 컬럼 */
+            grid-template-rows: repeat(4, auto); /* 4개의 행을 생성 */
+            column-gap: 24px; /* 열 간 간격 */
+            row-gap: 16px; /* 행 간 간격 */
+            grid-auto-flow: column; /* 세로로 채운 후, 첫번째 열을 채우고 두번째 열로 넘어감 */
+            width: 100%;
+            margin-bottom: 28px;
+
+            .step {
+              @include flex-row(flex-start);
+              gap: 16px;
+              border-radius: 6px;
+              border: 1px solid var(--Gray-Scale-50, #fafafa);
+              background: var(--Gray-Scale-50, #fafafa);
+              padding: 16px 24px;
+
+              color: var(--Gray-Scale-800, #27272a);
+              font-size: 18px;
+              font-weight: 500;
+              letter-spacing: -0.18px;
+
+              .divider {
+                width: 1.5px;
+                height: 28px;
+                background: #d4d4d8;
+                border: none;
+                margin: 0;
+              }
+              .stress {
+                width: 80px;
+                color: var(--brand-color-300-main, #ff808b);
+              }
+            }
+          }
+          .care_info_text {
+            width: 100%;
+            color: var(--Gray-Scale-400, #a1a1aa);
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: -0.12px;
+            list-style-type: disc;
+            margin-left: 24px;
+          }
         }
       }
-    }
-    .care_info_text {
-      width: 100%;
-      color: var(--Gray-Scale-400, #a1a1aa);
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: -0.12px;
-      list-style-type: disc;
-      margin-left: 24px;
     }
   }
 }

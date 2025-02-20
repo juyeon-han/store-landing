@@ -69,48 +69,50 @@ const PlacePage = () => {
   return (
     <section className={cx('container')} id="intro" data-page="intro">
       <div className={cx('background')} />
-      <PageTitle
-        category="Location & Director"
-        title={`약손명가 ${storeInfo.name}`}
-        style={{ marginBottom: 0 }}
-      />
-      <div className={cx('address')}>
-        <Icon name="Location" color="brown700" size="sm" />
-        <p>{storeInfo.address}</p>
-      </div>
-      <div className={cx('store_card')}>
-        <StoreCard data={storeData} />
-      </div>
-      <p className={cx('store_intro')}>
-        <span className={cx('point')}>전문성</span>과{' '}
-        <span className={cx('point')}>정성</span>이 깃든 공간, <br />
-        약손명가 {storeInfo.name}을 소개합니다.
-      </p>
-      <EmblaCarousel slides={imgArr} />
-      <div className={cx('ledger_wrapper')}>
-        <LazyImage
-          src={storeInfo.imgUrl}
-          alt="원장님 이미지"
-          className={cx('ledger_img')}
+      <div className={cx('container_inner')}>
+        <PageTitle
+          category="Location & Director"
+          title={`약손명가 ${storeInfo.name}`}
+          style={{ marginBottom: 0 }}
         />
-        <div className={cx('ledger_info')}>
-          <p className={cx('name')}>{storeInfo.ledger} 원장</p>
-          <p className={cx('intro')}>{storeInfo.intro}</p>
-          <div className={cx('info_wrapper')}>
-            <Icon name="Clock" color="brown700" size="xs" />
-            <p>{storeInfo.businessHours}</p>
-          </div>
-          <div className={cx('info_wrapper')}>
-            <Icon name="Phone" color="brown700" size="xs" />
-            <p>{storeInfo.tel}</p>
-          </div>
-          <button className={cx('button')}>
-            채팅 상담하기
-            <Icon name="ArrowRight" color="white" size="sm" />
-          </button>
+        <div className={cx('address')}>
+          <Icon name="Location" color="brown700" size="sm" />
+          <p>{storeInfo.address}</p>
         </div>
+        <div className={cx('store_card')}>
+          <StoreCard data={storeData} />
+        </div>
+        <p className={cx('store_intro')}>
+          <span className={cx('point')}>전문성</span>과{' '}
+          <span className={cx('point')}>정성</span>이 깃든 공간, <br />
+          약손명가 {storeInfo.name}을 소개합니다.
+        </p>
+        <EmblaCarousel slides={imgArr} />
+        <div className={cx('ledger_wrapper')}>
+          <LazyImage
+            src={storeInfo.imgUrl}
+            alt="원장님 이미지"
+            className={cx('ledger_img')}
+          />
+          <div className={cx('ledger_info')}>
+            <p className={cx('name')}>{storeInfo.ledger} 원장</p>
+            <p className={cx('intro')}>{storeInfo.intro}</p>
+            <div className={cx('info_wrapper')}>
+              <Icon name="Clock" color="brown700" size="xs" />
+              <p>{storeInfo.businessHours}</p>
+            </div>
+            <div className={cx('info_wrapper')}>
+              <Icon name="Phone" color="brown700" size="xs" />
+              <p>{storeInfo.tel}</p>
+            </div>
+            <button className={cx('button')}>
+              채팅 상담하기
+              <Icon name="ArrowRight" color="white" size="sm" />
+            </button>
+          </div>
+        </div>
+        <div className={cx('element')}></div>
       </div>
-      <div className={cx('element')}></div>
     </section>
   );
 };
