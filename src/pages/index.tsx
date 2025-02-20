@@ -1,9 +1,9 @@
 import Footer from '@/components/footer/Footer';
 import Gnb, { GnbMenusType } from '@/components/nav/Gnb';
 import CarePage from '@/pages/care';
-import FaqPage from '@/pages/faq';
 import PlacePage from '@/pages/place';
 import PromotionPage from '@/pages/promotion';
+import QnaPage from '@/pages/qna';
 import ReviewPage from '@/pages/review';
 
 function Home() {
@@ -22,7 +22,7 @@ function Home() {
       <ReviewPage />
       <PromotionPage />
       <CarePage />
-      <FaqPage />
+      <QnaPage />
       <Footer />
     </div>
   );

@@ -4,6 +4,7 @@ import Icon from '@/styles/icons/icons';
 import styles from './Accordion.module.scss';
 
 export interface AccordionType {
+  id: string;
   question: string;
   answer: React.ReactNode;
 }
@@ -14,27 +15,27 @@ interface AccordionProps extends React.HTMLAttributes<HTMLUListElement> {
 
 const Accordion = forwardRef<AccordionHandle, AccordionProps>((props, ref) => {
   const cx = classNames.bind(styles);
-  const { data, ...otherProps } = props;
-  const [openIds, setOpenIds] = useState<number[]>([]);
+  const { data, className, ...otherProps } = props;
+  const [openIds, setOpenIds] = useState<string[]>([]);
 
-  const handleToggle = (idx: number) => {
-    if (openIds.includes(idx)) {
-      setOpenIds(openIds.filter((id) => id !== idx));
+  const handleToggle = (id: string) => {
+    if (openIds.includes(id)) {
+      setOpenIds((prev) => prev.filter((prevId) => prevId !== id));
     } else {
-      setOpenIds([...openIds, idx]);
+      setOpenIds((prev) => [...prev, id]);
     }
   };
 
   return (
-    <ul ref={ref} {...otherProps} className={cx('container')}>
+    <ul ref={ref} {...otherProps} className={cx('container', className)}>
       {data.map((item, idx) => {
-        const isActive = openIds.includes(idx);
+        const isActive = openIds.includes(item.id);
 
         return (
           <li key={idx} className={cx('wrapper')}>
             <button
               className={cx('question')}
-              onClick={() => handleToggle(idx)}
+              onClick={() => handleToggle(item.id)}
               aria-expanded={isActive}
               aria-controls={`answer-${idx}`}
             >
