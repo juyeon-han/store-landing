@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import classNames from 'classnames/bind';
-import { LINKS } from '@/enum/link';
+import { LINKS } from '@/constants/link';
 import Icon from '@/styles/icons/icons';
 import { IconNameType } from '@/styles/icons/iconType';
 import styles from './Footer.module.scss';
@@ -11,41 +11,41 @@ interface FooterProps extends React.HTMLAttributes<HTMLDivElement> {}
 const text_link = [
   {
     id: '스타고객',
-    link: LINKS.STAR_CUSTOMER,
+    link: LINKS.star_customer,
   },
   {
     id: '이벤트',
-    link: LINKS.EVENT,
+    link: LINKS.event,
   },
   {
     id: '고객의 소리',
-    link: LINKS.CUSTOMER_VOICE,
+    link: LINKS.customer_voice,
   },
   {
     id: '고객님의 아이디어',
-    link: LINKS.CUSTOMER_IDEA,
+    link: LINKS.customer_idea,
   },
 ];
 const icons_link = [
   {
     id: 'Facebook',
-    link: LINKS.FACEBOOK,
+    link: LINKS.facebook,
   },
   {
     id: 'Instagram',
-    link: LINKS.INSTAGRAM,
+    link: LINKS.instagram,
   },
   {
     id: 'Cafe',
-    link: LINKS.CAFE,
+    link: LINKS.cafe,
   },
   {
     id: 'Kakaotalk',
-    link: LINKS.KAKAOTALK,
+    link: LINKS.kakaotalk,
   },
   {
     id: 'Youtube',
-    link: LINKS.YOUTUBE,
+    link: LINKS.youtube,
   },
 ];
 const Footer = forwardRef<FooterHandle, FooterProps>((props, ref) => {

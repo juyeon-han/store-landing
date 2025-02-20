@@ -2,44 +2,8 @@ import classNames from 'classnames/bind';
 import Accordion from '@/components/accordion/Accordion';
 import BasisTab from '@/components/tab/basic-tab/BasisTab';
 import PageTitle from '@/components/title/PageTitle';
+import { FAQ_DATA } from '@/constants/faq';
 import styles from './index.module.scss';
-
-const data = [
-  {
-    question: '프로모션 대상은 누구인가요?',
-    answer:
-      '약손명가 회원이라면 누구나 프로모션에 참여할 수 있습니다. 신규 회원과 기존 회원 모두 혜택을 받을 수 있습니다.',
-  },
-  {
-    question: '프로모션 혜택은 어떻게 받을 수 있나요?',
-    answer: '상담 예약을 하고 발급 받은 쿠폰을 지점에 보여드리면 됩니다.',
-  },
-  {
-    question: '회원권을 선물해도 프로모션 혜택을 받을 수 있나요?',
-    answer:
-      '네, 본인뿐만 아니라 가족 또는 지인에게 회원권을 선물하는 경우에도 혜택이 적용됩니다.',
-  },
-  {
-    question: '이미 회원권을 구매했는데, 프로모션 혜택을 받을 수 있나요?',
-    answer:
-      '프로모션 기간 동안 새롭게 추가 구매하는 경우에만 혜택이 적용됩니다. 기존 구매 건에 대해서는 적용되지 않습니다.',
-  },
-  {
-    question:
-      '프로모션 기간 동안 새롭게 추가 구매하는 경우에만 혜택이 적용됩니다. 기존 구매 건에 대해서는 적용되지 않습니다.',
-    answer:
-      '회원권 구매 후 환불 요청 시 제공된 프로모션 혜택(헬스케어 제품 및 추가 관리)은 반환 또는 차감될 수 있습니다.',
-  },
-  {
-    question: '다른 지점에서도 프로모션 혜택을 받을 수 있나요?',
-    answer: '해당 프로모션은 약손명가 해당 지점에서만 이용이 가능합니다.',
-  },
-  {
-    question: '회원권 결제는 어떻게 하나요?',
-    answer:
-      '예약 버튼을 통해 예약 후 매장에 방문하셔서 오프라인으로 결제가 가능합니다. 현재 온라인 결제는 지원하고 있지 않습니다.',
-  },
-];
 
 const tabs = [
   { id: '1', name: '문의사항' },
@@ -52,7 +16,7 @@ const FaqPage = () => {
     <section id="qna" data-page="qna" className={cx('container')}>
       <PageTitle category="Q&A" title="약손명가에 대해 궁금한 점 있으신가요?" />
       <BasisTab tabs={tabs} selectedId="1" className={cx('basis_tab')} />
-      <Accordion data={data} />
+      <Accordion data={FAQ_DATA} />
     </section>
   );
 };
