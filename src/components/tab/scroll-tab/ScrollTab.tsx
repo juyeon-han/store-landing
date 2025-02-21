@@ -1,5 +1,5 @@
-import { forwardRef, useCallback } from 'react';
-import classNameBind from 'classnames/bind';
+import { forwardRef, useCallback, useEffect, useState } from 'react';
+import classNames from 'classnames/bind';
 import useEmblaCarousel from 'embla-carousel-react';
 import Icon from '@/styles/icons/icons';
 import styles from './ScrollTab.module.scss';
@@ -14,16 +14,25 @@ interface ScrollTabProps extends React.HTMLAttributes<HTMLDivElement> {
   tabs: TabsType[];
   activeTabId?: TabsType['id'];
   handleActiveTab: (id: string) => void;
+  mode?: 'button' | 'line';
 }
 
 const ScrollTab = forwardRef<ScrollTabHandle, ScrollTabProps>((props, ref) => {
-  const cx = classNameBind.bind(styles);
-  const { tabs, activeTabId, handleActiveTab, className, ...otherProps } =
-    props;
+  const cx = classNames.bind(styles);
+  const {
+    tabs,
+    activeTabId,
+    mode = 'button',
+    handleActiveTab,
+    className,
+    ...otherProps
+  } = props;
+  const [canScrollNext, setCanScrollNext] = useState(false);
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
     dragFree: true,
     containScroll: 'keepSnaps',
+    active: canScrollNext,
   });
 
   // const onPrevButtonClick = useCallback(() => {
@@ -36,6 +45,17 @@ const ScrollTab = forwardRef<ScrollTabHandle, ScrollTabProps>((props, ref) => {
     emblaApi.scrollNext();
   }, [emblaApi]);
 
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const updateScrollState = () => {
+      const canScrollNext = emblaApi.canScrollNext();
+      setCanScrollNext(canScrollNext);
+    };
+
+    updateScrollState(); // 초기 상태 업데이트
+  }, [emblaApi]);
+
   return (
     <section
       className={cx('tab_container', className)}
@@ -46,12 +66,15 @@ const ScrollTab = forwardRef<ScrollTabHandle, ScrollTabProps>((props, ref) => {
         {/* <button className="embla__tab_button" onClick={onPrevButtonClick}>
         <Icon name="ArrowLeft" size="sm" />
       </button> */}
-        <div className="embla__tab_viewport" ref={emblaRef}>
+        <div
+          className={cx('embla__tab_viewport', { has_next: canScrollNext })}
+          ref={emblaRef}
+        >
           <div className="embla__tab_container">
             {tabs.map((tab) => (
               <div className="embla__tab_slide" key={tab.id}>
                 <button
-                  className={cx('embla__tab_slide__content', {
+                  className={cx(mode === 'line' ? 'line_tab' : 'button_tab', {
                     active_tab: tab.id === activeTabId,
                   })}
                   onClick={() => handleActiveTab(tab.id)}
@@ -62,9 +85,11 @@ const ScrollTab = forwardRef<ScrollTabHandle, ScrollTabProps>((props, ref) => {
             ))}
           </div>
         </div>
-        <button className="embla__tab_button" onClick={onNextButtonClick}>
-          <Icon name="ArrowRight" size="sm" />
-        </button>
+        {canScrollNext && (
+          <button className="embla__tab_button" onClick={onNextButtonClick}>
+            <Icon name="ArrowRight" size="sm" />
+          </button>
+        )}
       </section>
     </section>
   );

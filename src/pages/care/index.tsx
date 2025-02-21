@@ -1,7 +1,6 @@
 import classNames from 'classnames/bind';
 import PayCard from '@/components/card/pay-card/PayCard';
 import RecommendCard from '@/components/card/recommend-card/RecommendCard';
-import BasisTab from '@/components/tab/basic-tab/BasisTab';
 import ScrollTab, { TabsType } from '@/components/tab/scroll-tab/ScrollTab';
 import { useTabController } from '@/components/tab/tabController';
 import PageTitle from '@/components/title/PageTitle';
@@ -111,11 +110,12 @@ const CarePage = () => {
       <div className={cx('outer')}>
         <div className={cx('border')}>
           <div className={cx('inner')}>
-            <BasisTab
+            <ScrollTab
               className={cx('basis_tab')}
               tabs={basis_tabs}
               activeTabId={activeBasisTabId}
               handleActiveTab={handleActiveBasisTab}
+              mode="line"
             />
             <ScrollTab
               className={cx('scroll_tab')}
