@@ -186,25 +186,6 @@
   min-width: 0;
 }
 
-.embla__tab_button {
-  @include flex-row(center);
-  border: 0;
-  padding: 0;
-  margin: 0;
-  background: var(--Gray-Scale-100, #f4f4f5);
-  border-radius: 999px;
-  min-width: 40px;
-  height: 40px;
-
-  &:hover {
-    background: var(--Gray-Scale-200, #e4e4e7);
-  }
-
-  &:active {
-    background: var(--Gray-Scale-300, #d4d4d8);
-  }
-}
-
 // 인터렉션 옵저버
 .reveal {
   opacity: 0;

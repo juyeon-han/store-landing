@@ -65,4 +65,38 @@
       color: var(--Gray-Scale-White, #fff);
     }
   }
+
+  .arrow_button {
+    @include flex-row(center);
+    border: 0;
+    padding: 0;
+    margin: 0;
+    border-radius: 999px;
+    min-width: 40px;
+    height: 40px;
+
+    &.line {
+      background: var(--Gray-Scale-White, #fff);
+
+      &:hover {
+        background: var(--Gray-Scale-50, #fafafa);
+      }
+
+      &:active {
+        background: var(--Gray-Scale-100, #f4f4f5);
+      }
+    }
+
+    &.button {
+      background: var(--Gray-Scale-100, #f4f4f5);
+
+      &:hover {
+        background: var(--Gray-Scale-200, #e4e4e7);
+      }
+
+      &:active {
+        background: var(--Gray-Scale-300, #d4d4d8);
+      }
+    }
+  }
 }

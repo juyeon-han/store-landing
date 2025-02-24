@@ -86,8 +86,11 @@ const ScrollTab = forwardRef<ScrollTabHandle, ScrollTabProps>((props, ref) => {
           </div>
         </div>
         {canScrollNext && (
-          <button className="embla__tab_button" onClick={onNextButtonClick}>
-            <Icon name="ArrowRight" size="sm" />
+          <button
+            className={cx('arrow_button', mode === 'line' ? 'line' : 'button')}
+            onClick={onNextButtonClick}
+          >
+            <Icon name="ArrowRight" size="md" />
           </button>
         )}
       </section>

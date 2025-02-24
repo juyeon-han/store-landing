@@ -1,5 +1,4 @@
 import Variables from '@/styles/scss/variables.module.scss';
-import ArrowLeft from './svg/arrowLeft.svg?react';
 import ArrowRight from './svg/arrowRight.svg?react';
 import Cafe from './svg/cafe.svg?react';
 import CareEggFace from './svg/care-egg-face.svg?react';
@@ -22,7 +21,6 @@ import Year from './svg/year.svg?react';
 import Youtube from './svg/youtube.svg?react';
 
 export const icons = {
-  ArrowLeft,
   ArrowRight,
   Cafe,
   CareEggFace,
