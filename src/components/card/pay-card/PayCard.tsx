@@ -13,14 +13,19 @@ export interface PayCardType {
 interface PayCardHandle extends HTMLDivElement {}
 interface PayCardProps extends React.HTMLAttributes<HTMLDivElement> {
   data: PayCardType;
+  type?: 'column' | 'grid';
 }
 
 const PayCard = forwardRef<PayCardHandle, PayCardProps>((props, ref) => {
   const cx = classNames.bind(styles);
-  const { data, className, ...otherProps } = props;
+  const { data, type = 'column', className, ...otherProps } = props;
 
   return (
-    <div ref={ref} {...otherProps} className={cx('container', className)}>
+    <div
+      ref={ref}
+      {...otherProps}
+      className={cx('container', className, { grid: type === 'grid' })}
+    >
       <div className={cx('tag')}>{data.type_num}회 관리</div>
       <div className={cx('wrapper')}>
         <div className={cx('info_wrapper')}>

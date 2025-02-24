@@ -90,6 +90,51 @@ const steps = [
   },
 ];
 
+const pay_data = [
+  {
+    type_num: 1,
+    origin_price: 130000,
+    discount_per: 0,
+    discount_price: 130000,
+    duration: 60,
+  },
+  {
+    type_num: 10,
+    origin_price: 1300000,
+    discount_per: 15,
+    discount_price: 1100000,
+    duration: 80,
+  },
+  {
+    type_num: 20,
+    origin_price: 2600000,
+    discount_per: 23,
+    discount_price: 2000000,
+    duration: 80,
+  },
+  {
+    type_num: 30,
+    origin_price: 3900000,
+    discount_per: 30,
+    discount_price: 2730000,
+    duration: 80,
+  },
+  // {
+  //   type_num: 20,
+  //   origin_price: 2600000,
+  //   discount_per: 23,
+  //   discount_price: 2000000,
+  //   duration: 80,
+  // },
+  // {
+  //   type_num: 30,
+  //   origin_price: 3900000,
+  //   discount_per: 30,
+  //   discount_price: 2730000,
+  //   duration: 80,
+  // },
+];
+
 const CarePage = () => {
   const cx = classNames.bind(styles);
   const {
@@ -152,34 +197,18 @@ const CarePage = () => {
                   헤어스타일과도 잘 어울리는 이상적인 얼굴형이라 할 수 있습니다.
                 </p>
               </div>
-              <div className={cx('pay_card_wrapper')}>
-                <PayCard
-                  data={{
-                    type_num: 1,
-                    origin_price: 130000,
-                    discount_per: 0,
-                    discount_price: 130000,
-                    duration: 60,
-                  }}
-                />
-                <PayCard
-                  data={{
-                    type_num: 10,
-                    origin_price: 1300000,
-                    discount_per: 15,
-                    discount_price: 1100000,
-                    duration: 80,
-                  }}
-                />
-                <PayCard
-                  data={{
-                    type_num: 20,
-                    origin_price: 2600000,
-                    discount_per: 23,
-                    discount_price: 2000000,
-                    duration: 80,
-                  }}
-                />
+              <div
+                className={cx('pay_card_wrapper', {
+                  pay_card_grid_wrapper: pay_data.length > 3,
+                })}
+              >
+                {pay_data.map((pay) => (
+                  <PayCard
+                    key={pay.type_num}
+                    data={{ ...pay }}
+                    type={pay_data.length > 3 ? 'grid' : 'column'}
+                  />
+                ))}
               </div>
             </div>
             <div className={cx('recommend_wrapper')}>
