@@ -1,8 +1,10 @@
 import { forwardRef } from 'react';
 import classNames from 'classnames/bind';
 import { EmblaOptionsType } from 'embla-carousel';
+import AutoScroll from 'embla-carousel-auto-scroll';
 import useEmblaCarousel from 'embla-carousel-react';
 import LazyImage from '@/components/image/LazyImage';
+import { useAutoPlayObserver } from '@/hooks/useAutoPlayObserver';
 import styles from './ReviewCard.module.scss';
 
 export interface ReviewCardType {
@@ -21,11 +23,23 @@ const ReviewCard = forwardRef<ReviewCardHandle, ReviewCardProps>(
   (props, ref) => {
     const cx = classNames.bind(styles);
     const { data, className, options, ...otherProps } = props;
-    const [emblaRef] = useEmblaCarousel({
-      loop: true,
-      dragFree: true,
-      ...options,
-    });
+    const [emblaRef, emblaMainApi] = useEmblaCarousel(
+      {
+        loop: true,
+        dragFree: true,
+        containScroll: 'trimSnaps',
+        ...options,
+      },
+      [
+        AutoScroll({
+          speed: 1,
+          stopOnInteraction: false,
+          stopOnMouseEnter: true,
+        }),
+      ]
+    );
+
+    useAutoPlayObserver({ emblaApi: emblaMainApi, type: 'autoScroll' });
 
     return (
       <div className="embla_review" ref={ref}>
