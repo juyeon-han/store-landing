@@ -1,9 +1,11 @@
+import { useEffect, useRef } from 'react';
 import classNames from 'classnames/bind';
 import PayCard from '@/components/card/pay-card/PayCard';
 import RecommendCard from '@/components/card/recommend-card/RecommendCard';
 import ScrollTab, { TabsType } from '@/components/tab/scroll-tab/ScrollTab';
 import { useTabController } from '@/components/tab/tabController';
 import PageTitle from '@/components/title/PageTitle';
+import { useIntersectionObserver } from '@/hooks/useInteractionObserver';
 import Icon from '@/styles/icons/icons';
 import styles from './index.module.scss';
 
@@ -104,10 +106,20 @@ const CarePage = () => {
     initTabId: basis_tabs[0].id,
   });
 
+  const careRef = useRef<Array<HTMLDivElement | null>>([]);
+  const { setElements, isVisible } = useIntersectionObserver();
+
+  useEffect(() => {
+    setElements(careRef.current);
+  }, []);
+
   return (
     <section id="care" data-page="care" className={cx('container')}>
       <PageTitle category="Care" title="약손명가의 특별한 관리법" />
-      <div className={cx('outer')}>
+      <div
+        className={cx('outer', `reveal ${isVisible[0] ? 'visible' : ''}`)}
+        ref={(el) => (careRef.current[0] = el)}
+      >
         <div className={cx('border')}>
           <div className={cx('inner')}>
             <ScrollTab

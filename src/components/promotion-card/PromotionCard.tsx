@@ -20,14 +20,26 @@ interface PromotionCardProps
 const PromotionCard = forwardRef<PromotionCardHandle, PromotionCardProps>(
   (props, ref) => {
     const cx = classNames.bind(styles);
-    const { tag, condition, product, imgUrl, num, event_date, ...otherProps } =
-      props;
+    const {
+      tag,
+      condition,
+      product,
+      imgUrl,
+      num,
+      event_date,
+      className,
+      ...otherProps
+    } = props;
 
     return (
       <div
-        className={cx('wrapper', {
-          wrapper_with_date: event_date !== undefined,
-        })}
+        className={cx(
+          'wrapper',
+          {
+            wrapper_with_date: event_date !== undefined,
+          },
+          className
+        )}
         ref={ref}
         {...otherProps}
       >

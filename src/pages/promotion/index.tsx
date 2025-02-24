@@ -1,8 +1,10 @@
+import { useEffect, useRef } from 'react';
 import classNames from 'classnames/bind';
 import PromotionCard, {
   PromotionType,
 } from '@/components/promotion-card/PromotionCard';
 import PageTitle from '@/components/title/PageTitle';
+import { useIntersectionObserver } from '@/hooks/useInteractionObserver';
 import styles from './index.module.scss';
 
 const PromotionPage = () => {
@@ -34,6 +36,13 @@ const PromotionPage = () => {
       num: 3,
     },
   ];
+  const promotionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const { setElements, isVisible } = useIntersectionObserver();
+
+  useEffect(() => {
+    setElements(promotionRefs.current);
+  }, []);
+
   return (
     <section className={cx('container')} id="promotion" data-page="promotion">
       <PageTitle
@@ -43,6 +52,8 @@ const PromotionPage = () => {
       <div className={cx('promotion_card')}>
         {promotion.map((item, index) => (
           <PromotionCard
+            ref={(el) => (promotionRefs.current[index] = el)}
+            className={`reveal ${isVisible[index] ? 'visible' : ''}`}
             key={index}
             tag={item.tag}
             condition={item.condition}

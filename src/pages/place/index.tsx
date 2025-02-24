@@ -1,8 +1,10 @@
+import { useEffect, useRef } from 'react';
 import classNames from 'classnames/bind';
 import StoreCard from '@/components/card/store-card/StoreCard';
 import EmblaCarousel from '@/components/carousel/Carousel';
 import LazyImage from '@/components/image/LazyImage';
 import PageTitle from '@/components/title/PageTitle';
+import { useIntersectionObserver } from '@/hooks/useInteractionObserver';
 import Icon from '@/styles/icons/icons';
 import styles from './index.module.scss';
 
@@ -66,6 +68,13 @@ const PlacePage = () => {
     year: 10,
   };
 
+  const placeRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const { setElements, isVisible } = useIntersectionObserver();
+
+  useEffect(() => {
+    setElements(placeRefs.current);
+  }, []);
+
   return (
     <section className={cx('container')} id="intro" data-page="intro">
       <div className={cx('background')} />
@@ -80,15 +89,30 @@ const PlacePage = () => {
           <p>{storeInfo.address}</p>
         </div>
         <div className={cx('store_card')}>
-          <StoreCard data={storeData} />
+          <StoreCard
+            data={storeData}
+            ref={(el) => (placeRefs.current[0] = el)}
+            className={`reveal ${isVisible[0] ? 'visible' : ''}`}
+          />
         </div>
         <p className={cx('store_intro')}>
           <span className={cx('point')}>전문성</span>과{' '}
           <span className={cx('point')}>정성</span>이 깃든 공간, <br />
           약손명가 {storeInfo.name}을 소개합니다.
         </p>
-        <EmblaCarousel slides={imgArr} />
-        <div className={cx('ledger_wrapper')}>
+        <div
+          ref={(el) => (placeRefs.current[1] = el)}
+          className={`reveal ${isVisible[1] ? 'visible' : ''}`}
+        >
+          <EmblaCarousel slides={imgArr} />
+        </div>
+        <div
+          className={cx(
+            'ledger_wrapper',
+            `reveal ${isVisible[2] ? 'visible' : ''}`
+          )}
+          ref={(el) => (placeRefs.current[2] = el)}
+        >
           <LazyImage
             src={storeInfo.imgUrl}
             alt="원장님 이미지"

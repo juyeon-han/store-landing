@@ -2,7 +2,6 @@ import { forwardRef } from 'react';
 import classNames from 'classnames/bind';
 import Counter from '@/components/counter/Counter';
 import Icon from '@/styles/icons/icons';
-import { formatNumberWithCommas } from '@/utils/number';
 import styles from './StoreCard.module.scss';
 
 export interface StoreCardType {

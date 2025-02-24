@@ -1,6 +1,8 @@
+import { useEffect, useRef } from 'react';
 import classNames from 'classnames/bind';
 import ReviewCard from '@/components/card/review-card/ReviewCard';
 import PageTitle from '@/components/title/PageTitle';
+import { useIntersectionObserver } from '@/hooks/useInteractionObserver';
 import styles from './index.module.scss';
 
 const ReviewPage = () => {
@@ -57,6 +59,12 @@ const ReviewPage = () => {
   ];
 
   const cx = classNames.bind(styles);
+  const reviewRef = useRef<Array<HTMLDivElement | null>>([]);
+  const { setElements, isVisible } = useIntersectionObserver();
+
+  useEffect(() => {
+    setElements(reviewRef.current);
+  }, []);
 
   return (
     <section className={cx('wrapper')} id="review" data-page="review">
@@ -64,7 +72,13 @@ const ReviewPage = () => {
         category="Real Review"
         title="눈으로 확인하는 Before & After"
       />
-      <div className={cx('card_container')}>
+      <div
+        className={cx(
+          'card_container',
+          `reveal ${isVisible[0] ? 'visible' : ''}`
+        )}
+        ref={(el) => (reviewRef.current[0] = el)}
+      >
         <ReviewCard data={data} />
       </div>
     </section>
