@@ -8,17 +8,40 @@
   position: relative;
   z-index: -1;
 
+  @include tablet {
+    padding: 80px 40px;
+  }
+
+  @include mobile {
+    padding: 80px 16px;
+  }
+
   &::before {
     @include before();
     background: rgba(239, 237, 229, 0.4);
     background-blend-mode: multiply;
     backdrop-filter: blur(47px);
     z-index: -1;
+    padding: 120px 200px;
   }
 
   .promotion_card {
     @include flex-column(center);
     gap: 40px;
     width: 100%;
+    @include desktop {
+      min-width: map-get($breakpoints, 'tablet');
+    }
+
+    @include tablet {
+      min-width: map-get($breakpoints, 'mobile');
+      gap: 32px;
+    }
+
+    @include mobile {
+      min-width: 328px;
+      gap: 60px;
+      margin-top: 32px;
+    }
   }
 }

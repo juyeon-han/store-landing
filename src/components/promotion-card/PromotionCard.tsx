@@ -32,36 +32,32 @@ const PromotionCard = forwardRef<PromotionCardHandle, PromotionCardProps>(
     } = props;
 
     return (
-      <div
-        className={cx(
-          'wrapper',
-          {
-            wrapper_with_date: event_date !== undefined,
-          },
-          className
-        )}
-        ref={ref}
-        {...otherProps}
-      >
+      <div className={cx('container', className)} ref={ref} {...otherProps}>
         <div className={cx('sticker')}>
           <div className={cx('sticker_inner')}>Benefit {num}</div>
         </div>
-        <div className={cx('content')}>
-          {event_date && (
-            <div className={cx('event_date')}>이벤트 기간 {event_date}</div>
-          )}
-          <p aria-label="promotion-condition" className={cx('condition')}>
-            {condition}
-          </p>
-          <p aria-label="promotion-condition" className={cx('product')}>
-            <span className={cx('stress')}>
-              [<span>{product}</span>]
-            </span>{' '}
-            증정
-          </p>
-          <LazyImage src={imgUrl} alt="promotion" className={cx('image')} />
+        <div
+          className={cx('wrapper', {
+            wrapper_with_date: event_date !== undefined,
+          })}
+        >
+          <div className={cx('content')}>
+            {event_date && (
+              <div className={cx('event_date')}>이벤트 기간 {event_date}</div>
+            )}
+            <p aria-label="promotion-condition" className={cx('condition')}>
+              {condition}
+            </p>
+            <p aria-label="promotion-condition" className={cx('product')}>
+              <span className={cx('stress')}>
+                [<span>{product}</span>]
+              </span>{' '}
+              증정
+            </p>
+            <LazyImage src={imgUrl} alt="promotion" className={cx('image')} />
+          </div>
+          <div className={cx('back_circle')}></div>
         </div>
-        <div className={cx('back_circle')}></div>
       </div>
     );
   }
