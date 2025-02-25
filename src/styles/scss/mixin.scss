@@ -34,7 +34,7 @@
 }
 
 $breakpoints: (
-  'mobile': 360px,
+  'mobile': 480px,
   'tablet': 768px,
   'desktop': 1280px,
 );
@@ -55,19 +55,16 @@ $breakpoints: (
 // 360px ~ 768px (태블릿)
 @mixin tablet {
   @include respond-between(
-    map-get($breakpoints, 'mobile'),
+    #{map-get($breakpoints, 'mobile') + 1px},
     map-get($breakpoints, 'tablet')
   ) {
     @content;
   }
 }
 
-// 768px ~ 1280px (데스크탑)
+// 768px (데스크탑)
 @mixin desktop {
-  @include respond-between(
-    map-get($breakpoints, 'tablet'),
-    map-get($breakpoints, 'desktop')
-  ) {
+  @media (min-width: #{map-get($breakpoints, 'tablet') + 1px}) {
     @content;
   }
 }

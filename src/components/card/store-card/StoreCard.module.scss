@@ -8,9 +8,15 @@
   background-color: var(--Gray-Scale-White, #fff);
   opacity: 0.8;
 
+  @include mobile {
+    @include flex-column(center);
+    margin: 0 56px;
+    padding: 32px 0;
+    gap: 48px;
+  }
+
   .wrapper {
     @include flex-column(center);
-    gap: 16px;
     width: 200px;
 
     color: var(--Gray-Scale-700, #3f3f46);
@@ -19,12 +25,29 @@
     font-weight: 600;
     letter-spacing: -0.16px;
 
+    gap: 16px;
+    @include tablet {
+      gap: 12px;
+    }
+
     .data_text {
       color: var(--brand-color-300-main, #ff808b);
       text-align: center;
       font-size: 32px;
       font-weight: 700;
       letter-spacing: -0.32px;
+
+      @include tablet {
+        margin-top: -6px;
+        font-size: 28px;
+        letter-spacing: -0.28px;
+      }
+
+      @include mobile {
+        margin-top: -6px;
+        font-size: 28px;
+        letter-spacing: -0.24px;
+      }
     }
   }
 
@@ -33,5 +56,9 @@
     height: 40px;
     background-color: var(--Brand-color-200, #ffccd1);
     border: none;
+
+    @include mobile {
+      display: none;
+    }
   }
 }

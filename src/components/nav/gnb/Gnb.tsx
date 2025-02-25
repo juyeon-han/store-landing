@@ -122,7 +122,10 @@ const Gnb = forwardRef<GnbHandle, GnbProps>((props, ref) => {
           ))}
         </li>
         <div className={cx('btn_wrapper')}>
-          <button className={cx('reserve_btn')}>예약하기</button>
+          <button className={cx('reserve_btn')}>
+            <Icon name="Calendar" size={20} className={cx('reserve_icon')} />
+            예약하기
+          </button>
           <button className={cx('menu_btn')} onClick={handleSideMenuBtn}>
             <Icon name="Menu" size="md" />
           </button>
