@@ -6,13 +6,18 @@ interface PageTitleHandle extends HTMLDivElement {}
 interface PageTitleProps extends React.HTMLAttributes<HTMLDivElement> {
   category: string;
   title: string;
+  isStore?: boolean;
 }
 
 const PageTitle = forwardRef<PageTitleHandle, PageTitleProps>((props, ref) => {
   const cx = classNames.bind(styles);
-  const { category, title, ...otherProps } = props;
+  const { category, title, isStore, ...otherProps } = props;
   return (
-    <div className={cx('wrapper')} {...otherProps} ref={ref}>
+    <div
+      className={cx('wrapper', { store: isStore })}
+      {...otherProps}
+      ref={ref}
+    >
       <p className={cx('category')} aria-label="category">
         {category}
       </p>

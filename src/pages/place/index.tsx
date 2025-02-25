@@ -83,6 +83,7 @@ const PlacePage = () => {
           category="Location & Director"
           title={`약손명가 ${storeInfo.name}`}
           style={{ marginBottom: 0 }}
+          isStore
         />
         <div className={cx('address')}>
           <Icon name="Location" color="brown700" size="sm" />
