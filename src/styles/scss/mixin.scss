@@ -32,3 +32,19 @@
   height: 100%;
   pointer-events: none;
 }
+
+$breakpoints: (
+  'mobile': 360px,
+  'tablet': 768px,
+  'desktop': 1280px,
+);
+
+@mixin respond-to($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (max-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @warn "Breakpoint #{$breakpoint} is not defined.";
+  }
+}

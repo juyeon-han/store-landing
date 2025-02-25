@@ -14,7 +14,13 @@ interface IconProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const Icon = (props: IconProps) => {
-  const { size = 'md', color = '#1E1E1E', name, ...otherProps } = props;
+  const {
+    size = 'md',
+    color = '#1E1E1E',
+    name,
+    className,
+    ...otherProps
+  } = props;
   const IconElement = icons[name];
 
   const sizeMap = {
@@ -38,12 +44,11 @@ const Icon = (props: IconProps) => {
   return (
     <div
       style={{
-        width: getSize(size),
-        height: getSize(size),
         display: 'inline-flex',
         justifyContent: 'center',
         alignItems: 'center',
       }}
+      className={className}
       {...otherProps}
     >
       <IconElement

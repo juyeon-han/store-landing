@@ -1,5 +1,5 @@
 import Footer from '@/components/footer/Footer';
-import Gnb, { GnbMenusType } from '@/components/nav/Gnb';
+import Gnb, { GnbMenusType } from '@/components/nav/gnb/Gnb';
 import CarePage from '@/pages/care';
 import PlacePage from '@/pages/place';
 import PromotionPage from '@/pages/promotion';

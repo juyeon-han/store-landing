@@ -14,6 +14,7 @@ import Instagram from './svg/instagram.svg?react';
 import Kakaotalk from './svg/kakaotalk.svg?react';
 import Line from './svg/line.svg?react';
 import Location from './svg/location.svg?react';
+import Menu from './svg/menu.svg?react';
 import Phone from './svg/phone.svg?react';
 import Plus from './svg/plus.svg?react';
 import Sessions from './svg/sessions.svg?react';
@@ -36,6 +37,7 @@ export const icons = {
   Kakaotalk,
   Line,
   Location,
+  Menu,
   Phone,
   Plus,
   Sessions,

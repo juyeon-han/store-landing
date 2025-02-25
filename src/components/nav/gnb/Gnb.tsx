@@ -1,5 +1,7 @@
 import { forwardRef, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
+import Slider from '@/components/nav/slider/Slider';
+import Icon from '@/styles/icons/icons';
 import styles from './Gnb.module.scss';
 
 export interface GnbMenusType {
@@ -16,6 +18,7 @@ const Gnb = forwardRef<GnbHandle, GnbProps>((props, ref) => {
   const { menus, ...otherProps } = props;
   const [activeMenu, setActiveMenu] = useState<string>('');
   const [isTopPage, setIsTopPage] = useState<boolean>(false);
+  const [isSliderOpen, setIsSliderOpen] = useState<boolean>(false);
 
   const handleLogo = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -33,6 +36,10 @@ const Gnb = forwardRef<GnbHandle, GnbProps>((props, ref) => {
     }
   };
 
+  const handleSideMenuBtn = () => {
+    setIsSliderOpen(true);
+  };
+
   useEffect(() => {
     const sections = document.querySelectorAll('[data-page]');
     let ticking = false; // requestAnimationFrame 중복 실행 방지
@@ -47,7 +54,7 @@ const Gnb = forwardRef<GnbHandle, GnbProps>((props, ref) => {
 
           setIsTopPage(window.scrollY === 0);
 
-          sections.forEach((section, index) => {
+          sections.forEach((section) => {
             const rect = section.getBoundingClientRect();
             const visibleHeight =
               Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
@@ -82,39 +89,47 @@ const Gnb = forwardRef<GnbHandle, GnbProps>((props, ref) => {
   }, []);
 
   return (
-    <ul
-      className={cx('wrapper', { top_page: isTopPage })}
-      {...otherProps}
-      ref={ref}
-    >
-      <button
-        className={cx('logo_btn')}
-        onClick={handleLogo}
-        type="button"
-        aria-label="홈으로 이동"
+    <>
+      <ul
+        className={cx('wrapper', { top_page: isTopPage })}
+        {...otherProps}
+        ref={ref}
       >
-        <img
-          src="/src/assets/images/yakson_logo.png"
-          alt="로고"
-          aria-hidden="true"
-        />
-      </button>
+        <button
+          className={cx('logo_btn')}
+          onClick={handleLogo}
+          type="button"
+          aria-label="홈으로 이동"
+        >
+          <img
+            src="/src/assets/images/yakson_logo.png"
+            alt="로고"
+            aria-hidden="true"
+          />
+        </button>
 
-      <li className={cx('menus')}>
-        {menus.map((menu) => (
-          <a
-            className={cx({ active_menu: activeMenu === menu.id })}
-            key={menu.id}
-            href={`#${menu.id}`}
-            onClick={(e) => handleMenu(e, menu.id)}
-            aria-current={activeMenu === menu.id ? 'page' : undefined}
-          >
-            {menu.name}
-          </a>
-        ))}
-      </li>
-      <button className={cx('button')}>예약하기</button>
-    </ul>
+        <li className={cx('menus')}>
+          {menus.map((menu) => (
+            <a
+              className={cx({ active_menu: activeMenu === menu.id })}
+              key={menu.id}
+              href={`#${menu.id}`}
+              onClick={(e) => handleMenu(e, menu.id)}
+              aria-current={activeMenu === menu.id ? 'page' : undefined}
+            >
+              {menu.name}
+            </a>
+          ))}
+        </li>
+        <div className={cx('btn_wrapper')}>
+          <button className={cx('reserve_btn')}>예약하기</button>
+          <button className={cx('menu_btn')} onClick={handleSideMenuBtn}>
+            <Icon name="Menu" size="md" />
+          </button>
+        </div>
+      </ul>
+      {isSliderOpen && <Slider isOpen={isSliderOpen} />}
+    </>
   );
 });
 

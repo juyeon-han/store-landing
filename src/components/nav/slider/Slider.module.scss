@@ -1,0 +1,52 @@
+@use '@/styles/scss/mixin.scss' as *;
+
+.container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  background: var(--Gray-Scale-White, #fff);
+  z-index: 999;
+  height: 100vh;
+
+  @include respond-to('tablet') {
+    width: 512px;
+  }
+
+  @include respond-to('mobile') {
+    width: 240px;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @include respond-to('tablet') {
+      padding: 18px 24px;
+    }
+
+    @include respond-to('mobile') {
+      padding: 6px 8px 6px 16px;
+    }
+  }
+
+  .body {
+    @include respond-to('tablet') {
+      padding: 24px;
+    }
+
+    @include respond-to('mobile') {
+      padding: 16px;
+    }
+  }
+
+  .footer {
+    @include respond-to('tablet') {
+      padding: 20px 24px;
+    }
+
+    @include respond-to('mobile') {
+      padding: 20px 16px;
+    }
+  }
+}
