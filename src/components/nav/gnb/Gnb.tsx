@@ -128,7 +128,15 @@ const Gnb = forwardRef<GnbHandle, GnbProps>((props, ref) => {
           </button>
         </div>
       </ul>
-      {isSliderOpen && <Slider isOpen={isSliderOpen} />}
+      {isSliderOpen && (
+        <Slider
+          isSliderOpen={isSliderOpen}
+          setIsSliderOpen={setIsSliderOpen}
+          menus={menus}
+          activeMenu={activeMenu}
+          handleMenu={handleMenu}
+        />
+      )}
     </>
   );
 });

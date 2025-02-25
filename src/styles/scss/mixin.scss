@@ -39,12 +39,35 @@ $breakpoints: (
   'desktop': 1280px,
 );
 
-@mixin respond-to($breakpoint) {
-  @if map-has-key($breakpoints, $breakpoint) {
-    @media (max-width: map-get($breakpoints, $breakpoint)) {
-      @content;
-    }
-  } @else {
-    @warn "Breakpoint #{$breakpoint} is not defined.";
+@mixin respond-between($min, $max) {
+  @media (min-width: $min) and (max-width: $max) {
+    @content;
+  }
+}
+
+// 0 ~ 360px (모바일)
+@mixin mobile {
+  @include respond-between(0px, map-get($breakpoints, 'mobile')) {
+    @content;
+  }
+}
+
+// 360px ~ 768px (태블릿)
+@mixin tablet {
+  @include respond-between(
+    map-get($breakpoints, 'mobile'),
+    map-get($breakpoints, 'tablet')
+  ) {
+    @content;
+  }
+}
+
+// 768px ~ 1280px (데스크탑)
+@mixin desktop {
+  @include respond-between(
+    map-get($breakpoints, 'tablet'),
+    map-get($breakpoints, 'desktop')
+  ) {
+    @content;
   }
 }
