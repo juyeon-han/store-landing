@@ -11,8 +11,17 @@
   letter-spacing: -0.12px;
 
   .logo {
-    height: 28px;
     width: 130px;
+    height: 28px;
+
+    @include tablet {
+      width: 84px;
+      height: 18px;
+    }
+    @include mobile {
+      width: 84px;
+      height: 18px;
+    }
   }
 
   .wrapper {

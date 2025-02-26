@@ -122,6 +122,16 @@
   margin: auto;
   --review-spacing: 24px;
   --review-size: 240px;
+
+  @include tablet {
+    --review-spacing: 16px;
+    --review-size: 180px;
+  }
+
+  @include mobile {
+    --review-spacing: 8px;
+    --review-size: 160px;
+  }
 }
 .embla__review_viewport {
   overflow: hidden;
