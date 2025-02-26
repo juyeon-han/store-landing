@@ -82,22 +82,34 @@ const Footer = forwardRef<FooterHandle, FooterProps>((props, ref) => {
         <hr />
         <div className={cx('footer_info')}>
           <div>
-            <span className={cx('title')}>대표</span>
-            <span className={cx('text')}>이병철</span>
-            <span className={cx('title')}>개인정보관리 책임자</span>
-            <span className={cx('text')}>김현숙</span>
-            <span className={cx('title')}>본사</span>
-            <span className={cx('text')}>
-              서울특별시 강남구 영동대로142길 29 약손명가 빌딩 2층
-            </span>
+            <div className={cx('info_item')}>
+              <span className={cx('title')}>대표</span>
+              <span className={cx('text')}>이병철</span>
+            </div>
+            <div className={cx('info_item')}>
+              <span className={cx('title')}>개인정보관리 책임자</span>
+              <span className={cx('text')}>김현숙</span>
+            </div>
+            <div className={cx('info_item')}>
+              <span className={cx('title')}>본사</span>
+              <span className={cx('text')}>
+                서울특별시 강남구 영동대로142길 29 약손명가 빌딩 2층
+              </span>
+            </div>
           </div>
           <div>
-            <span className={cx('title')}>사업자등록번호</span>
-            <span className={cx('text')}>211-88-34433</span>
-            <span className={cx('title')}>Tel</span>
-            <span className={cx('text')}>02-546-1600</span>
-            <span className={cx('title')}>Fax</span>
-            <span className={cx('text')}>02-6052-1608</span>
+            <div className={cx('info_item')}>
+              <span className={cx('title')}>사업자등록번호</span>
+              <span className={cx('text')}>211-88-34433</span>
+            </div>
+            <div className={cx('info_item')}>
+              <span className={cx('title')}>Tel</span>
+              <span className={cx('text')}>02-546-1600</span>
+            </div>
+            <div className={cx('info_item')}>
+              <span className={cx('title')}>Fax</span>
+              <span className={cx('text')}>02-6052-1608</span>
+            </div>
           </div>
           <div>
             <span className={cx('text')}>개인정보취급방침</span>

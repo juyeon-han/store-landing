@@ -32,6 +32,12 @@
       @include flex-row();
       width: 100%;
       margin-bottom: 24px;
+      gap: 12px;
+
+      @include mobile {
+        @include flex-column();
+        gap: 12px;
+      }
 
       .link {
         a {
@@ -60,11 +66,30 @@
     .footer_info {
       @include flex-column();
       gap: 8px;
+
+      .info_item {
+        display: inline-block;
+
+        @include mobile {
+          margin-bottom: 8px;
+        }
+      }
+
+      @include mobile {
+        gap: 0;
+      }
     }
 
     .footer_bottom {
       @include flex-row(space-between, end);
       width: 100%;
+
+      @include mobile {
+        @include flex-column();
+        margin-top: 24px;
+        gap: 12px;
+      }
+
       .copyright {
         color: var(--Gray-Scale-300, #d4d4d8);
       }
