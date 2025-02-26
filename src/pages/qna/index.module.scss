@@ -4,7 +4,23 @@
   @include flex-column(center);
   padding: 120px 100px;
 
+  @include tablet {
+    padding: 80px 40px;
+  }
+
+  @include mobile {
+    padding: 60px 16px;
+  }
+
   .basis_tab {
     margin-bottom: 48px;
+
+    @include tablet {
+      margin-bottom: 24px;
+    }
+
+    @include mobile {
+      margin-bottom: 16px;
+    }
   }
 }

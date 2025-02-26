@@ -1,3 +1,5 @@
+@use '@/styles/scss/mixin.scss' as *;
+
 .container {
   display: flex;
   flex-direction: column;
@@ -11,10 +13,16 @@
   width: 100%;
   border-bottom: 1px solid #e4e4e7;
   padding: 32px 20px;
-  font-size: 16px;
-  font-weight: 600;
   white-space: pre-wrap;
   word-break: break-all;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  @include mobile {
+    padding: 20px 12px;
+  }
 
   .question {
     display: flex;
@@ -27,6 +35,13 @@
     font-size: 18px;
     font-weight: 500;
     letter-spacing: -0.18px;
+
+    @include mobile {
+      padding: 0;
+      font-size: 14px;
+      letter-spacing: -0.14px;
+      gap: 8px;
+    }
 
     .icon {
       transition: transform 0.3s ease-in-out;
@@ -61,5 +76,10 @@
     border: 1px solid var(--Gray-Scale-100, #f4f4f5);
     background: var(--Gray-Scale-100, #f4f4f5);
     margin-top: 16px;
+
+    @include mobile {
+      margin-top: 16px;
+      padding: 16px;
+    }
   }
 }

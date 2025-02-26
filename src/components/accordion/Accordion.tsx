@@ -1,5 +1,6 @@
 import { forwardRef, useState } from 'react';
 import classNames from 'classnames/bind';
+import useBreakpoint from '@/hooks/useBreakPoint';
 import Icon from '@/styles/icons/icons';
 import styles from './Accordion.module.scss';
 
@@ -17,6 +18,7 @@ const Accordion = forwardRef<AccordionHandle, AccordionProps>((props, ref) => {
   const cx = classNames.bind(styles);
   const { data, className, ...otherProps } = props;
   const [openIds, setOpenIds] = useState<string[]>([]);
+  const breakpoint = useBreakpoint();
 
   const handleToggle = (id: string) => {
     if (openIds.includes(id)) {
@@ -41,7 +43,7 @@ const Accordion = forwardRef<AccordionHandle, AccordionProps>((props, ref) => {
             >
               <Icon
                 name="Plus"
-                size="sm"
+                size={breakpoint === 'mobile' ? 'xs' : 'sm'}
                 className={cx('icon', { active: isActive })}
               />
               <span>{item.question}</span>
