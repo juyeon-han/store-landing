@@ -1,4 +1,5 @@
 import { Property } from 'csstype';
+import useBreakpoint from '@/hooks/useBreakPoint';
 import {
   colors,
   IconColorType,
@@ -6,37 +7,47 @@ import {
   icons,
 } from '@/styles/icons/iconType';
 
-interface IconProps extends React.HTMLAttributes<HTMLDivElement> {
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | number;
-  color?: Property.Color | IconColorType;
-  name: IconNameType;
-  // onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+type SizeType = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | number;
+
+interface ResponsiveSize {
+  mobile?: SizeType;
+  tablet?: SizeType;
+  desktop?: SizeType;
 }
 
-const Icon = (props: IconProps) => {
-  const {
-    size = 'md',
-    color = '#1E1E1E',
-    name,
-    className,
-    ...otherProps
-  } = props;
+interface IconProps extends React.HTMLAttributes<HTMLDivElement> {
+  size?: SizeType | ResponsiveSize;
+  color?: Property.Color | IconColorType;
+  name: IconNameType;
+}
+
+const sizeMap = {
+  xs: 14,
+  sm: 16,
+  md: 24,
+  lg: 32,
+  xl: 40,
+  xxl: 56,
+};
+
+const getSize = (size: SizeType) =>
+  typeof size === 'string' ? sizeMap[size] : size;
+
+const Icon = ({
+  size = 'md',
+  color = '#1E1E1E',
+  name,
+  className,
+  ...props
+}: IconProps) => {
+  const breakPoint = useBreakpoint();
   const IconElement = icons[name];
 
-  const sizeMap = {
-    xs: 14,
-    sm: 16,
-    md: 24,
-    lg: 32,
-    xl: 40,
-    xxl: 56,
-  };
-  const getSize = (size: string | number) => {
-    if (typeof size === 'string') {
-      return sizeMap[size as keyof typeof sizeMap]; // keyof 사용
-    }
-    return size;
-  };
+  const responsiveSize: ResponsiveSize =
+    typeof size === 'object' ? size : { desktop: size };
+
+  const breakPointSize = responsiveSize[breakPoint] ?? responsiveSize.desktop;
+
   const colorValue = colors[color as IconColorType]
     ? `var(${colors[color as IconColorType]})`
     : color;
@@ -49,13 +60,13 @@ const Icon = (props: IconProps) => {
         alignItems: 'center',
       }}
       className={className}
-      {...otherProps}
+      {...props}
     >
       <IconElement
         fill={colorValue}
         style={{
-          width: getSize(size),
-          height: getSize(size),
+          width: getSize(breakPointSize ?? 'md'),
+          height: getSize(breakPointSize ?? 'md'),
         }}
       />
     </div>

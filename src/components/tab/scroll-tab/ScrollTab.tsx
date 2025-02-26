@@ -1,7 +1,6 @@
 import { forwardRef, useCallback, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import useEmblaCarousel from 'embla-carousel-react';
-import useBreakpoint from '@/hooks/useBreakPoint';
 import Icon from '@/styles/icons/icons';
 import styles from './ScrollTab.module.scss';
 
@@ -36,8 +35,6 @@ const ScrollTab = forwardRef<ScrollTabHandle, ScrollTabProps>((props, ref) => {
     active: canScrollNext,
   });
 
-  const breakpoint = useBreakpoint();
-
   // const onPrevButtonClick = useCallback(() => {
   //   if (!emblaApi) return;
   //   emblaApi.scrollPrev();
@@ -67,7 +64,7 @@ const ScrollTab = forwardRef<ScrollTabHandle, ScrollTabProps>((props, ref) => {
     >
       <section className="embla_tab">
         {/* <button className="embla__tab_button" onClick={onPrevButtonClick}>
-        <Icon name="ArrowLeft" size={breakpoint === 'desktop' ? 'md' : 'sm'} />
+        <Icon name="ArrowLeft" size={{ mobile: 'sm', tablet: 'sm', desktop: 'md' }} />
       </button> */}
         <div
           className={cx('embla__tab_viewport', { has_next: canScrollNext })}
@@ -95,7 +92,7 @@ const ScrollTab = forwardRef<ScrollTabHandle, ScrollTabProps>((props, ref) => {
           >
             <Icon
               name="ArrowRight"
-              size={breakpoint === 'desktop' ? 'md' : 'sm'}
+              size={{ mobile: 'sm', tablet: 'sm', desktop: 'md' }}
             />
           </button>
         )}
