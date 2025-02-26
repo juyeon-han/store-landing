@@ -16,6 +16,14 @@
     opacity: 0.05;
   }
 
+  @include tablet {
+    padding: 80px 40px;
+  }
+
+  @include mobile {
+    padding: 60px 16px;
+  }
+
   .outer {
     gap: 10px;
     padding: 18px;
@@ -38,12 +46,29 @@
         border: 2px solid var(--Brown-Scale-Color-200, #dedaca);
         padding: 30px 40px;
 
+        @include tablet {
+          padding: 30px 50px 54px;
+        }
+
+        @include mobile {
+          padding: 24px 16px 37px;
+        }
+
         .basis_tab {
           margin-bottom: 40px;
+          @include tablet {
+            margin-bottom: 12px;
+          }
+          @include mobile {
+            margin-bottom: 12px;
+          }
         }
 
         .scroll_tab {
           margin-bottom: 24px;
+          @include mobile {
+            margin-bottom: 16px;
+          }
         }
 
         .program_wrapper {
@@ -51,6 +76,17 @@
           gap: 24px;
           margin-bottom: 24px;
           width: 100%;
+
+          @include tablet {
+            @include flex-column(center);
+            gap: 16px;
+          }
+
+          @include mobile {
+            @include flex-column(center);
+            gap: 12px;
+            margin-bottom: 8px;
+          }
 
           .program_card {
             display: flex;
@@ -80,6 +116,21 @@
               );
             }
 
+            @include tablet {
+              width: 100%;
+              min-height: 320px;
+              max-height: 320px;
+              padding: 24px;
+            }
+
+            @include mobile {
+              width: 100%;
+              min-height: 360px;
+              max-height: 360px;
+              padding: 12px;
+              gap: 8px;
+            }
+
             .title {
               align-self: stretch;
               font-size: 24px;
@@ -88,6 +139,12 @@
               letter-spacing: -0.24px;
               z-index: 10;
               margin-top: auto;
+
+              @include mobile {
+                font-size: 16px;
+                font-weight: 600;
+                letter-spacing: -0.16px;
+              }
             }
 
             .text {
@@ -97,6 +154,12 @@
               line-height: 150%; /* 24px */
               letter-spacing: -0.16px;
               z-index: 10;
+
+              @include mobile {
+                font-size: 14px;
+                font-weight: 400;
+                letter-spacing: -0.14px;
+              }
             }
           }
 
@@ -106,12 +169,24 @@
             align-items: flex-start;
             gap: 16px;
             flex: 1 0 0;
+            width: 100%;
           }
 
           .pay_card_grid_wrapper {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 16px;
+
+            @include tablet {
+              grid-template-columns: repeat(1, 1fr);
+              width: 100%;
+            }
+
+            @include mobile {
+              grid-template-columns: repeat(1, 1fr);
+              width: 100%;
+              gap: 12px;
+            }
           }
         }
 
@@ -120,6 +195,12 @@
           padding-top: 32px;
           gap: 40px;
           margin-bottom: 96px;
+
+          @include mobile {
+            padding-top: 16px;
+            gap: 32px;
+            margin-bottom: 72px;
+          }
 
           .recommend_text {
             @include flex-column(center);
@@ -130,11 +211,25 @@
             font-weight: 500;
             line-height: 150%; /* 36px */
             letter-spacing: -0.24px;
+
+            @include mobile {
+              font-size: 20px;
+              letter-spacing: -0.2px;
+            }
           }
 
           .needs_wrapper {
             @include flex-row();
             gap: 32px;
+
+            @include tablet {
+              @include flex-column();
+            }
+
+            @include mobile {
+              @include flex-column();
+              gap: 20px;
+            }
           }
         }
 
@@ -143,12 +238,26 @@
           padding: 0 40px;
           width: 100%;
 
+          @include tablet {
+            padding: 0;
+          }
+
+          @include mobile {
+            padding: 0;
+          }
+
           .info_text {
             color: var(--Gray-Scale-900, #18181b);
             font-size: 24px;
             font-weight: 500;
             letter-spacing: -0.24px;
             margin-bottom: 32px;
+            text-align: center;
+
+            @include mobile {
+              font-size: 20px;
+              letter-spacing: -0.2px;
+            }
           }
 
           .block {
@@ -163,6 +272,11 @@
             font-size: 18px;
             font-weight: 500;
             letter-spacing: -0.18px;
+
+            @include mobile {
+              font-size: 16px;
+              letter-spacing: -0.16px;
+            }
           }
 
           .step_container {
@@ -174,6 +288,19 @@
             grid-auto-flow: column; /* 세로로 채운 후, 첫번째 열을 채우고 두번째 열로 넘어감 */
             width: 100%;
             margin-bottom: 28px;
+
+            @include tablet {
+              grid-template-columns: repeat(1, 1fr);
+              grid-template-rows: repeat(8, auto);
+              margin-bottom: 24px;
+            }
+
+            @include mobile {
+              grid-template-columns: repeat(1, 1fr);
+              grid-template-rows: repeat(8, auto);
+              margin-bottom: 20px;
+              row-gap: 8px;
+            }
 
             .step {
               @include flex-row(flex-start);
@@ -188,16 +315,28 @@
               font-weight: 500;
               letter-spacing: -0.18px;
 
+              @include mobile {
+                font-size: 14px;
+                letter-spacing: -0.14px;
+                padding: 16px;
+              }
+
               .divider {
                 width: 1.5px;
                 height: 28px;
                 background: #d4d4d8;
                 border: none;
                 margin: 0;
+
+                @include mobile {
+                  width: 1px;
+                  height: 20px;
+                }
               }
               .stress {
                 width: 80px;
                 color: var(--brand-color-300-main, #ff808b);
+                text-align: center;
               }
             }
           }
@@ -208,7 +347,12 @@
             font-weight: 500;
             letter-spacing: -0.12px;
             list-style-type: disc;
-            margin-left: 24px;
+            list-style-position: inside;
+
+            > li {
+              text-indent: -18px; // 첫 줄 들여쓰기 제거
+              padding-left: 18px; // 두 번째 줄부터 정렬 유지
+            }
           }
         }
       }

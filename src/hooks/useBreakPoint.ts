@@ -11,9 +11,9 @@ const useBreakpoint = () => {
     const handleResize = () => {
       clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
-        if (window.innerWidth < 360) {
+        if (window.innerWidth <= 480) {
           setBreakpoint('mobile');
-        } else if (window.innerWidth < 768) {
+        } else if (window.innerWidth <= 768) {
           setBreakpoint('tablet');
         } else {
           setBreakpoint('desktop');

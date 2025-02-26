@@ -5,6 +5,7 @@ import RecommendCard from '@/components/card/recommend-card/RecommendCard';
 import ScrollTab, { TabsType } from '@/components/tab/scroll-tab/ScrollTab';
 import { useTabController } from '@/components/tab/tabController';
 import PageTitle from '@/components/title/PageTitle';
+import useBreakpoint from '@/hooks/useBreakPoint';
 import { useIntersectionObserver } from '@/hooks/useInteractionObserver';
 import Icon from '@/styles/icons/icons';
 import styles from './index.module.scss';
@@ -119,15 +120,15 @@ const pay_data = [
     discount_price: 2730000,
     duration: 80,
   },
+  {
+    type_num: 40,
+    origin_price: 2600000,
+    discount_per: 23,
+    discount_price: 2000000,
+    duration: 80,
+  },
   // {
-  //   type_num: 20,
-  //   origin_price: 2600000,
-  //   discount_per: 23,
-  //   discount_price: 2000000,
-  //   duration: 80,
-  // },
-  // {
-  //   type_num: 30,
+  //   type_num: 50,
   //   origin_price: 3900000,
   //   discount_per: 30,
   //   discount_price: 2730000,
@@ -150,6 +151,8 @@ const CarePage = () => {
   } = useTabController({
     initTabId: basis_tabs[0].id,
   });
+
+  const breakpoint = useBreakpoint();
 
   const careRef = useRef<Array<HTMLDivElement | null>>([]);
   const { setElements, isVisible } = useIntersectionObserver();
@@ -219,13 +222,22 @@ const CarePage = () => {
               </div>
               <div className={cx('needs_wrapper')}>
                 <RecommendCard text="작은 얼굴을 원하시는 분">
-                  <Icon name="CareSmallFace" size={140} />
+                  <Icon
+                    name="CareSmallFace"
+                    size={breakpoint === 'mobile' ? 100 : 140}
+                  />
                 </RecommendCard>
                 <RecommendCard text="계란형 얼굴을 가지고 싶은 분">
-                  <Icon name="CareEggFace" size={140} />
+                  <Icon
+                    name="CareEggFace"
+                    size={breakpoint === 'mobile' ? 100 : 140}
+                  />
                 </RecommendCard>
                 <RecommendCard text="예쁜 두상을 가지고 싶은 분">
-                  <Icon name="CareHead" size={140} />
+                  <Icon
+                    name="CareHead"
+                    size={breakpoint === 'mobile' ? 100 : 140}
+                  />
                 </RecommendCard>
               </div>
             </div>

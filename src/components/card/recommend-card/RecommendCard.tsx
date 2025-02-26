@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
 import classNames from 'classnames/bind';
+import useBreakpoint from '@/hooks/useBreakPoint';
 import Icon from '@/styles/icons/icons';
 import styles from './RecommendCard.module.scss';
 
@@ -12,13 +13,14 @@ const RecommendCard = forwardRef<RecommendCardHandle, RecommendCardProps>(
   (props, ref) => {
     const cx = classNames.bind(styles);
     const { text, className, children, ...otherProps } = props;
+    const breakpoint = useBreakpoint();
     return (
       <div ref={ref} {...otherProps} className={cx('container', className)}>
         <div className={cx('background')}>
           <div className={cx('circle')}>{children}</div>
         </div>
         <div className={cx('footer')}>
-          <Icon name="Check" />
+          <Icon name="Check" size={breakpoint === 'mobile' ? 'xs' : 'md'} />
           {text}
         </div>
       </div>
