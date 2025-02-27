@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
 import classNames from 'classnames/bind';
+import logo from '@/assets/images/yakson_logo.png';
 import { LINKS } from '@/constants/link';
 import Icon from '@/styles/icons/icons';
 import { IconNameType } from '@/styles/icons/iconType';
@@ -52,11 +53,7 @@ const Footer = forwardRef<FooterHandle, FooterProps>((props, ref) => {
   const cx = classNames.bind(styles);
   return (
     <footer className={cx('container')} {...props} ref={ref}>
-      <img
-        className={cx('logo')}
-        src="/src/assets/images/yakson_logo.png"
-        alt="logo"
-      ></img>
+      <img className={cx('logo')} src={logo} alt="logo"></img>
       <div className={cx('wrapper')}>
         <div className={cx('footer_top')}>
           <div>

@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
 import classNames from 'classnames/bind';
+import logo from '@/assets/images/yakson_logo.png';
 import { GnbMenusType } from '@/components/nav/gnb/Gnb';
 import Icon from '@/styles/icons/icons';
 import styles from './Slider.module.scss';
@@ -38,11 +39,7 @@ const Slider = forwardRef<SliderHandle, SliderProps>((props, ref) => {
       <div ref={ref} {...otherProps} className={cx('container')}>
         <div className={cx('header')} onClick={handleLogo}>
           <button className={cx('logo_btn')}>
-            <img
-              src="/src/assets/images/yakson_logo.png"
-              alt="로고"
-              aria-hidden="true"
-            />
+            <img src={logo} alt="로고" aria-hidden="true" />
           </button>
           <button className={cx('close_btn')} onClick={handleCloseSlider}>
             <Icon name="Close" size="sm" />

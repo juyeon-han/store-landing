@@ -1,5 +1,6 @@
 import { forwardRef, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
+import logo from '@/assets/images/yakson_logo.png';
 import Slider from '@/components/nav/slider/Slider';
 import Icon from '@/styles/icons/icons';
 import styles from './Gnb.module.scss';
@@ -101,11 +102,7 @@ const Gnb = forwardRef<GnbHandle, GnbProps>((props, ref) => {
           type="button"
           aria-label="홈으로 이동"
         >
-          <img
-            src="/src/assets/images/yakson_logo.png"
-            alt="로고"
-            aria-hidden="true"
-          />
+          <img src={logo} alt="로고" aria-hidden="true" />
         </button>
 
         <li className={cx('menus')}>
