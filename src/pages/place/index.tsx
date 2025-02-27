@@ -103,7 +103,10 @@ const PlacePage = () => {
         </p>
         <div
           ref={(el) => (placeRefs.current[1] = el)}
-          className={`reveal ${isVisible[1] ? 'visible' : ''}`}
+          className={cx(
+            `reveal ${isVisible[1] ? 'visible' : ''}`,
+            'carousel_wrapper'
+          )}
         >
           <EmblaCarousel slides={imgArr} />
         </div>

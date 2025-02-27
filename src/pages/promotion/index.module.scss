@@ -1,4 +1,5 @@
 @use '@/styles/scss/mixin.scss' as *;
+@use 'sass:map';
 
 .container {
   @include flex-column(center);
@@ -29,11 +30,11 @@
     gap: 40px;
     width: 100%;
     @include desktop {
-      min-width: map-get($breakpoints, 'tablet');
+      min-width: map.get($breakpoints, 'tablet');
     }
 
     @include tablet {
-      min-width: map-get($breakpoints, 'mobile');
+      min-width: map.get($breakpoints, 'mobile');
       gap: 32px;
     }
 

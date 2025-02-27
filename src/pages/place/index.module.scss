@@ -16,6 +16,7 @@
   }
 
   padding: 160px 240px;
+
   @include tablet {
     padding: 120px 40px 60px;
   }
@@ -68,6 +69,10 @@
       font-size: 16px;
       letter-spacing: -0.16px;
 
+      @include desktop {
+        min-width: 700px;
+      }
+
       @include mobile {
         @include flex-column(center);
         text-align: center;
@@ -84,7 +89,7 @@
       margin-bottom: 170px;
 
       @include desktop {
-        min-width: map-get($breakpoints, 'tablet');
+        min-width: 700px;
       }
 
       @include mobile {
@@ -112,13 +117,19 @@
       }
     }
 
+    .carousel_wrapper {
+      @include desktop {
+        min-width: 700px;
+      }
+    }
+
     .ledger_wrapper {
       @include flex-row(center, start);
       gap: 40px;
       margin-top: 140px;
 
       @include desktop {
-        min-width: map-get($breakpoints, 'tablet');
+        min-width: 700px;
       }
 
       @include mobile {

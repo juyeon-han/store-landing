@@ -68,8 +68,10 @@
       flex-direction: column;
 
       gap: 16px;
+      padding: 24px;
       @include mobile {
         gap: 8px;
+        padding: 16px;
       }
 
       a {
@@ -89,11 +91,6 @@
           font-weight: 600;
         }
       }
-    }
-
-    padding: 24px;
-    @include mobile {
-      padding: 16px;
     }
   }
 
