@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
 
-export const useIntersectionObserver = (options = {}) => {
+interface IntersectionObserverProps extends IntersectionObserverInit {}
+
+export const useIntersectionObserver = (
+  props: IntersectionObserverProps = {}
+) => {
+  const { threshold = 0.2, ...options } = props;
   const [elements, setElements] = useState<(HTMLElement | null)[]>([]);
   const [isVisible, setIsVisible] = useState<boolean[]>([]);
 
@@ -19,7 +24,7 @@ export const useIntersectionObserver = (options = {}) => {
             observer.disconnect();
           }
         },
-        { threshold: 0.2, ...options }
+        { threshold, ...options }
       );
 
       observer.observe(element);

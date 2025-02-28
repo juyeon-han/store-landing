@@ -204,7 +204,9 @@ const CarePage = () => {
   });
 
   const careRef = useRef<Array<HTMLDivElement | null>>([]);
-  const { setElements, isVisible } = useIntersectionObserver();
+  const { setElements, isVisible } = useIntersectionObserver({
+    threshold: 0.05,
+  });
 
   const breakPoint = useBreakpoint();
   const { setBottomSheetOpen } = useGlobalContext();

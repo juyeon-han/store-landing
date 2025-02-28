@@ -210,3 +210,30 @@
     transform: translateY(0);
   }
 }
+
+.embla__dots {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+}
+
+.embla__dot {
+  -webkit-appearance: none;
+  appearance: none;
+  touch-action: manipulation;
+  display: inline-flex;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--Gray-Scale-300, #d4d4d8);
+}
+
+.embla__dot--selected {
+  background: var(--brand-color-300-main, #ff808b);
+}
