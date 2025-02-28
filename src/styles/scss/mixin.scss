@@ -35,6 +35,14 @@
   pointer-events: none;
 }
 
+@mixin hide-scrollbar() {
+  &::-webkit-scrollbar {
+    display: none; // Chrome, Safari, Opera
+  }
+  -ms-overflow-style: none; // IE, Edge
+  scrollbar-width: none; // Firefox
+}
+
 $breakpoints: (
   'mobile': 480px,
   'tablet': 768px,

@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import '@/styles/scss/global.scss';
+import GlobalContextContainer from '@/context/GlobalContext.tsx';
 import App from './App.tsx';
 
 async function enableMocking() {
@@ -39,7 +40,9 @@ async function enableMocking() {
 enableMocking().then(() => {
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
-      <App />
+      <GlobalContextContainer>
+        <App />
+      </GlobalContextContainer>
     </StrictMode>
   );
 });

@@ -67,7 +67,7 @@
           padding: 24px 16px 37px;
         }
 
-        .basis_tab {
+        .line_tab {
           margin-bottom: 40px;
           @include tablet {
             margin-bottom: 12px;
@@ -77,7 +77,7 @@
           }
         }
 
-        .scroll_tab {
+        .button_tab {
           margin-bottom: 24px;
           @include mobile {
             margin-bottom: 16px;
@@ -368,6 +368,44 @@
               padding-left: 18px; // 두 번째 줄부터 정렬 유지
             }
           }
+        }
+      }
+    }
+  }
+}
+
+.bottom_sheet_body {
+  @include flex-column();
+  gap: 20px;
+  padding-bottom: 80px;
+
+  .body_content {
+    @include flex-column();
+    gap: 15px;
+    color: var(--Gray-Scale-700, #3f3f46);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.16px;
+
+    .tag_wrapper {
+      @include flex-row(flex-start);
+      gap: 12px;
+      flex-wrap: wrap;
+
+      .tag {
+        padding: 6px 12px;
+        gap: 4px;
+        border-radius: 6px;
+        background: var(--Gray-Scale-50, #fafafa);
+        color: var(--Gray-Scale-700, #3f3f46);
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: -0.14px;
+        line-height: 150%;
+
+        &.selected {
+          background: var(--brand-color-300-main, #ff808b);
+          color: var(--Gray-Scale-White, #fff);
         }
       }
     }

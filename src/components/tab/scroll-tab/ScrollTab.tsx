@@ -1,6 +1,9 @@
 import { forwardRef, useCallback, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import useEmblaCarousel from 'embla-carousel-react';
+import BottomSheet from '@/components/bottomSheet/BottomSheet';
+import { useGlobalContext } from '@/context/GlobalContext';
+import useBreakpoint from '@/hooks/useBreakPoint';
 import Icon from '@/styles/icons/icons';
 import styles from './ScrollTab.module.scss';
 
@@ -34,6 +37,14 @@ const ScrollTab = forwardRef<ScrollTabHandle, ScrollTabProps>((props, ref) => {
     containScroll: 'keepSnaps',
     active: canScrollNext,
   });
+
+  const { setBottomSheetOpen } = useGlobalContext();
+
+  const handleBottomSheetOpen = () => {
+    setBottomSheetOpen(true);
+  };
+
+  const breakPoint = useBreakpoint();
 
   // const onPrevButtonClick = useCallback(() => {
   //   if (!emblaApi) return;
@@ -88,11 +99,18 @@ const ScrollTab = forwardRef<ScrollTabHandle, ScrollTabProps>((props, ref) => {
         {canScrollNext && (
           <button
             className={cx('arrow_button', mode === 'line' ? 'line' : 'button')}
-            onClick={onNextButtonClick}
+            onClick={
+              breakPoint === 'mobile' && mode === 'button'
+                ? handleBottomSheetOpen
+                : onNextButtonClick
+            }
           >
             <Icon
               name="ArrowRight"
               size={{ mobile: 'sm', tablet: 'sm', desktop: 'md' }}
+              className={cx({
+                arrowDown: breakPoint === 'mobile',
+              })}
             />
           </button>
         )}

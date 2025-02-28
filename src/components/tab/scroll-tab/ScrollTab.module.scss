@@ -126,6 +126,10 @@
       &:active {
         background: var(--Gray-Scale-300, #d4d4d8);
       }
+
+      .arrowDown {
+        transform: rotate(90deg);
+      }
     }
   }
 }

@@ -1,0 +1,92 @@
+@use '@/styles/scss/mixin.scss' as *;
+
+.container {
+  position: fixed; // 화면에 고정
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(12, 140, 233, 0.1);
+  z-index: 9999;
+  visibility: hidden;
+
+  &.open {
+    visibility: visible;
+  }
+
+  .wrapper {
+    @include flex-column();
+    gap: 16px;
+    position: fixed;
+    z-index: 1;
+    height: calc(100vh - 200px); // 바텀시트 높이 MIN_Y
+    top: calc(100vh - 300px); // 시트가 얼마나 높이 위치할지 MAX_Y
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    padding: 8px 8px 16px 16px;
+    border-radius: 12px 12px 0px 0px;
+    border: 1px solid var(--Gray-Scale-100, #f4f4f5);
+    background: var(--Gray-Scale-White, #fff);
+    box-shadow: 0px 4px 13px 0px rgba(39, 39, 42, 0.04);
+
+    transition: transform 0.3s ease-out;
+
+    .content {
+      overflow-y: auto;
+      touch-action: auto;
+      @include flex-column();
+      @include hide-scrollbar();
+      width: 100%;
+      position: relative;
+
+      .header {
+        @include flex-row();
+        color: var(--Gray-Scale-800, #27272a);
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: -0.18px;
+        width: 100%;
+        position: sticky;
+        top: 0;
+        left: 0;
+        z-index: 100;
+        background: var(--Gray-Scale-White, #fff);
+        padding-bottom: 16px;
+
+        .icon_wrapper {
+          @include flex-row(center);
+          width: 40px;
+          height: 40px;
+          background: transparent;
+
+          .icon {
+            transform: rotate(45deg);
+          }
+        }
+      }
+    }
+  }
+  .footer {
+    @include flex-row(center);
+    width: 100%;
+    padding: 16px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background: var(--Gray-Scale-White, #fff);
+    z-index: 100;
+
+    > button {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 6px;
+      background: var(--brand-color-300-main, #ff808b);
+      color: var(--Gray-Scale-White, #fff);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -0.16px;
+    }
+  }
+}
