@@ -6,14 +6,16 @@ import DotButton from '@/components/carousel/DotButton';
 import CarouselThumb from '@/components/carousel/Thumb';
 import { useAutoPlayObserver } from '@/hooks/useAutoPlayObserver';
 import useBreakpoint from '@/hooks/useBreakPoint';
+import Icon from '@/styles/icons/icons';
 
 type PropType = {
   slides: { url: string; alt: string }[];
   options?: EmblaOptionsType;
+  isControl?: boolean;
 };
 
 const EmblaCarousel: React.FC<PropType> = (props) => {
-  const { slides, options } = props;
+  const { slides, options, isControl = true } = props;
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
   const breakpoint = useBreakpoint();
@@ -44,6 +46,16 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
     [emblaApi, emblaThumbsApi]
   );
 
+  const onPrevButtonClick = useCallback(() => {
+    if (!emblaApi) return;
+    emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const onNextButtonClick = useCallback(() => {
+    if (!emblaApi) return;
+    emblaApi.scrollNext();
+  }, [emblaApi]);
+
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
     const index = emblaApi.selectedScrollSnap();
@@ -72,6 +84,16 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
             </div>
           ))}
         </div>
+        {isControl && (
+          <div className="embla_arrow_wrapper">
+            <button className="embla_arrow" onClick={onPrevButtonClick}>
+              <Icon name="ArrowLeft" />
+            </button>
+            <button className="embla_arrow" onClick={onNextButtonClick}>
+              <Icon name="ArrowRight" />
+            </button>
+          </div>
+        )}
       </div>
       {breakpoint === 'mobile' ? (
         <div className="embla__dots">

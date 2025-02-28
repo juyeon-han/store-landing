@@ -16,6 +16,7 @@
   overflow: hidden;
   border-radius: 8px;
   width: 100%;
+  position: relative;
 }
 .embla__container {
   display: flex;
@@ -43,6 +44,31 @@
   background-size: contain;
   background-color: #e4e4e7;
 }
+
+.embla_arrow_wrapper {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  right: 16px;
+  transform: translateY(-50%);
+  @include flex-row();
+}
+.embla_arrow {
+  width: 40px;
+  height: 40px;
+  @include flex-row(center);
+  border-radius: 99999px;
+  background: var(--Gray-Scale-100, #f4f4f5);
+
+  &:hover {
+    background: var(--Gray-Scale-200, #e4e4e7);
+  }
+
+  &:active {
+    background: var(--Gray-Scale-300, #d4d4d8);
+  }
+}
+
 .embla-thumbs {
   --thumbs-img-space: 10px;
   --thumbs-img-size: 100px;
@@ -66,11 +92,7 @@
     flex: 0 0 calc(var(--thumbs-img-size));
   }
 }
-@media (min-width: 576px) {
-  .embla-thumbs__slide {
-    // flex: 0 0 15%;
-  }
-}
+
 .embla-thumbs__slide__img {
   border-radius: 1.8rem;
   -webkit-tap-highlight-color: rgba(var(--text-high-contrast-rgb-value), 0.5);
@@ -211,6 +233,7 @@
   }
 }
 
+// embla dots
 .embla__dots {
   margin-top: 16px;
   display: flex;
