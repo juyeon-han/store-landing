@@ -32,7 +32,7 @@ export const useIntersectionObserver = (
     });
 
     return () => observers.forEach((observer) => observer?.disconnect());
-  }, [elements, options]);
+  }, [elements]);
 
   return { setElements, isVisible };
 };
