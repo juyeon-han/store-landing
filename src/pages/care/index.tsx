@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import classNames from 'classnames/bind';
-import { useGetServiceCategory } from '@/api/service/service';
+import { useGetService, useGetServiceCategory } from '@/api/service/service';
 import BottomSheet from '@/components/bottomSheet/BottomSheet';
 import PayCard from '@/components/card/pay-card/PayCard';
 import RecommendCard from '@/components/card/recommend-card/RecommendCard';
-import ScrollTab, { TabsType } from '@/components/tab/scroll-tab/ScrollTab';
+import ScrollTab from '@/components/tab/scroll-tab/ScrollTab';
 import { useTabController } from '@/components/tab/tabController';
 import PageTitle from '@/components/title/PageTitle';
 import { BRAND_CODE } from '@/constants/service';
@@ -55,60 +55,6 @@ const data = [
   {
     subTitle: 'K-BEAUTY 연예인 관리',
     categories: [{ id: '12', name: 'K-BEAUTY 연예인 관리 A' }],
-  },
-];
-
-const line_tabs: TabsType[] = [
-  { id: '1', name: '얼굴 관리' },
-  { id: '2', name: '바디 관리' },
-  { id: '3', name: '맞춤 케어' },
-  { id: '4', name: '집중 관리' },
-  { id: '5', name: '맞춤 관리' },
-];
-const button_tabs: TabsType[] = [
-  {
-    id: '1',
-    name: '작은 얼굴 관리',
-  },
-  {
-    id: '2',
-    name: '작은 얼굴 관리 + 작은 모공 관리',
-  },
-  {
-    id: '3',
-    name: '작은 얼굴 관리 X 필킨',
-  },
-  {
-    id: '4',
-    name: '윤곽 조각 얼굴 관리',
-  },
-  {
-    id: '5',
-    name: '윤곽 조각 얼굴 관리+ 작은 모공 관리',
-  },
-  {
-    id: '6',
-    name: '동안 얼굴 관리',
-  },
-  {
-    id: '7',
-    name: '동안 얼굴 관리 + 작은 모공 관리',
-  },
-  {
-    id: '8',
-    name: '균형 얼굴 관리',
-  },
-  {
-    id: '9',
-    name: '균형 얼굴 관리 + 작은 모공 관리',
-  },
-  {
-    id: '10',
-    name: '에그셀런트 관리',
-  },
-  {
-    id: '11',
-    name: '에그셀런트 관리 + 작은 모공 관리',
   },
 ];
 
@@ -198,21 +144,39 @@ const CarePage = () => {
   const params = new URLSearchParams(location.search);
   const branchCode = params.get('branchCode') ?? '123';
 
-  const { data: serviceCategory } = useGetServiceCategory({
+  const { data: serviceCategoryData } = useGetServiceCategory({
     brandCode: BRAND_CODE.YAKSON,
     branchCode: Number(branchCode),
   });
 
+  const lineTabsData =
+    serviceCategoryData?.body?.serviceCategory.map((item) => ({
+      id: item.serviceCategoryCode,
+      name: item.serviceCategoryName,
+    })) ?? [];
+
   const { activeTabId: activeLineTabId, handleActiveTab: handleActiveLineTab } =
     useTabController({
-      initTabId: line_tabs[0].id,
+      initTabId: lineTabsData[0]?.id,
     });
+
+  const { data: serviceData } = useGetService({
+    brandCode: BRAND_CODE.YAKSON,
+    branchCode: Number(branchCode),
+    serviceCategoryCode: activeLineTabId,
+  });
+
+  const buttonTabsData =
+    serviceData?.body?.service.map((item) => ({
+      id: item.serviceCode,
+      name: item.serviceName,
+    })) ?? [];
 
   const {
     activeTabId: activeButtonTabId,
     handleActiveTab: handleActiveButtonTab,
   } = useTabController({
-    initTabId: line_tabs[0].id,
+    initTabId: buttonTabsData[0]?.id,
   });
 
   const careRef = useRef<Array<HTMLDivElement | null>>([]);
@@ -249,16 +213,18 @@ const CarePage = () => {
         >
           <div className={cx('border')}>
             <div className={cx('inner')}>
-              <ScrollTab
-                className={cx('line_tab')}
-                tabs={line_tabs}
-                activeTabId={activeLineTabId}
-                handleActiveTab={handleActiveLineTab}
-                mode="line"
-              />
+              {lineTabsData.length > 0 && (
+                <ScrollTab
+                  className={cx('line_tab')}
+                  tabs={lineTabsData}
+                  activeTabId={activeLineTabId}
+                  handleActiveTab={handleActiveLineTab}
+                  mode="line"
+                />
+              )}
               <ScrollTab
                 className={cx('button_tab')}
-                tabs={button_tabs}
+                tabs={buttonTabsData}
                 activeTabId={activeButtonTabId}
                 handleActiveTab={handleActiveButtonTab}
               />

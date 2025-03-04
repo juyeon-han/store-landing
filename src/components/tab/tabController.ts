@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface ControllerInit {
   initTabId: string;
@@ -11,11 +11,15 @@ interface Controller {
 
 export const useTabController = (props: ControllerInit): Controller => {
   const { initTabId } = props;
-  const [activeTabId, setActiveTabId] = useState<string>(initTabId);
+  const [activeTabId, setActiveTabId] = useState<string>('000');
 
   const handleActiveTab = (id: string) => {
     setActiveTabId(id);
   };
+
+  useEffect(() => {
+    setActiveTabId(initTabId);
+  }, [initTabId]);
 
   return {
     activeTabId,

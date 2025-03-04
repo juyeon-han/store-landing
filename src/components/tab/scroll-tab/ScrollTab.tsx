@@ -14,7 +14,7 @@ export interface TabsType {
 interface ScrollTabHandle extends HTMLDivElement {}
 interface ScrollTabProps extends React.HTMLAttributes<HTMLDivElement> {
   tabs: TabsType[];
-  activeTabId?: TabsType['id'];
+  activeTabId: TabsType['id'];
   handleActiveTab: (id: string) => void;
   mode?: 'button' | 'line';
 }
@@ -63,7 +63,7 @@ const ScrollTab = forwardRef<ScrollTabHandle, ScrollTabProps>((props, ref) => {
       setCanScrollNext(canScrollNext);
     };
 
-    updateScrollState(); // 초기 상태 업데이트
+    updateScrollState();
   }, [emblaApi]);
 
   return (
@@ -81,8 +81,8 @@ const ScrollTab = forwardRef<ScrollTabHandle, ScrollTabProps>((props, ref) => {
           ref={emblaRef}
         >
           <div className="embla__tab_container">
-            {tabs.map((tab) => (
-              <div className="embla__tab_slide" key={tab.id}>
+            {tabs?.map((tab, index) => (
+              <div className="embla__tab_slide" key={index}>
                 <button
                   className={cx(mode === 'line' ? 'line_tab' : 'button_tab', {
                     active_tab: tab.id === activeTabId,

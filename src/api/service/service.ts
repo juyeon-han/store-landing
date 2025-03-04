@@ -41,10 +41,24 @@ export const getService = async ({
 }: ServiceReq): Promise<ServiceResDto> => {
   request();
 
-  return instance.get(
-    endpoints.service
-      .replace('{brandCode}', String(brandCode))
-      .replace('{branchCode}', String(branchCode))
-      .replace('{serviceCategoryCode}', String(serviceCategoryCode))
-  );
+  return instance
+    .get(
+      endpoints.service
+        .replace('{brandCode}', String(brandCode))
+        .replace('{branchCode}', String(branchCode))
+        .replace('{serviceCategoryCode}', String(serviceCategoryCode))
+    )
+    .then((res) => res.data);
+};
+
+export const useGetService = ({
+  brandCode,
+  branchCode,
+  serviceCategoryCode,
+}: ServiceReq) => {
+  return useQuery({
+    queryKey: [endpoints.service, brandCode, branchCode, serviceCategoryCode],
+    queryFn: () => getService({ brandCode, branchCode, serviceCategoryCode }),
+    enabled: serviceCategoryCode !== '000' && serviceCategoryCode !== undefined,
+  });
 };
