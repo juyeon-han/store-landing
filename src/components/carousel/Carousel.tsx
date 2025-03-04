@@ -84,7 +84,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
             </div>
           ))}
         </div>
-        {isControl && (
+        {isControl && breakpoint !== 'mobile' && (
           <div className="embla_arrow_wrapper">
             <button className="embla_arrow" onClick={onPrevButtonClick}>
               <Icon name="ArrowLeft" />

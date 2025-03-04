@@ -1,7 +1,6 @@
 import { forwardRef, useCallback, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import useEmblaCarousel from 'embla-carousel-react';
-import BottomSheet from '@/components/bottomSheet/BottomSheet';
 import { useGlobalContext } from '@/context/GlobalContext';
 import useBreakpoint from '@/hooks/useBreakPoint';
 import Icon from '@/styles/icons/icons';

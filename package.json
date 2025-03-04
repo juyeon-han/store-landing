@@ -13,6 +13,8 @@
     "clean": "rm -rf node_modules yarn.lock && yarn cache clean"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.66.9",
+    "axios": "^1.8.1",
     "classnames": "^2.5.1",
     "embla-carousel-auto-scroll": "^8.5.2",
     "embla-carousel-autoplay": "^8.5.2",
@@ -20,7 +22,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-error-boundary": "^5.0.0",
-    "react-router-dom": "^7.1.5",
+    "react-router-dom": "^7.2.0",
     "uuid": "^11.1.0"
   },
   "devDependencies": {

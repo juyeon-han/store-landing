@@ -1,11 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import classNames from 'classnames/bind';
+import { useGetServiceCategory } from '@/api/service/service';
 import BottomSheet from '@/components/bottomSheet/BottomSheet';
 import PayCard from '@/components/card/pay-card/PayCard';
 import RecommendCard from '@/components/card/recommend-card/RecommendCard';
 import ScrollTab, { TabsType } from '@/components/tab/scroll-tab/ScrollTab';
 import { useTabController } from '@/components/tab/tabController';
 import PageTitle from '@/components/title/PageTitle';
+import { BRAND_CODE } from '@/constants/service';
 import { useGlobalContext } from '@/context/GlobalContext';
 import useBreakpoint from '@/hooks/useBreakPoint';
 import { useIntersectionObserver } from '@/hooks/useInteractionObserver';
@@ -191,6 +194,15 @@ const pay_data = [
 
 const CarePage = () => {
   const cx = classNames.bind(styles);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const branchCode = params.get('branchCode') ?? '123';
+
+  const { data: serviceCategory } = useGetServiceCategory({
+    brandCode: BRAND_CODE.YAKSON,
+    branchCode: Number(branchCode),
+  });
+
   const { activeTabId: activeLineTabId, handleActiveTab: handleActiveLineTab } =
     useTabController({
       initTabId: line_tabs[0].id,
