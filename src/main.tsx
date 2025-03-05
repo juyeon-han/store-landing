@@ -46,6 +46,7 @@ const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
       retry: false,
       throwOnError: true,
+      staleTime: 1000 * 60 * 60 * 24, // 24시간
     },
     mutations: {
       throwOnError: false,
