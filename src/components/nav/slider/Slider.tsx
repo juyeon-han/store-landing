@@ -37,8 +37,8 @@ const Slider = forwardRef<SliderHandle, SliderProps>((props, ref) => {
     <div style={{ display: isSliderOpen ? 'block' : 'none' }}>
       <div className={cx('overlay')} onClick={handleCloseSlider}></div>
       <div ref={ref} {...otherProps} className={cx('container')}>
-        <div className={cx('header')} onClick={handleLogo}>
-          <button className={cx('logo_btn')}>
+        <div className={cx('header')}>
+          <button className={cx('logo_btn')} onClick={handleLogo}>
             <img src={logo} alt="로고" aria-hidden="true" />
           </button>
           <button className={cx('close_btn')} onClick={handleCloseSlider}>
