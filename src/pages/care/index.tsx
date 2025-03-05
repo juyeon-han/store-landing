@@ -121,6 +121,11 @@ const CarePage = () => {
     initTabId: lineTabsData[0]?.id,
   });
 
+  const serviceCategoryTitle =
+    serviceCategoryData?.body?.serviceCategory.find(
+      (item) => item.serviceCategoryCode === serviceCategoryId
+    )?.serviceCategoryName ?? '';
+
   const { data: serviceData } = useGetService({
     brandCode: BRAND_CODE.YAKSON,
     branchCode: Number(branchCode),
@@ -316,7 +321,10 @@ const CarePage = () => {
         </div>
       </section>
       {breakPoint === 'mobile' && (
-        <BottomSheet title="얼굴 관리" handleButton={handleSheetClose}>
+        <BottomSheet
+          title={serviceCategoryTitle}
+          handleButton={handleSheetClose}
+        >
           <div className={cx('bottom_sheet_body')}>
             {data.map((data) => (
               <div key={data.subTitle} className={cx('body_content')}>
