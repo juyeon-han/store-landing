@@ -34,7 +34,6 @@ const ScrollTab = forwardRef<ScrollTabHandle, ScrollTabProps>((props, ref) => {
     align: 'start',
     dragFree: true,
     containScroll: 'keepSnaps',
-    active: canScrollNext,
   });
 
   const { setBottomSheetOpen } = useGlobalContext();
@@ -64,7 +63,29 @@ const ScrollTab = forwardRef<ScrollTabHandle, ScrollTabProps>((props, ref) => {
     };
 
     updateScrollState();
-  }, [emblaApi]);
+  }, [emblaApi, tabs]);
+
+  // useEffect(() => {
+  //   if (!emblaApi) return;
+
+  //   const updateScrollState = () => {
+  //     setCanScrollNext(emblaApi.canScrollNext());
+  //   };
+
+  //   // 초기 상태 업데이트
+  //   updateScrollState();
+
+  //   // 이벤트 리스너 추가
+  //   // emblaApi.on('slidesInView', updateScrollState);
+  //   // emblaApi.on('select', updateScrollState);
+  //   emblaApi.on('resize', updateScrollState);
+
+  //   return () => {
+  //     // emblaApi.off('slidesInView', updateScrollState);
+  //     // emblaApi.off('select', updateScrollState);
+  //     emblaApi.off('resize', updateScrollState);
+  //   };
+  // }, [emblaApi]);
 
   return (
     <section
