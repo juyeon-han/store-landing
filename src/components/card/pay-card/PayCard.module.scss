@@ -11,6 +11,11 @@
   border-radius: 6px;
   background: var(--Gray-Scale-50, #fafafa);
 
+  @include mobile {
+    gap: 12px;
+    padding: 12px;
+  }
+
   &.grid {
     padding: 16px 24px;
     justify-content: flex-start;
@@ -19,6 +24,11 @@
     @include tablet {
       gap: 16px;
       padding: 24px;
+    }
+
+    @include mobile {
+      gap: 12px;
+      padding: 12px;
     }
 
     .tag {
@@ -66,7 +76,12 @@
     letter-spacing: -0.18px;
     display: inline-block;
 
+    @include tablet {
+    }
+
     @include mobile {
+      font-size: 12px;
+      letter-spacing: -0.12px;
       padding: 4px 8px;
     }
   }

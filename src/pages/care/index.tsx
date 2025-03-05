@@ -97,51 +97,6 @@ const steps = [
   },
 ];
 
-const pay_data = [
-  {
-    type_num: 1,
-    origin_price: 130000,
-    discount_per: 0,
-    discount_price: 130000,
-    duration: 60,
-  },
-  {
-    type_num: 10,
-    origin_price: 1300000,
-    discount_per: 15,
-    discount_price: 1100000,
-    duration: 80,
-  },
-  {
-    type_num: 20,
-    origin_price: 2600000,
-    discount_per: 23,
-    discount_price: 2000000,
-    duration: 80,
-  },
-  {
-    type_num: 30,
-    origin_price: 3900000,
-    discount_per: 30,
-    discount_price: 2730000,
-    duration: 80,
-  },
-  {
-    type_num: 40,
-    origin_price: 2600000,
-    discount_per: 23,
-    discount_price: 2000000,
-    duration: 80,
-  },
-  // {
-  //   type_num: 50,
-  //   origin_price: 3900000,
-  //   discount_per: 30,
-  //   discount_price: 2730000,
-  //   duration: 80,
-  // },
-];
-
 const CarePage = () => {
   const cx = classNames.bind(styles);
   const location = useLocation();
@@ -276,14 +231,29 @@ const CarePage = () => {
                 </div>
                 <div
                   className={cx('pay_card_wrapper', {
-                    pay_card_grid_wrapper: pay_data.length > 3,
+                    pay_card_grid_wrapper:
+                      serviceSubData?.body?.serviceSub &&
+                      serviceSubData?.body?.serviceSub.length > 3,
                   })}
                 >
-                  {pay_data.map((pay) => (
+                  {serviceSubData?.body?.serviceSub.map((pay) => (
                     <PayCard
-                      key={pay.type_num}
-                      data={{ ...pay }}
-                      type={pay_data.length > 3 ? 'grid' : 'column'}
+                      key={pay.serviceSubCode}
+                      data={{
+                        type_num: Number(pay.serviceSubCount),
+                        discount_per: Number(pay.serviceSubDiscountPercent),
+                        discount_price: Number(pay.serviceSubPrice),
+                        origin_price: Number(pay.serviceSubOriginalPrice),
+                        duration: Number(
+                          serviceData?.body?.service[0].serviceTime
+                        ),
+                      }}
+                      type={
+                        serviceSubData?.body?.serviceSub &&
+                        serviceSubData?.body?.serviceSub.length > 3
+                          ? 'grid'
+                          : 'column'
+                      }
                     />
                   ))}
                 </div>

@@ -184,6 +184,10 @@
             gap: 16px;
             flex: 1 0 0;
             width: 100%;
+
+            @include mobile {
+              gap: 12px;
+            }
           }
 
           .pay_card_grid_wrapper {
