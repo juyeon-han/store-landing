@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import classNames from 'classnames/bind';
-import { useGetService, useGetServiceCategory } from '@/api/service/service';
+import {
+  useGetService,
+  useGetServiceCategory,
+  useGetServiceSub,
+} from '@/api/service/service';
 import BottomSheet from '@/components/bottomSheet/BottomSheet';
 import PayCard from '@/components/card/pay-card/PayCard';
 import RecommendCard from '@/components/card/recommend-card/RecommendCard';
@@ -155,15 +159,20 @@ const CarePage = () => {
       name: item.serviceCategoryName,
     })) ?? [];
 
-  const { activeTabId: activeLineTabId, handleActiveTab: handleActiveLineTab } =
-    useTabController({
-      initTabId: lineTabsData[0]?.id,
-    });
+  const {
+    activeTabId: serviceCategoryId,
+    handleActiveTab: handleActiveLineTab,
+  } = useTabController({
+    initTabId: lineTabsData[0]?.id,
+  });
 
   const { data: serviceData } = useGetService({
     brandCode: BRAND_CODE.YAKSON,
     branchCode: Number(branchCode),
-    serviceCategoryCode: activeLineTabId,
+    serviceCategoryCode: serviceCategoryId,
+    options: {
+      enabled: serviceCategoryId !== '000' && serviceCategoryId !== undefined,
+    },
   });
 
   const buttonTabsData =
@@ -172,12 +181,32 @@ const CarePage = () => {
       name: item.serviceName,
     })) ?? [];
 
-  const {
-    activeTabId: activeButtonTabId,
-    handleActiveTab: handleActiveButtonTab,
-  } = useTabController({
-    initTabId: buttonTabsData[0]?.id,
+  const { activeTabId: serviceId, handleActiveTab: handleActiveButtonTab } =
+    useTabController({
+      initTabId: buttonTabsData[0]?.id,
+    });
+
+  const serviceCategoryIdRef = useRef<string>(serviceCategoryId);
+  const serviceIdRef = useRef<string>(serviceId);
+
+  const { data: serviceSubData } = useGetServiceSub({
+    brandCode: BRAND_CODE.YAKSON,
+    branchCode: Number(branchCode),
+    serviceCategoryCode: serviceCategoryId,
+    serviceCode: serviceId,
+    options: {
+      enabled:
+        serviceId !== '000' &&
+        serviceId !== undefined &&
+        serviceCategoryId !== undefined &&
+        serviceIdRef.current !== serviceId,
+    },
   });
+
+  useEffect(() => {
+    serviceCategoryIdRef.current = serviceCategoryId;
+    serviceIdRef.current = serviceId;
+  }, [serviceCategoryId, serviceId]);
 
   const careRef = useRef<Array<HTMLDivElement | null>>([]);
   const { setElements, isVisible } = useIntersectionObserver({
@@ -187,8 +216,7 @@ const CarePage = () => {
   const breakPoint = useBreakpoint();
   const { setBottomSheetOpen } = useGlobalContext();
 
-  const [sheetSelectedId, setSheetSelectedId] =
-    useState<string>(activeButtonTabId);
+  const [sheetSelectedId, setSheetSelectedId] = useState<string>(serviceId);
 
   const handleSheetItemClick = (id: string) => {
     setSheetSelectedId(id);
@@ -217,7 +245,7 @@ const CarePage = () => {
                 <ScrollTab
                   className={cx('line_tab')}
                   tabs={lineTabsData}
-                  activeTabId={activeLineTabId}
+                  activeTabId={serviceCategoryId}
                   handleActiveTab={handleActiveLineTab}
                   mode="line"
                 />
@@ -225,7 +253,7 @@ const CarePage = () => {
               <ScrollTab
                 className={cx('button_tab')}
                 tabs={buttonTabsData}
-                activeTabId={activeButtonTabId}
+                activeTabId={serviceId}
                 handleActiveTab={handleActiveButtonTab}
               />
               <div className={cx('program_wrapper')}>

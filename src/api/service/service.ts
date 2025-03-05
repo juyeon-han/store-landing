@@ -1,10 +1,12 @@
-import { useQuery } from '@tanstack/react-query';
+import { QueryObserverOptions, useQuery } from '@tanstack/react-query';
 import { endpoints, instance, request } from '@/api/endpoint';
 import {
   ServiceCategoryReq,
   ServiceCategoryResDto,
   ServiceReq,
   ServiceResDto,
+  ServiceSubReq,
+  ServiceSubResDto,
 } from '@/api/types/serviceType';
 
 // ServiceCategory
@@ -26,10 +28,14 @@ export const getServiceCategory = async ({
 export const useGetServiceCategory = ({
   brandCode,
   branchCode,
-}: ServiceCategoryReq) => {
+  options,
+}: ServiceCategoryReq & {
+  options?: Partial<QueryObserverOptions<ServiceCategoryResDto, Error>>;
+}) => {
   return useQuery({
     queryKey: [endpoints.serviceCategory, brandCode, branchCode],
     queryFn: () => getServiceCategory({ brandCode, branchCode }),
+    ...options,
   });
 };
 
@@ -55,10 +61,60 @@ export const useGetService = ({
   brandCode,
   branchCode,
   serviceCategoryCode,
-}: ServiceReq) => {
+  options,
+}: ServiceReq & {
+  options?: Partial<QueryObserverOptions<ServiceResDto, Error>>;
+}) => {
   return useQuery({
     queryKey: [endpoints.service, brandCode, branchCode, serviceCategoryCode],
     queryFn: () => getService({ brandCode, branchCode, serviceCategoryCode }),
-    enabled: serviceCategoryCode !== '000' && serviceCategoryCode !== undefined,
+    ...options,
+  });
+};
+
+// ServiceSub
+export const getServiceSub = async ({
+  brandCode,
+  branchCode,
+  serviceCategoryCode,
+  serviceCode,
+}: ServiceSubReq): Promise<ServiceSubResDto> => {
+  request();
+  return instance
+    .get(
+      endpoints.serviceSub
+        .replace('{brandCode}', String(brandCode))
+        .replace('{branchCode}', String(branchCode))
+        .replace('{serviceCategoryCode}', String(serviceCategoryCode))
+        .replace('{serviceCode}', String(serviceCode))
+    )
+    .then((res) => res.data);
+};
+
+export const useGetServiceSub = ({
+  brandCode,
+  branchCode,
+  serviceCategoryCode,
+  serviceCode,
+  options,
+}: ServiceSubReq & {
+  options?: Partial<QueryObserverOptions<ServiceSubResDto, Error>>;
+}) => {
+  return useQuery({
+    queryKey: [
+      endpoints.serviceSub,
+      brandCode,
+      branchCode,
+      serviceCategoryCode,
+      serviceCode,
+    ],
+    queryFn: () =>
+      getServiceSub({
+        brandCode,
+        branchCode,
+        serviceCategoryCode,
+        serviceCode,
+      }),
+    ...options,
   });
 };
