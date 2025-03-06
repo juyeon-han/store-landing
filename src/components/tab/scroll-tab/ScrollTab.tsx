@@ -1,7 +1,6 @@
 import { forwardRef, useCallback, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import useEmblaCarousel from 'embla-carousel-react';
-import { useGlobalContext } from '@/context/GlobalContext';
 import useBreakpoint from '@/hooks/useBreakPoint';
 import Icon from '@/styles/icons/icons';
 import styles from './ScrollTab.module.scss';
@@ -17,6 +16,7 @@ interface ScrollTabProps extends React.HTMLAttributes<HTMLDivElement> {
   activeTabId: TabsType['id'];
   handleActiveTab: (id: string) => void;
   mode?: 'button' | 'line';
+  handleNextButton?: () => void;
 }
 
 const ScrollTab = forwardRef<ScrollTabHandle, ScrollTabProps>((props, ref) => {
@@ -26,6 +26,7 @@ const ScrollTab = forwardRef<ScrollTabHandle, ScrollTabProps>((props, ref) => {
     activeTabId,
     mode = 'button',
     handleActiveTab,
+    handleNextButton,
     className,
     ...otherProps
   } = props;
@@ -35,12 +36,6 @@ const ScrollTab = forwardRef<ScrollTabHandle, ScrollTabProps>((props, ref) => {
     dragFree: true,
     containScroll: 'keepSnaps',
   });
-
-  const { setBottomSheetOpen } = useGlobalContext();
-
-  const handleBottomSheetOpen = () => {
-    setBottomSheetOpen(true);
-  };
 
   const breakPoint = useBreakpoint();
 
@@ -64,28 +59,6 @@ const ScrollTab = forwardRef<ScrollTabHandle, ScrollTabProps>((props, ref) => {
 
     updateScrollState();
   }, [emblaApi, tabs]);
-
-  // useEffect(() => {
-  //   if (!emblaApi) return;
-
-  //   const updateScrollState = () => {
-  //     setCanScrollNext(emblaApi.canScrollNext());
-  //   };
-
-  //   // 초기 상태 업데이트
-  //   updateScrollState();
-
-  //   // 이벤트 리스너 추가
-  //   // emblaApi.on('slidesInView', updateScrollState);
-  //   // emblaApi.on('select', updateScrollState);
-  //   emblaApi.on('resize', updateScrollState);
-
-  //   return () => {
-  //     // emblaApi.off('slidesInView', updateScrollState);
-  //     // emblaApi.off('select', updateScrollState);
-  //     emblaApi.off('resize', updateScrollState);
-  //   };
-  // }, [emblaApi]);
 
   return (
     <section
@@ -120,8 +93,8 @@ const ScrollTab = forwardRef<ScrollTabHandle, ScrollTabProps>((props, ref) => {
           <button
             className={cx('arrow_button', mode === 'line' ? 'line' : 'button')}
             onClick={
-              breakPoint === 'mobile' && mode === 'button'
-                ? handleBottomSheetOpen
+              breakPoint === 'mobile' && handleNextButton
+                ? handleNextButton
                 : onNextButtonClick
             }
           >

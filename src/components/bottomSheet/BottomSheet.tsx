@@ -1,77 +1,148 @@
-import { forwardRef } from 'react';
+import { forwardRef, useImperativeHandle } from 'react';
+import { a, config, useSpring } from '@react-spring/web';
+import { useDrag } from '@use-gesture/react';
 import classNames from 'classnames/bind';
-import { useGlobalContext } from '@/context/GlobalContext';
-import useBottomSheet from '@/hooks/useBottomSheet';
 import Icon from '@/styles/icons/icons';
 import styles from './BottomSheet.module.scss';
 
-interface BottomSheetHandle extends HTMLDivElement {}
+export interface BottomSheetHandle {
+  open: () => void;
+}
 interface BottomSheetProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
-  children: React.ReactNode;
   buttonText?: string;
-  handleButton?: () => void;
+  children: React.ReactNode;
+  height?: number;
+  onClose?: () => void;
+  onOpen?: () => void;
+  closeOnOverlayClick?: boolean;
+  showCloseButton?: boolean;
+  disableDrag?: boolean;
+  footerButton?: {
+    text: string;
+    onClick: () => void;
+  };
+  initialState?: 'open' | 'closed';
 }
 
 const BottomSheet = forwardRef<BottomSheetHandle, BottomSheetProps>(
   (props, ref) => {
     const cx = classNames.bind(styles);
-    const {
-      children,
-      title,
-      buttonText = '적용하기',
-      handleButton = () => {},
-      ...otherProps
-    } = props;
 
-    const { sheet, content } = useBottomSheet();
-    const { bottomSheetOpen, setBottomSheetOpen } = useGlobalContext();
+    const height = props.height || 500;
+    const [{ y }, api] = useSpring(() => ({ y: height }));
 
-    const handleClose = () => {
-      setBottomSheetOpen(false);
+    useImperativeHandle(ref, () => ({
+      open: () => handleOpen({ canceled: false }),
+    }));
+
+    const handleOpen = ({ canceled }: { canceled: boolean }) => {
+      api.start({
+        y: 0,
+        immediate: false,
+        config: canceled ? config.wobbly : config.stiff,
+      });
+      document.body.style.overflowY = 'hidden';
     };
 
+    const handleClose = (velocity = 0) => {
+      api.start({
+        y: height,
+        immediate: false,
+        config: { ...config.stiff, velocity },
+      });
+      document.body.style.overflowY = 'auto';
+    };
+
+    const handleBind = useDrag(
+      ({
+        last,
+        velocity: [, vy],
+        direction: [, dy],
+        offset: [, oy],
+        cancel,
+        canceled,
+        target,
+      }) => {
+        const bodyElement = (target as HTMLElement).closest(`.${styles.body}`);
+
+        if (bodyElement) {
+          const isAtTop = bodyElement.scrollTop === 0;
+          const isAtBottom =
+            bodyElement.scrollHeight - bodyElement.scrollTop ===
+            bodyElement.clientHeight;
+
+          // 스크롤이 끝에 도달하지 않았으면 드래그 무시
+          if (!isAtTop && !isAtBottom) {
+            return;
+          }
+          // 위로 스크롤 중이고 바닥에 닿지 않았으면 드래그 무시
+          if (dy < 0 && !isAtBottom) {
+            return;
+          }
+          // 아래로 스크롤 중이고 top에 닿지 않았으면 드래그 무시
+          if (dy > 0 && !isAtTop) {
+            return;
+          }
+        }
+
+        if (oy < -70) cancel();
+
+        if (last) {
+          if (oy > height * 0.5 || (vy > 0.5 && dy > 0)) {
+            handleClose(vy);
+          } else {
+            handleOpen({ canceled });
+          }
+        } else {
+          api.start({ y: oy, immediate: true });
+        }
+      },
+      {
+        from: () => [0, y.get()],
+        filterTaps: true,
+        bounds: { top: 0 },
+        rubberband: true,
+      }
+    );
+
+    const display = y.to((py) => (py < height ? 'flex' : 'none'));
+
+    const { title, buttonText = '적용하기', children, ...otherProps } = props;
+
     return (
-      <div
-        ref={ref}
-        {...otherProps}
-        className={cx('container', { open: bottomSheetOpen })}
-        onClick={(e) => {
-          e.stopPropagation();
-          e.preventDefault();
-          handleClose();
-        }}
-      >
-        <div
-          className={cx('wrapper', { open: bottomSheetOpen })}
-          ref={sheet}
-          onClick={(e) => {
-            e.stopPropagation();
-            e.preventDefault();
-          }}
-        >
-          <div className={cx('content')} ref={content}>
-            <div className={cx('header')}>
-              <p>{title}</p>
-              <button className={cx('icon_wrapper')} onClick={handleClose}>
-                <Icon name="Close" size="sm" className={cx('icon')} />
-              </button>
-            </div>
-            {children}
-          </div>
-        </div>
-        <div className={cx('footer')}>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              e.preventDefault();
-              handleButton();
-            }}
+      <>
+        <a.div
+          className={cx('overlay')}
+          style={{ display }}
+          onClick={() => handleClose()}
+        ></a.div>
+        <div {...otherProps}>
+          <a.div
+            className={cx('sheet')}
+            {...handleBind()}
+            style={{ display, bottom: `calc(-100vh + ${height - 100}px)`, y }}
           >
-            {buttonText}
-          </button>
+            <div className={cx('wrapper')}>
+              <div className={cx('header')}>
+                <p className={cx('title')}>{title}</p>
+                <button
+                  className={cx('icon_wrapper')}
+                  onClick={() => handleClose()}
+                >
+                  <Icon name="Close" size="sm" className={cx('icon')} />
+                </button>
+              </div>
+              <div id="bottomSheetBody" className={cx('body')}>
+                {children}
+              </div>
+              <div className={cx('footer')}>
+                <button className={cx('button')}>{buttonText}</button>
+              </div>
+            </div>
+          </a.div>
         </div>
-      </div>
+      </>
     );
   }
 );

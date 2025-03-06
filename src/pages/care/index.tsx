@@ -6,14 +6,15 @@ import {
   useGetServiceCategory,
   useGetServiceSub,
 } from '@/api/service/service';
-import BottomSheet from '@/components/bottomSheet/BottomSheet';
+import BottomSheet, {
+  BottomSheetHandle,
+} from '@/components/bottomSheet/BottomSheet';
 import PayCard from '@/components/card/pay-card/PayCard';
 import RecommendCard from '@/components/card/recommend-card/RecommendCard';
 import ScrollTab from '@/components/tab/scroll-tab/ScrollTab';
 import { useTabController } from '@/components/tab/tabController';
 import PageTitle from '@/components/title/PageTitle';
 import { BRAND_CODE } from '@/constants/service';
-import { useGlobalContext } from '@/context/GlobalContext';
 import useBreakpoint from '@/hooks/useBreakPoint';
 import { useIntersectionObserver } from '@/hooks/useInteractionObserver';
 import Icon from '@/styles/icons/icons';
@@ -121,11 +122,6 @@ const CarePage = () => {
     initTabId: lineTabsData[0]?.id,
   });
 
-  const serviceCategoryTitle =
-    serviceCategoryData?.body?.serviceCategory.find(
-      (item) => item.serviceCategoryCode === serviceCategoryId
-    )?.serviceCategoryName ?? '';
-
   const { data: serviceData } = useGetService({
     brandCode: BRAND_CODE.YAKSON,
     branchCode: Number(branchCode),
@@ -174,7 +170,6 @@ const CarePage = () => {
   });
 
   const breakPoint = useBreakpoint();
-  const { setBottomSheetOpen } = useGlobalContext();
 
   const [sheetSelectedId, setSheetSelectedId] = useState<string>(serviceId);
 
@@ -182,15 +177,11 @@ const CarePage = () => {
     setSheetSelectedId(id);
   };
 
-  const handleSheetClose = () => {
-    handleActiveButtonTab(sheetSelectedId);
-    setBottomSheetOpen(false);
-  };
-
   useEffect(() => {
     setElements(careRef.current);
   }, []);
 
+  const bottomSheetRef = useRef<BottomSheetHandle>(null);
   return (
     <>
       <section id="care" data-page="care" className={cx('container')}>
@@ -215,6 +206,7 @@ const CarePage = () => {
                 tabs={buttonTabsData}
                 activeTabId={serviceId}
                 handleActiveTab={handleActiveButtonTab}
+                handleNextButton={() => bottomSheetRef.current?.open()}
               />
               <div className={cx('program_wrapper')}>
                 <div
@@ -321,10 +313,7 @@ const CarePage = () => {
         </div>
       </section>
       {breakPoint === 'mobile' && (
-        <BottomSheet
-          title={serviceCategoryTitle}
-          handleButton={handleSheetClose}
-        >
+        <BottomSheet ref={bottomSheetRef} title="관리 선택">
           <div className={cx('bottom_sheet_body')}>
             {data.map((data) => (
               <div key={data.subTitle} className={cx('body_content')}>
