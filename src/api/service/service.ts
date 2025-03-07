@@ -3,6 +3,8 @@ import { endpoints, instance, request } from '@/api/endpoint';
 import {
   ServiceCategoryReq,
   ServiceCategoryResDto,
+  ServiceListReq,
+  ServiceListResDto,
   ServiceReq,
   ServiceResDto,
   ServiceSubReq,
@@ -16,7 +18,7 @@ export const getServiceCategory = async ({
   request();
   //   await new Promise((resolve) => setTimeout(resolve, 10000));
   return instance
-    .get(endpoints.serviceCategory.replace('{pageNum}', String(pageNum)))
+    .get(endpoints.serviceCategory.replace('{pageNum}', pageNum))
     .then((res) => res.data);
 };
 
@@ -43,7 +45,7 @@ export const getService = async ({
   return instance
     .get(
       endpoints.service
-        .replace('{pageNum}', String(pageNum))
+        .replace('{pageNum}', pageNum)
         .replace('{serviceCategoryCode}', String(serviceCategoryCode))
     )
     .then((res) => res.data);
@@ -63,6 +65,30 @@ export const useGetService = ({
   });
 };
 
+// ServiceList = serviceCategory + service
+export const getServiceList = async ({
+  pageNum,
+}: ServiceListReq): Promise<ServiceListResDto> => {
+  request();
+
+  return instance
+    .get(endpoints.serviceList.replace('{pageNum}', pageNum))
+    .then((res) => res.data);
+};
+
+export const useGetServiceList = ({
+  pageNum,
+  options,
+}: ServiceListReq & {
+  options?: Partial<QueryObserverOptions<ServiceListResDto, Error>>;
+}) => {
+  return useQuery({
+    queryKey: [endpoints.serviceList, pageNum],
+    queryFn: () => getServiceList({ pageNum }),
+    ...options,
+  });
+};
+
 // ServiceSub
 export const getServiceSub = async ({
   pageNum,
@@ -73,7 +99,7 @@ export const getServiceSub = async ({
   return instance
     .get(
       endpoints.serviceSub
-        .replace('{pageNum}', String(pageNum))
+        .replace('{pageNum}', pageNum)
         .replace('{serviceCategoryCode}', String(serviceCategoryCode))
         .replace('{serviceCode}', String(serviceCode))
     )

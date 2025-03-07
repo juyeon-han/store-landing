@@ -3,8 +3,14 @@ import axios from 'axios';
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 export const endpoints = {
+  page: `${baseUrl}/api/page/page?mode={mode}`,
+  pageDetail: `${baseUrl}/api/page/pageDetail?pageNum={pageNum}&mode={mode}`,
+  pagePromotion: `${baseUrl}/api/page/pagePromotion?pageNum={pageNum}&mode={mode}`,
+  pageReview: `${baseUrl}/api/page/pageReview?pageNum={pageNum}&mode={mode}`,
+  pageFaq: `${baseUrl}/api/page/pageFaq?pageNum={pageNum}&mode={mode}`,
   serviceCategory: `${baseUrl}/api/page/serviceCategory?pageNum={pageNum}`,
   service: `${baseUrl}/api/page/service?pageNum={pageNum}&serviceCategoryCode={serviceCategoryCode}`,
+  serviceList: `${baseUrl}/api/page/serviceList?pageNum={pageNum}`,
   serviceSub: `${baseUrl}/api/page/serviceSub?pageNum={pageNum}&serviceCategoryCode={serviceCategoryCode}&serviceCode={serviceCode}`,
 };
 

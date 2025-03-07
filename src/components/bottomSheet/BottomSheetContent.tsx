@@ -41,7 +41,7 @@ const BottomSheetContent = forwardRef<
       queryKey: [endpoints.service, pageNum, serviceCategory],
       queryFn: () =>
         getService({
-          pageNum: Number(pageNum),
+          pageNum: pageNum,
           serviceCategoryCode: serviceCategory.id,
         }),
     })),

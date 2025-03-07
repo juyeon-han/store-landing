@@ -2,13 +2,13 @@ import { ApiResponse } from '@/api/types/baseType';
 
 //ServiceCategory
 export interface ServiceCategoryReq {
-  pageNum: number;
+  pageNum: string;
 }
 
 export interface serviceCategoryType {
   serviceCategoryCode: string;
   serviceCategoryName: string;
-  serviceCount: string;
+  serviceCount?: string;
 }
 
 export interface ServiceCategoryRes {
@@ -19,7 +19,7 @@ export type ServiceCategoryResDto = ApiResponse<ServiceCategoryRes>;
 
 //Service
 export interface ServiceReq {
-  pageNum: number;
+  pageNum: string;
   serviceCategoryCode: string;
 }
 
@@ -38,9 +38,25 @@ export interface ServiceRes {
 
 export type ServiceResDto = ApiResponse<ServiceRes>;
 
+// ServiceList
+export interface ServiceListReq {
+  pageNum: string;
+}
+
+export interface ServiceListType {
+  serviceCategory: serviceCategoryType;
+  service: ServiceType[];
+}
+
+export interface ServiceListRes {
+  serviceList: ServiceListType[];
+}
+
+export type ServiceListResDto = ApiResponse<ServiceListRes>;
+
 // ServiceSub
 export interface ServiceSubReq {
-  pageNum: number;
+  pageNum: string;
   serviceCategoryCode: string;
   serviceCode: string;
 }

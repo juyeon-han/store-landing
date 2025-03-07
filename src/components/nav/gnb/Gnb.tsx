@@ -1,4 +1,5 @@
 import { forwardRef, useEffect, useState } from 'react';
+// import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import logo from '@/assets/images/yakson_logo.png';
 import Slider from '@/components/nav/slider/Slider';
@@ -39,6 +40,14 @@ const Gnb = forwardRef<GnbHandle, GnbProps>((props, ref) => {
 
   const handleSideMenuBtn = () => {
     setIsSliderOpen(true);
+  };
+
+  const handleReserve = () => {
+    window.open(
+      'http://pf.kakao.com/_fWGAn/coupons/_krikmo44Z',
+      '_blank',
+      'noopener,noreferrer'
+    );
   };
 
   useEffect(() => {
@@ -119,10 +128,11 @@ const Gnb = forwardRef<GnbHandle, GnbProps>((props, ref) => {
           ))}
         </li>
         <div className={cx('btn_wrapper')}>
-          <button className={cx('reserve_btn')}>
+          <button className={cx('reserve_btn')} onClick={handleReserve}>
             <Icon name="Calendar" size={20} className={cx('reserve_icon')} />
             예약하기
           </button>
+
           <button className={cx('menu_btn')} onClick={handleSideMenuBtn}>
             <Icon name="Menu" size="md" />
           </button>

@@ -62,7 +62,7 @@ const CarePage = () => {
   const pageNum = params.get('pageNum') ?? '1';
 
   const { data: serviceCategoryData } = useGetServiceCategory({
-    pageNum: Number(pageNum),
+    pageNum: pageNum,
   });
 
   const lineTabsData =
@@ -79,7 +79,7 @@ const CarePage = () => {
   });
 
   const { data: serviceData } = useGetService({
-    pageNum: Number(pageNum),
+    pageNum: pageNum,
     serviceCategoryCode: serviceCategoryId,
     options: {
       enabled: serviceCategoryId !== '000' && serviceCategoryId !== undefined,
@@ -101,7 +101,7 @@ const CarePage = () => {
   const serviceIdRef = useRef<string>(serviceId);
 
   const { data: serviceSubData } = useGetServiceSub({
-    pageNum: Number(pageNum),
+    pageNum: pageNum,
     serviceCategoryCode: serviceCategoryId,
     serviceCode: serviceId,
     options: {
