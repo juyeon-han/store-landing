@@ -7,8 +7,7 @@ import styles from './BottomSheetContent.module.scss';
 
 interface BottomSheetContentHandle extends HTMLDivElement {}
 interface BottomSheetContentProps extends React.HTMLAttributes<HTMLDivElement> {
-  brandCode: string;
-  branchCode: string;
+  pageNum: string;
   serviceCategories: {
     id: string;
     name: string;
@@ -29,8 +28,7 @@ const BottomSheetContent = forwardRef<
 >((props, ref) => {
   const cx = classNames.bind(styles);
   const {
-    brandCode,
-    branchCode,
+    pageNum,
     serviceCategories,
     sheetSelectedId,
     handleSheetItem,
@@ -40,11 +38,10 @@ const BottomSheetContent = forwardRef<
 
   const data = useQueries({
     queries: serviceCategories.map((serviceCategory) => ({
-      queryKey: [endpoints.service, brandCode, branchCode, serviceCategory],
+      queryKey: [endpoints.service, pageNum, serviceCategory],
       queryFn: () =>
         getService({
-          brandCode,
-          branchCode: Number(branchCode),
+          pageNum: Number(pageNum),
           serviceCategoryCode: serviceCategory.id,
         }),
     })),

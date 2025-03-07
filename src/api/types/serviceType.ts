@@ -1,10 +1,8 @@
 import { ApiResponse } from '@/api/types/baseType';
-import { BrandCode } from '@/constants/service';
 
 //ServiceCategory
 export interface ServiceCategoryReq {
-  brandCode: BrandCode;
-  branchCode: number;
+  pageNum: number;
 }
 
 export interface serviceCategoryType {
@@ -21,8 +19,7 @@ export type ServiceCategoryResDto = ApiResponse<ServiceCategoryRes>;
 
 //Service
 export interface ServiceReq {
-  brandCode: BrandCode;
-  branchCode: number;
+  pageNum: number;
   serviceCategoryCode: string;
 }
 
@@ -43,8 +40,7 @@ export type ServiceResDto = ApiResponse<ServiceRes>;
 
 // ServiceSub
 export interface ServiceSubReq {
-  brandCode: BrandCode;
-  branchCode: number;
+  pageNum: number;
   serviceCategoryCode: string;
   serviceCode: string;
 }

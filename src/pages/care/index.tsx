@@ -15,7 +15,6 @@ import RecommendCard from '@/components/card/recommend-card/RecommendCard';
 import ScrollTab from '@/components/tab/scroll-tab/ScrollTab';
 import { useTabController } from '@/components/tab/tabController';
 import PageTitle from '@/components/title/PageTitle';
-import { BRAND_CODE } from '@/constants/service';
 import useBreakpoint from '@/hooks/useBreakPoint';
 import { useIntersectionObserver } from '@/hooks/useInteractionObserver';
 import Icon from '@/styles/icons/icons';
@@ -60,11 +59,10 @@ const CarePage = () => {
   const cx = classNames.bind(styles);
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const branchCode = params.get('branchCode') ?? '123';
+  const pageNum = params.get('pageNum') ?? '1';
 
   const { data: serviceCategoryData } = useGetServiceCategory({
-    brandCode: BRAND_CODE.YAKSON,
-    branchCode: Number(branchCode),
+    pageNum: Number(pageNum),
   });
 
   const lineTabsData =
@@ -81,8 +79,7 @@ const CarePage = () => {
   });
 
   const { data: serviceData } = useGetService({
-    brandCode: BRAND_CODE.YAKSON,
-    branchCode: Number(branchCode),
+    pageNum: Number(pageNum),
     serviceCategoryCode: serviceCategoryId,
     options: {
       enabled: serviceCategoryId !== '000' && serviceCategoryId !== undefined,
@@ -104,8 +101,7 @@ const CarePage = () => {
   const serviceIdRef = useRef<string>(serviceId);
 
   const { data: serviceSubData } = useGetServiceSub({
-    brandCode: BRAND_CODE.YAKSON,
-    branchCode: Number(branchCode),
+    pageNum: Number(pageNum),
     serviceCategoryCode: serviceCategoryId,
     serviceCode: serviceId,
     options: {
@@ -294,8 +290,7 @@ const CarePage = () => {
           handleSheetButton={handleBottomSheetButton}
         >
           <BottomSheetContent
-            brandCode={BRAND_CODE.YAKSON}
-            branchCode={branchCode}
+            pageNum={pageNum}
             serviceCategories={
               serviceCategoryData?.body?.serviceCategory.map((item) => ({
                 id: item.serviceCategoryCode,

@@ -11,38 +11,31 @@ import {
 
 // ServiceCategory
 export const getServiceCategory = async ({
-  brandCode,
-  branchCode,
+  pageNum,
 }: ServiceCategoryReq): Promise<ServiceCategoryResDto> => {
   request();
   //   await new Promise((resolve) => setTimeout(resolve, 10000));
   return instance
-    .get(
-      endpoints.serviceCategory
-        .replace('{brandCode}', String(brandCode))
-        .replace('{branchCode}', String(branchCode))
-    )
+    .get(endpoints.serviceCategory.replace('{pageNum}', String(pageNum)))
     .then((res) => res.data);
 };
 
 export const useGetServiceCategory = ({
-  brandCode,
-  branchCode,
+  pageNum,
   options,
 }: ServiceCategoryReq & {
   options?: Partial<QueryObserverOptions<ServiceCategoryResDto, Error>>;
 }) => {
   return useQuery({
-    queryKey: [endpoints.serviceCategory, brandCode, branchCode],
-    queryFn: () => getServiceCategory({ brandCode, branchCode }),
+    queryKey: [endpoints.serviceCategory, pageNum],
+    queryFn: () => getServiceCategory({ pageNum }),
     ...options,
   });
 };
 
 // Service
 export const getService = async ({
-  brandCode,
-  branchCode,
+  pageNum,
   serviceCategoryCode,
 }: ServiceReq): Promise<ServiceResDto> => {
   request();
@@ -50,32 +43,29 @@ export const getService = async ({
   return instance
     .get(
       endpoints.service
-        .replace('{brandCode}', String(brandCode))
-        .replace('{branchCode}', String(branchCode))
+        .replace('{pageNum}', String(pageNum))
         .replace('{serviceCategoryCode}', String(serviceCategoryCode))
     )
     .then((res) => res.data);
 };
 
 export const useGetService = ({
-  brandCode,
-  branchCode,
+  pageNum,
   serviceCategoryCode,
   options,
 }: ServiceReq & {
   options?: Partial<QueryObserverOptions<ServiceResDto, Error>>;
 }) => {
   return useQuery({
-    queryKey: [endpoints.service, brandCode, branchCode, serviceCategoryCode],
-    queryFn: () => getService({ brandCode, branchCode, serviceCategoryCode }),
+    queryKey: [endpoints.service, pageNum, serviceCategoryCode],
+    queryFn: () => getService({ pageNum, serviceCategoryCode }),
     ...options,
   });
 };
 
 // ServiceSub
 export const getServiceSub = async ({
-  brandCode,
-  branchCode,
+  pageNum,
   serviceCategoryCode,
   serviceCode,
 }: ServiceSubReq): Promise<ServiceSubResDto> => {
@@ -83,8 +73,7 @@ export const getServiceSub = async ({
   return instance
     .get(
       endpoints.serviceSub
-        .replace('{brandCode}', String(brandCode))
-        .replace('{branchCode}', String(branchCode))
+        .replace('{pageNum}', String(pageNum))
         .replace('{serviceCategoryCode}', String(serviceCategoryCode))
         .replace('{serviceCode}', String(serviceCode))
     )
@@ -92,8 +81,7 @@ export const getServiceSub = async ({
 };
 
 export const useGetServiceSub = ({
-  brandCode,
-  branchCode,
+  pageNum,
   serviceCategoryCode,
   serviceCode,
   options,
@@ -101,17 +89,10 @@ export const useGetServiceSub = ({
   options?: Partial<QueryObserverOptions<ServiceSubResDto, Error>>;
 }) => {
   return useQuery({
-    queryKey: [
-      endpoints.serviceSub,
-      brandCode,
-      branchCode,
-      serviceCategoryCode,
-      serviceCode,
-    ],
+    queryKey: [endpoints.serviceSub, pageNum, serviceCategoryCode, serviceCode],
     queryFn: () =>
       getServiceSub({
-        brandCode,
-        branchCode,
+        pageNum,
         serviceCategoryCode,
         serviceCode,
       }),

@@ -3,9 +3,9 @@ import axios from 'axios';
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 export const endpoints = {
-  serviceCategory: `${baseUrl}/api/page/serviceCategory?brandCode={brandCode}&branchCode={branchCode}`,
-  service: `${baseUrl}/api/page/service?brandCode={brandCode}&branchCode={branchCode}&serviceCategoryCode={serviceCategoryCode}`,
-  serviceSub: `${baseUrl}/api/page/serviceSub?brandCode={brandCode}&branchCode={branchCode}&serviceCategoryCode={serviceCategoryCode}&serviceCode={serviceCode}`,
+  serviceCategory: `${baseUrl}/api/page/serviceCategory?pageNum={pageNum}`,
+  service: `${baseUrl}/api/page/service?pageNum={pageNum}&serviceCategoryCode={serviceCategoryCode}`,
+  serviceSub: `${baseUrl}/api/page/serviceSub?pageNum={pageNum}&serviceCategoryCode={serviceCategoryCode}&serviceCode={serviceCode}`,
 };
 
 export const instance = axios.create({
