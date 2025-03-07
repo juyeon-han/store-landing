@@ -4,8 +4,10 @@ import classNames from 'classnames/bind';
 import {
   useGetService,
   useGetServiceCategory,
+  useGetServiceList,
   useGetServiceSub,
 } from '@/api/service/service';
+import { serviceCategoryType, ServiceType } from '@/api/types/serviceType';
 import BottomSheet, {
   BottomSheetHandle,
 } from '@/components/bottomSheet/BottomSheet';
@@ -61,62 +63,84 @@ const CarePage = () => {
   const params = new URLSearchParams(location.search);
   const pageNum = params.get('pageNum') ?? '1';
 
-  const { data: serviceCategoryData } = useGetServiceCategory({
-    pageNum: pageNum,
-  });
-
-  const lineTabsData =
-    serviceCategoryData?.body?.serviceCategory.map((item) => ({
-      id: item.serviceCategoryCode,
-      name: item.serviceCategoryName,
-    })) ?? [];
-
-  const {
-    activeTabId: serviceCategoryId,
-    handleActiveTab: handleActiveLineTab,
-  } = useTabController({
-    initTabId: lineTabsData[0]?.id,
-  });
-
-  const { data: serviceData } = useGetService({
-    pageNum: pageNum,
-    serviceCategoryCode: serviceCategoryId,
-    options: {
-      enabled: serviceCategoryId !== '000' && serviceCategoryId !== undefined,
-    },
-  });
-
-  const buttonTabsData =
-    serviceData?.body?.service.map((item) => ({
-      id: item.serviceCode,
-      name: item.serviceName,
-    })) ?? [];
-
-  const { activeTabId: serviceId, handleActiveTab: handleActiveButtonTab } =
-    useTabController({
-      initTabId: buttonTabsData[0]?.id,
+  const { data: serviceListData, isSuccess: isServiceListSuccess } =
+    useGetServiceList({
+      pageNum: pageNum,
     });
 
-  const serviceCategoryIdRef = useRef<string>(serviceCategoryId);
-  const serviceIdRef = useRef<string>(serviceId);
+  const [selectedServiceCategoryId, setSelectedServiceCategoryId] =
+    useState<string>('000');
+
+  const [selectedServiceId, setSelectedServiceId] = useState<string>('00000');
+
+  const [serviceCategoryList, setServiceCategoryList] = useState<
+    serviceCategoryType[]
+  >([]);
+
+  const [serviceList, setServiceList] = useState<ServiceType[]>([]);
+
+  useEffect(() => {
+    const serviceCategoryList =
+      serviceListData?.body?.serviceList.map((item) => item.serviceCategory) ??
+      [];
+
+    const initServiceCategory = serviceCategoryList?.[0];
+
+    const serviceList = serviceListData?.body?.serviceList[0].service ?? [];
+
+    const initService = serviceList?.[0];
+
+    if (serviceCategoryList !== undefined && isServiceListSuccess) {
+      setServiceCategoryList(serviceCategoryList);
+      setServiceList(serviceList);
+      setSelectedServiceCategoryId(initServiceCategory?.serviceCategoryCode);
+      setSelectedServiceId(initService?.serviceCode);
+    }
+  }, [serviceListData]);
+
+  const getMatchedService = (serviceCategoryId: string) => {
+    return (
+      serviceListData?.body?.serviceList.find(
+        (item) => item.serviceCategory.serviceCategoryCode === serviceCategoryId
+      )?.service ?? []
+    );
+  };
+
+  const getMatchedServiceCategory = (service: ServiceType) => {
+    return (
+      serviceListData?.body?.serviceList.find((item) =>
+        item.service.find((item) => item.serviceCode === service.serviceCode)
+      )?.serviceCategory ?? []
+    );
+  };
+
+  const getMatchedServiceTime = (serviceId: string) => {
+    return (
+      serviceList.find((item) => item.serviceCode === serviceId)?.serviceTime ??
+      '0'
+    );
+  };
+
+  const handleServiceCategory = (serviceCategoryId: string) => {
+    setSelectedServiceCategoryId(serviceCategoryId);
+    const matchedService = getMatchedService(serviceCategoryId);
+    setServiceList(matchedService);
+    setSelectedServiceId(matchedService[0].serviceCode);
+  };
+
+  const handleService = (serviceId: string) => {
+    setSelectedServiceId(serviceId);
+  };
 
   const { data: serviceSubData } = useGetServiceSub({
     pageNum: pageNum,
-    serviceCategoryCode: serviceCategoryId,
-    serviceCode: serviceId,
+    serviceCategoryCode: selectedServiceCategoryId,
+    serviceCode: selectedServiceId,
     options: {
       enabled:
-        serviceId !== '000' &&
-        serviceId !== undefined &&
-        serviceCategoryId !== undefined &&
-        serviceIdRef.current !== serviceId,
+        selectedServiceCategoryId !== '000' && selectedServiceId !== '00000',
     },
   });
-
-  useEffect(() => {
-    serviceCategoryIdRef.current = serviceCategoryId;
-    serviceIdRef.current = serviceId;
-  }, [serviceCategoryId, serviceId]);
 
   const careRef = useRef<Array<HTMLDivElement | null>>([]);
   const { setElements, isVisible } = useIntersectionObserver({
@@ -125,27 +149,27 @@ const CarePage = () => {
 
   const breakPoint = useBreakpoint();
 
-  const [sheetSelectedServiceId, setSheetSelectedServiceId] =
-    useState<string>(serviceId);
-  const [sheetSelectedServiceCategoryId, setSheetSelectedServiceCategoryId] =
-    useState<string>(serviceCategoryId);
+  // const [sheetSelectedServiceId, setSheetSelectedServiceId] =
+  //   useState<string>(serviceId);
+  // const [sheetSelectedServiceCategoryId, setSheetSelectedServiceCategoryId] =
+  //   useState<string>(serviceCategoryId);
 
-  const handleSheetItem = ({
-    serviceCategoryId,
-    serviceId,
-  }: {
-    serviceCategoryId: string;
-    serviceId: string;
-  }) => {
-    setSheetSelectedServiceId(serviceId);
-    setSheetSelectedServiceCategoryId(serviceCategoryId);
-  };
+  // const handleSheetItem = ({
+  //   serviceCategoryId,
+  //   serviceId,
+  // }: {
+  //   serviceCategoryId: string;
+  //   serviceId: string;
+  // }) => {
+  //   setSheetSelectedServiceId(serviceId);
+  //   setSheetSelectedServiceCategoryId(serviceCategoryId);
+  // };
 
-  const handleBottomSheetButton = () => {
-    handleActiveLineTab(sheetSelectedServiceCategoryId);
-    handleActiveButtonTab(sheetSelectedServiceId);
-    bottomSheetRef.current?.close();
-  };
+  // const handleBottomSheetButton = () => {
+  //   handleActiveLineTab(sheetSelectedServiceCategoryId);
+  //   handleActiveButtonTab(sheetSelectedServiceId);
+  //   bottomSheetRef.current?.close();
+  // };
 
   useEffect(() => {
     setElements(careRef.current);
@@ -162,20 +186,26 @@ const CarePage = () => {
         >
           <div className={cx('border')}>
             <div className={cx('inner')}>
-              {lineTabsData.length > 0 && (
+              {serviceCategoryList.length > 0 && (
                 <ScrollTab
                   className={cx('line_tab')}
-                  tabs={lineTabsData}
-                  activeTabId={serviceCategoryId}
-                  handleActiveTab={handleActiveLineTab}
+                  tabs={serviceCategoryList.map((item) => ({
+                    id: item.serviceCategoryCode,
+                    name: item.serviceCategoryName,
+                  }))}
+                  activeTabId={selectedServiceCategoryId}
+                  handleActiveTab={handleServiceCategory}
                   mode="line"
                 />
               )}
               <ScrollTab
                 className={cx('button_tab')}
-                tabs={buttonTabsData}
-                activeTabId={serviceId}
-                handleActiveTab={handleActiveButtonTab}
+                tabs={serviceList.map((item) => ({
+                  id: item.serviceCode,
+                  name: item.serviceName,
+                }))}
+                activeTabId={selectedServiceId}
+                handleActiveTab={handleService}
                 handleNextButton={() => bottomSheetRef.current?.open()}
               />
               <div className={cx('program_wrapper')}>
@@ -212,7 +242,7 @@ const CarePage = () => {
                         discount_price: Number(pay.serviceSubPrice),
                         origin_price: Number(pay.serviceSubOriginalPrice),
                         duration: Number(
-                          serviceData?.body?.service[0].serviceTime
+                          getMatchedServiceTime(selectedServiceId)
                         ),
                       }}
                       type={
@@ -282,7 +312,7 @@ const CarePage = () => {
           </div>
         </div>
       </section>
-      {breakPoint === 'mobile' && (
+      {/* {breakPoint === 'mobile' && (
         <BottomSheet
           ref={bottomSheetRef}
           title="관리 선택"
@@ -301,7 +331,7 @@ const CarePage = () => {
             handleSheetItem={handleSheetItem}
           />
         </BottomSheet>
-      )}
+      )} */}
     </>
   );
 };

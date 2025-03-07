@@ -1,4 +1,4 @@
-import { ApiResponse } from '@/api/types/baseType';
+import { ApiResponse, PageStatusType } from '@/api/types/baseType';
 
 //ServiceCategory
 export interface ServiceCategoryReq {
@@ -23,13 +23,19 @@ export interface ServiceReq {
   serviceCategoryCode: string;
 }
 
+interface ServiceContentType {
+  serviceContentPrior: string;
+  serviceContentImage: string;
+  serviceContentTitle: string;
+  serviceContentContent: string;
+  serviceContentStatus: PageStatusType;
+}
+
 export interface ServiceType {
   serviceCode: string;
   serviceName: string;
   serviceTime: string;
-  serviceImage?: string;
-  serviceContentTitle?: string;
-  serviceContentDesc?: string;
+  serviceContent: ServiceContentType[];
 }
 
 export interface ServiceRes {

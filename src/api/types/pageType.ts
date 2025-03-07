@@ -1,7 +1,6 @@
-import { ApiResponse } from '@/api/types/baseType';
+import { ApiResponse, PageStatusType } from '@/api/types/baseType';
 import { ModeType } from '@/constants/page';
 
-type PageStatusType = 'Y' | 'N';
 // Page
 export interface PageReq {
   pageNum: string;

@@ -4,3 +4,5 @@ export interface ApiResponse<T> {
   resultCount: number;
   body?: T;
 }
+
+export type PageStatusType = 'Y' | 'N';
