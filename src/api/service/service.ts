@@ -13,7 +13,7 @@ import {
 
 // ServiceCategory
 export const getServiceCategory = async ({
-  pageNum,
+  pageNum = '1',
 }: ServiceCategoryReq): Promise<ServiceCategoryResDto> => {
   request();
   //   await new Promise((resolve) => setTimeout(resolve, 10000));
@@ -23,7 +23,7 @@ export const getServiceCategory = async ({
 };
 
 export const useGetServiceCategory = ({
-  pageNum,
+  pageNum = '1',
   options,
 }: ServiceCategoryReq & {
   options?: Partial<QueryObserverOptions<ServiceCategoryResDto, Error>>;
@@ -37,7 +37,7 @@ export const useGetServiceCategory = ({
 
 // Service
 export const getService = async ({
-  pageNum,
+  pageNum = '1',
   serviceCategoryCode,
 }: ServiceReq): Promise<ServiceResDto> => {
   request();
@@ -52,7 +52,7 @@ export const getService = async ({
 };
 
 export const useGetService = ({
-  pageNum,
+  pageNum = '1',
   serviceCategoryCode,
   options,
 }: ServiceReq & {
@@ -67,7 +67,7 @@ export const useGetService = ({
 
 // ServiceList = serviceCategory + service
 export const getServiceList = async ({
-  pageNum,
+  pageNum = '1',
 }: ServiceListReq): Promise<ServiceListResDto> => {
   request();
 
@@ -77,7 +77,7 @@ export const getServiceList = async ({
 };
 
 export const useGetServiceList = ({
-  pageNum,
+  pageNum = '1',
   options,
 }: ServiceListReq & {
   options?: Partial<QueryObserverOptions<ServiceListResDto, Error>>;
@@ -91,7 +91,7 @@ export const useGetServiceList = ({
 
 // ServiceSub
 export const getServiceSub = async ({
-  pageNum,
+  pageNum = '1',
   serviceCategoryCode,
   serviceCode,
 }: ServiceSubReq): Promise<ServiceSubResDto> => {
@@ -107,7 +107,7 @@ export const getServiceSub = async ({
 };
 
 export const useGetServiceSub = ({
-  pageNum,
+  pageNum = '1',
   serviceCategoryCode,
   serviceCode,
   options,

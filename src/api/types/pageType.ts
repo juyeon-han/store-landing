@@ -3,7 +3,7 @@ import { ModeType } from '@/constants/page';
 
 // Page
 export interface PageReq {
-  pageNum: string;
+  pageNum?: string;
   mode?: ModeType;
 }
 

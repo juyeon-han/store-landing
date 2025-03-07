@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import { useGetServiceList, useGetServiceSub } from '@/api/service/service';
 import { serviceCategoryType, ServiceType } from '@/api/types/serviceType';
@@ -13,6 +12,7 @@ import ScrollTab from '@/components/tab/scroll-tab/ScrollTab';
 import PageTitle from '@/components/title/PageTitle';
 import useBreakpoint from '@/hooks/useBreakPoint';
 import { useIntersectionObserver } from '@/hooks/useInteractionObserver';
+import { usePageParams } from '@/hooks/usePageParams';
 import Icon from '@/styles/icons/icons';
 import styles from './index.module.scss';
 
@@ -53,13 +53,11 @@ const steps = [
 
 const CarePage = () => {
   const cx = classNames.bind(styles);
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const pageNum = params.get('pageNum') ?? '1';
+  const { pageParams } = usePageParams();
 
   const { data: serviceListData, isSuccess: isServiceListSuccess } =
     useGetServiceList({
-      pageNum: pageNum,
+      pageNum: pageParams.pageNum,
     });
 
   const [selectedServiceCategoryId, setSelectedServiceCategoryId] =
@@ -127,7 +125,7 @@ const CarePage = () => {
   };
 
   const { data: serviceSubData } = useGetServiceSub({
-    pageNum: pageNum,
+    pageNum: pageParams.pageNum,
     serviceCategoryCode: selectedServiceCategoryId,
     serviceCode: selectedServiceId,
     options: {

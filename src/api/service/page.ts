@@ -35,7 +35,7 @@ export const useGetPage = ({
 
 // PageDetail
 export const getPageDetail = async ({
-  pageNum,
+  pageNum = '1',
   mode = MODE_CODE.PRIVATE,
 }: PageReq): Promise<PageDetailResDto> => {
   request();
@@ -47,7 +47,7 @@ export const getPageDetail = async ({
 };
 
 export const useGetPageDetail = ({
-  pageNum,
+  pageNum = '1',
   mode = MODE_CODE.PRIVATE,
   options,
 }: PageReq & {
@@ -62,7 +62,7 @@ export const useGetPageDetail = ({
 
 // PagePromotion
 export const getPagePromotion = async ({
-  pageNum,
+  pageNum = '1',
   mode = MODE_CODE.PRIVATE,
 }: PageReq): Promise<PagePromotionResDto> => {
   request();
@@ -91,7 +91,7 @@ export const useGetPagePromotion = ({
 
 // PageReview
 export const getPageReview = async ({
-  pageNum,
+  pageNum = '1',
   mode = MODE_CODE.PRIVATE,
 }: PageReq): Promise<PageReviewResDto> => {
   request();
@@ -103,7 +103,7 @@ export const getPageReview = async ({
 };
 
 export const useGetPageReview = ({
-  pageNum,
+  pageNum = '1',
   mode = MODE_CODE.PRIVATE,
   options,
 }: PageReq & {
@@ -118,7 +118,7 @@ export const useGetPageReview = ({
 
 // PageFaq
 export const getPageFaq = async ({
-  pageNum,
+  pageNum = '1',
   mode = MODE_CODE.PRIVATE,
 }: PageReq): Promise<PageFaqResDto> => {
   request();
@@ -130,7 +130,7 @@ export const getPageFaq = async ({
 };
 
 export const useGetPageFaq = ({
-  pageNum,
+  pageNum = '1',
   mode = MODE_CODE.PRIVATE,
   options,
 }: PageReq & {
