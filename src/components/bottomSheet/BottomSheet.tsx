@@ -7,33 +7,36 @@ import styles from './BottomSheet.module.scss';
 
 export interface BottomSheetHandle {
   open: () => void;
+  close: () => void;
 }
 interface BottomSheetProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   buttonText?: string;
-  children: React.ReactNode;
   height?: number;
-  onClose?: () => void;
-  onOpen?: () => void;
-  closeOnOverlayClick?: boolean;
-  showCloseButton?: boolean;
-  disableDrag?: boolean;
-  footerButton?: {
-    text: string;
-    onClick: () => void;
-  };
-  initialState?: 'open' | 'closed';
+  selectedServiceId?: string;
+  children: React.ReactNode;
+  handleSheetButton?: () => void;
 }
 
 const BottomSheet = forwardRef<BottomSheetHandle, BottomSheetProps>(
   (props, ref) => {
     const cx = classNames.bind(styles);
 
-    const height = props.height || 500;
+    const {
+      title,
+      buttonText = '적용하기',
+      children,
+      selectedServiceId: sheetSelectedId,
+      handleSheetButton,
+      ...otherProps
+    } = props;
+
+    const height = props.height ?? 500;
     const [{ y }, api] = useSpring(() => ({ y: height }));
 
     useImperativeHandle(ref, () => ({
       open: () => handleOpen({ canceled: false }),
+      close: () => handleClose(),
     }));
 
     const handleOpen = ({ canceled }: { canceled: boolean }) => {
@@ -108,8 +111,6 @@ const BottomSheet = forwardRef<BottomSheetHandle, BottomSheetProps>(
 
     const display = y.to((py) => (py < height ? 'flex' : 'none'));
 
-    const { title, buttonText = '적용하기', children, ...otherProps } = props;
-
     return (
       <>
         <a.div
@@ -137,7 +138,9 @@ const BottomSheet = forwardRef<BottomSheetHandle, BottomSheetProps>(
                 {children}
               </div>
               <div className={cx('footer')}>
-                <button className={cx('button')}>{buttonText}</button>
+                <button className={cx('button')} onClick={handleSheetButton}>
+                  {buttonText}
+                </button>
               </div>
             </div>
           </a.div>

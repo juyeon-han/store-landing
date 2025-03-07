@@ -9,6 +9,7 @@ import {
 import BottomSheet, {
   BottomSheetHandle,
 } from '@/components/bottomSheet/BottomSheet';
+import BottomSheetContent from '@/components/bottomSheet/BottomSheetContent';
 import PayCard from '@/components/card/pay-card/PayCard';
 import RecommendCard from '@/components/card/recommend-card/RecommendCard';
 import ScrollTab from '@/components/tab/scroll-tab/ScrollTab';
@@ -19,49 +20,6 @@ import useBreakpoint from '@/hooks/useBreakPoint';
 import { useIntersectionObserver } from '@/hooks/useInteractionObserver';
 import Icon from '@/styles/icons/icons';
 import styles from './index.module.scss';
-
-const data = [
-  {
-    subTitle: '작은 얼굴 관리',
-    categories: [
-      { id: '1', name: '작은 얼굴 관리' },
-      { id: '2', name: '작은 얼굴 관리 + 작은 모공 관리' },
-      { id: '3', name: '작은 얼굴 관리 X 필킨' },
-    ],
-  },
-  {
-    subTitle: '윤곽 조각 얼굴 관리',
-    categories: [
-      { id: '4', name: '윤곽 조각 얼굴 관리' },
-      { id: '5', name: '윤곽 조각 얼굴 관리 + 작은 모공 관리' },
-    ],
-  },
-  {
-    subTitle: '동안 얼굴 관리',
-    categories: [
-      { id: '6', name: '동안 얼굴 관리' },
-      { id: '7', name: '동안 얼굴 관리 + 작은 모공 관리' },
-    ],
-  },
-  {
-    subTitle: '균형 얼굴 관리',
-    categories: [
-      { id: '8', name: '균형 얼굴 관리' },
-      { id: '9', name: '균형 얼굴 관리 + 작은 모공 관리' },
-    ],
-  },
-  {
-    subTitle: '에그셀런트 관리',
-    categories: [
-      { id: '10', name: '에그셀런트 관리' },
-      { id: '11', name: '에그셀런트 관리 + 작은 모공 관리' },
-    ],
-  },
-  {
-    subTitle: 'K-BEAUTY 연예인 관리',
-    categories: [{ id: '12', name: 'K-BEAUTY 연예인 관리 A' }],
-  },
-];
 
 const steps = [
   {
@@ -171,10 +129,26 @@ const CarePage = () => {
 
   const breakPoint = useBreakpoint();
 
-  const [sheetSelectedId, setSheetSelectedId] = useState<string>(serviceId);
+  const [sheetSelectedServiceId, setSheetSelectedServiceId] =
+    useState<string>(serviceId);
+  const [sheetSelectedServiceCategoryId, setSheetSelectedServiceCategoryId] =
+    useState<string>(serviceCategoryId);
 
-  const handleSheetItemClick = (id: string) => {
-    setSheetSelectedId(id);
+  const handleSheetItem = ({
+    serviceCategoryId,
+    serviceId,
+  }: {
+    serviceCategoryId: string;
+    serviceId: string;
+  }) => {
+    setSheetSelectedServiceId(serviceId);
+    setSheetSelectedServiceCategoryId(serviceCategoryId);
+  };
+
+  const handleBottomSheetButton = () => {
+    handleActiveLineTab(sheetSelectedServiceCategoryId);
+    handleActiveButtonTab(sheetSelectedServiceId);
+    bottomSheetRef.current?.close();
   };
 
   useEffect(() => {
@@ -313,27 +287,24 @@ const CarePage = () => {
         </div>
       </section>
       {breakPoint === 'mobile' && (
-        <BottomSheet ref={bottomSheetRef} title="관리 선택">
-          <div className={cx('bottom_sheet_body')}>
-            {data.map((data) => (
-              <div key={data.subTitle} className={cx('body_content')}>
-                <p>{data.subTitle}</p>
-                <div className={cx('tag_wrapper')}>
-                  {data.categories.map((category) => (
-                    <button
-                      key={category.id}
-                      className={cx('tag', {
-                        selected: sheetSelectedId === category.id,
-                      })}
-                      onClick={() => handleSheetItemClick(category.id)}
-                    >
-                      {category.name}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+        <BottomSheet
+          ref={bottomSheetRef}
+          title="관리 선택"
+          selectedServiceId={sheetSelectedServiceId}
+          handleSheetButton={handleBottomSheetButton}
+        >
+          <BottomSheetContent
+            brandCode={BRAND_CODE.YAKSON}
+            branchCode={branchCode}
+            serviceCategories={
+              serviceCategoryData?.body?.serviceCategory.map((item) => ({
+                id: item.serviceCategoryCode,
+                name: item.serviceCategoryName,
+              })) ?? []
+            }
+            sheetSelectedId={sheetSelectedServiceId}
+            handleSheetItem={handleSheetItem}
+          />
         </BottomSheet>
       )}
     </>
