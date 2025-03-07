@@ -1,12 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import classNames from 'classnames/bind';
-import {
-  useGetService,
-  useGetServiceCategory,
-  useGetServiceList,
-  useGetServiceSub,
-} from '@/api/service/service';
+import { useGetServiceList, useGetServiceSub } from '@/api/service/service';
 import { serviceCategoryType, ServiceType } from '@/api/types/serviceType';
 import BottomSheet, {
   BottomSheetHandle,
@@ -15,7 +10,6 @@ import BottomSheetContent from '@/components/bottomSheet/BottomSheetContent';
 import PayCard from '@/components/card/pay-card/PayCard';
 import RecommendCard from '@/components/card/recommend-card/RecommendCard';
 import ScrollTab from '@/components/tab/scroll-tab/ScrollTab';
-import { useTabController } from '@/components/tab/tabController';
 import PageTitle from '@/components/title/PageTitle';
 import useBreakpoint from '@/hooks/useBreakPoint';
 import { useIntersectionObserver } from '@/hooks/useInteractionObserver';
@@ -106,11 +100,11 @@ const CarePage = () => {
     );
   };
 
-  const getMatchedServiceCategory = (service: ServiceType) => {
+  const getMatchedServiceCategoryId = (serviceId: string) => {
     return (
       serviceListData?.body?.serviceList.find((item) =>
-        item.service.find((item) => item.serviceCode === service.serviceCode)
-      )?.serviceCategory ?? []
+        item.service.find((item) => item.serviceCode === serviceId)
+      )?.serviceCategory?.serviceCategoryCode ?? '000'
     );
   };
 
@@ -149,33 +143,32 @@ const CarePage = () => {
 
   const breakPoint = useBreakpoint();
 
-  // const [sheetSelectedServiceId, setSheetSelectedServiceId] =
-  //   useState<string>(serviceId);
-  // const [sheetSelectedServiceCategoryId, setSheetSelectedServiceCategoryId] =
-  //   useState<string>(serviceCategoryId);
+  const [sheetSelectedServiceId, setSheetSelectedServiceId] =
+    useState<string>('');
 
-  // const handleSheetItem = ({
-  //   serviceCategoryId,
-  //   serviceId,
-  // }: {
-  //   serviceCategoryId: string;
-  //   serviceId: string;
-  // }) => {
-  //   setSheetSelectedServiceId(serviceId);
-  //   setSheetSelectedServiceCategoryId(serviceCategoryId);
-  // };
+  const handleSheetItem = (serviceId: string) => {
+    setSheetSelectedServiceId(serviceId);
+  };
 
-  // const handleBottomSheetButton = () => {
-  //   handleActiveLineTab(sheetSelectedServiceCategoryId);
-  //   handleActiveButtonTab(sheetSelectedServiceId);
-  //   bottomSheetRef.current?.close();
-  // };
+  const handleSheetButton = () => {
+    const matchedServiceCategoryId = getMatchedServiceCategoryId(
+      sheetSelectedServiceId
+    );
+    handleServiceCategory(matchedServiceCategoryId);
+    handleService(sheetSelectedServiceId);
+    bottomSheetRef.current?.close();
+  };
 
   useEffect(() => {
     setElements(careRef.current);
   }, []);
 
+  useEffect(() => {
+    setSheetSelectedServiceId(selectedServiceId);
+  }, [selectedServiceId]);
+
   const bottomSheetRef = useRef<BottomSheetHandle>(null);
+
   return (
     <>
       <section id="care" data-page="care" className={cx('container')}>
@@ -312,26 +305,23 @@ const CarePage = () => {
           </div>
         </div>
       </section>
-      {/* {breakPoint === 'mobile' && (
+      {breakPoint === 'mobile' && (
         <BottomSheet
           ref={bottomSheetRef}
           title="관리 선택"
           selectedServiceId={sheetSelectedServiceId}
-          handleSheetButton={handleBottomSheetButton}
+          handleSheetButton={handleSheetButton}
+          onClose={() => {
+            setSheetSelectedServiceId(selectedServiceId);
+          }}
         >
           <BottomSheetContent
-            pageNum={pageNum}
-            serviceCategories={
-              serviceCategoryData?.body?.serviceCategory.map((item) => ({
-                id: item.serviceCategoryCode,
-                name: item.serviceCategoryName,
-              })) ?? []
-            }
+            data={serviceListData?.body?.serviceList ?? []}
             sheetSelectedId={sheetSelectedServiceId}
             handleSheetItem={handleSheetItem}
           />
         </BottomSheet>
-      )} */}
+      )}
     </>
   );
 };

@@ -16,6 +16,7 @@ interface BottomSheetProps extends React.HTMLAttributes<HTMLDivElement> {
   selectedServiceId?: string;
   children: React.ReactNode;
   handleSheetButton?: () => void;
+  onClose?: () => void;
 }
 
 const BottomSheet = forwardRef<BottomSheetHandle, BottomSheetProps>(
@@ -28,6 +29,7 @@ const BottomSheet = forwardRef<BottomSheetHandle, BottomSheetProps>(
       children,
       selectedServiceId: sheetSelectedId,
       handleSheetButton,
+      onClose,
       ...otherProps
     } = props;
 
@@ -55,6 +57,7 @@ const BottomSheet = forwardRef<BottomSheetHandle, BottomSheetProps>(
         config: { ...config.stiff, velocity },
       });
       document.body.style.overflowY = 'auto';
+      onClose?.();
     };
 
     const handleBind = useDrag(

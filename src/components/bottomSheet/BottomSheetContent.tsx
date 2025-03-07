@@ -1,25 +1,13 @@
-import { forwardRef, useEffect } from 'react';
-import { useQueries } from '@tanstack/react-query';
+import { forwardRef } from 'react';
 import classNames from 'classnames/bind';
-import { endpoints } from '@/api/endpoint';
-import { getService } from '@/api/service/service';
+import { ServiceListType } from '@/api/types/serviceType';
 import styles from './BottomSheetContent.module.scss';
 
 interface BottomSheetContentHandle extends HTMLDivElement {}
 interface BottomSheetContentProps extends React.HTMLAttributes<HTMLDivElement> {
-  pageNum: string;
-  serviceCategories: {
-    id: string;
-    name: string;
-  }[];
+  data: ServiceListType[];
   sheetSelectedId: string;
-  handleSheetItem: ({
-    serviceCategoryId,
-    serviceId,
-  }: {
-    serviceCategoryId: string;
-    serviceId: string;
-  }) => void;
+  handleSheetItem: (serviceId: string) => void;
 }
 
 const BottomSheetContent = forwardRef<
@@ -27,50 +15,8 @@ const BottomSheetContent = forwardRef<
   BottomSheetContentProps
 >((props, ref) => {
   const cx = classNames.bind(styles);
-  const {
-    pageNum,
-    serviceCategories,
-    sheetSelectedId,
-    handleSheetItem,
-    className,
-    ...otherProps
-  } = props;
-
-  const data = useQueries({
-    queries: serviceCategories.map((serviceCategory) => ({
-      queryKey: [endpoints.service, pageNum, serviceCategory],
-      queryFn: () =>
-        getService({
-          pageNum: pageNum,
-          serviceCategoryCode: serviceCategory.id,
-        }),
-    })),
-    combine: (results) => {
-      // 모든 쿼리가 성공적으로 완료되었는지 확인
-      const isAllSuccess = results.every((result) => result.isSuccess);
-
-      if (isAllSuccess) {
-        return (
-          serviceCategories.map((serviceCategory, index) => {
-            const service = results[index].data?.body?.service;
-            return {
-              serviceCategoryId: serviceCategory.id,
-              serviceCategoryName: serviceCategory.name,
-              service: service?.map((service) => ({
-                serviceId: service.serviceCode,
-                serviceName: service.serviceName,
-              })),
-            };
-          }) ?? []
-        );
-      }
-      return [];
-    },
-  });
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  const { data, sheetSelectedId, handleSheetItem, className, ...otherProps } =
+    props;
 
   return (
     <div
@@ -80,21 +26,19 @@ const BottomSheetContent = forwardRef<
     >
       <div className={cx('bottom_sheet_body')}>
         {data.map((item) => (
-          <div key={item.serviceCategoryId} className={cx('body_content')}>
-            <p>{item.serviceCategoryName}</p>
+          <div
+            key={item.serviceCategory.serviceCategoryCode}
+            className={cx('body_content')}
+          >
+            <p>{item.serviceCategory.serviceCategoryName}</p>
             <div className={cx('tag_wrapper')}>
               {item.service?.map((service) => (
                 <button
-                  key={service.serviceId}
+                  key={service.serviceCode}
                   className={cx('tag', {
-                    selected: sheetSelectedId === service.serviceId,
+                    selected: sheetSelectedId === service.serviceCode,
                   })}
-                  onClick={() =>
-                    handleSheetItem({
-                      serviceCategoryId: item.serviceCategoryId,
-                      serviceId: service.serviceId,
-                    })
-                  }
+                  onClick={() => handleSheetItem(service.serviceCode)}
                 >
                   {service.serviceName}
                 </button>
