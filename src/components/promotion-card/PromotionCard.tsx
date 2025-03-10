@@ -5,7 +5,6 @@ import styles from './PromotionCard.module.scss';
 
 interface PromotionCardHandle extends HTMLDivElement {}
 export interface PromotionType {
-  tag: string;
   condition: string;
   product: string;
   imgUrl: string;
@@ -21,7 +20,6 @@ const PromotionCard = forwardRef<PromotionCardHandle, PromotionCardProps>(
   (props, ref) => {
     const cx = classNames.bind(styles);
     const {
-      tag,
       condition,
       product,
       imgUrl,

@@ -1,10 +1,17 @@
-import { ApiResponse, PageStatusType } from '@/api/types/baseType';
-import { ModeType } from '@/constants/page';
+import { ApiResponse } from '@/api/types/baseType';
+import { FaqType, ModeType, PageStatusType } from '@/constants/page';
 
 // Page
 export interface PageReq {
   pageNum?: string;
   mode?: ModeType;
+}
+
+interface PageImageType {
+  pageImageIdx: string;
+  pageImagePrior: string;
+  pageImageUrl: string;
+  pageImageStatus: PageStatusType;
 }
 
 export interface PageType {
@@ -19,6 +26,7 @@ export interface PageType {
   pageOwnerProfileUrl: string;
   pageIntro: string;
   pageStatus: PageStatusType;
+  pageImage: PageImageType[];
 }
 
 export interface PageRes {
@@ -84,7 +92,7 @@ export type PageReviewResDto = ApiResponse<PageReviewRes>;
 // PageFaq
 export interface PageFaqType {
   pageFaqIdx: string;
-  pageFaqType: string;
+  pageFaqType: FaqType; // 문의사항 : P, 유의사항 : I
   pageFaqPrior: string;
   pageFaqQuestion: string;
   pageFaqAnswer: string;
