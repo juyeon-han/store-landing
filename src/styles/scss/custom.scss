@@ -84,6 +84,7 @@
 .embla-thumbs__container {
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 .embla-thumbs__slide {
   flex: 0 0 calc(var(--thumbs-img-size) + var(--thumbs-img-space)); // 한개의 썸네일이 특정 크기만큼 크기 차지
