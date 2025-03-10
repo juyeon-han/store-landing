@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import classNames from 'classnames/bind';
-import { formatMinutesToHours, formatNumberWithCommas } from '@/utils/number';
+import { formatMinutesToHours } from '@/utils/date';
+import { formatNumberWithCommas } from '@/utils/number';
 import styles from './PayCard.module.scss';
 
 export interface PayCardType {
