@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
 import { useGetServiceList, useGetServiceSub } from '@/api/service/service';
 import { serviceCategoryType, ServiceType } from '@/api/types/serviceType';
@@ -8,8 +8,10 @@ import BottomSheet, {
 import BottomSheetContent from '@/components/bottomSheet/BottomSheetContent';
 import PayCard from '@/components/card/pay-card/PayCard';
 import RecommendCard from '@/components/card/recommend-card/RecommendCard';
+import PayCardSkeleton from '@/components/skeleton/pay-card/PayCardSkeleton';
 import ScrollTab from '@/components/tab/scroll-tab/ScrollTab';
 import PageTitle from '@/components/title/PageTitle';
+import { RESPONSE_CODE } from '@/constants/responseCode';
 import useBreakpoint from '@/hooks/useBreakPoint';
 import { useIntersectionObserver } from '@/hooks/useInteractionObserver';
 import { usePageParams } from '@/hooks/usePageParams';
@@ -124,7 +126,7 @@ const CarePage = () => {
     setSelectedServiceId(serviceId);
   };
 
-  const { data: serviceSubData } = useGetServiceSub({
+  const { data, isLoading } = useGetServiceSub({
     pageNum: pageParams.pageNum,
     serviceCategoryCode: selectedServiceCategoryId,
     serviceCode: selectedServiceId,
@@ -133,6 +135,14 @@ const CarePage = () => {
         selectedServiceCategoryId !== '000' && selectedServiceId !== '00000',
     },
   });
+
+  const serviceSubData = useMemo(
+    () =>
+      data?.resultCode === RESPONSE_CODE.SUCCESS
+        ? data.body?.serviceSub
+        : undefined,
+    [data]
+  );
 
   const careRef = useRef<Array<HTMLDivElement | null>>([]);
   const { setElements, isVisible } = useIntersectionObserver({
@@ -220,30 +230,33 @@ const CarePage = () => {
                 <div
                   className={cx('pay_card_wrapper', {
                     pay_card_grid_wrapper:
-                      serviceSubData?.body?.serviceSub &&
-                      serviceSubData?.body?.serviceSub.length > 3,
+                      serviceSubData && serviceSubData.length > 3,
                   })}
                 >
-                  {serviceSubData?.body?.serviceSub.map((pay) => (
-                    <PayCard
-                      key={pay.serviceSubCode}
-                      data={{
-                        type_num: Number(pay.serviceSubCount),
-                        discount_per: Number(pay.serviceSubDiscountPercent),
-                        discount_price: Number(pay.serviceSubPrice),
-                        origin_price: Number(pay.serviceSubOriginalPrice),
-                        duration: Number(
-                          getMatchedServiceTime(selectedServiceId)
-                        ),
-                      }}
-                      type={
-                        serviceSubData?.body?.serviceSub &&
-                        serviceSubData?.body?.serviceSub.length > 3
-                          ? 'grid'
-                          : 'column'
-                      }
-                    />
-                  ))}
+                  {isLoading
+                    ? Array.from({ length: 3 }).map((_, index) => (
+                        <PayCardSkeleton key={index} />
+                      ))
+                    : serviceSubData &&
+                      serviceSubData.map((pay) => (
+                        <PayCard
+                          key={pay.serviceSubCode}
+                          data={{
+                            type_num: Number(pay.serviceSubCount),
+                            discount_per: Number(pay.serviceSubDiscountPercent),
+                            discount_price: Number(pay.serviceSubPrice),
+                            origin_price: Number(pay.serviceSubOriginalPrice),
+                            duration: Number(
+                              getMatchedServiceTime(selectedServiceId)
+                            ),
+                          }}
+                          type={
+                            serviceSubData && serviceSubData.length > 3
+                              ? 'grid'
+                              : 'column'
+                          }
+                        />
+                      ))}
                 </div>
               </div>
               <div className={cx('recommend_wrapper')}>
