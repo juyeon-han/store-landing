@@ -24,8 +24,6 @@ const PlacePage = () => {
   const placeRefs = useRef<Array<HTMLDivElement | null>>([]);
   const { setElements, isVisible } = useIntersectionObserver();
   const { pageParams } = usePageParams();
-  const tempUrl =
-    'https://images.unsplash.com/photo-1732565277341-ebb37d748a87?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDN8aVVJc25WdGpCMFl8fGVufDB8fHx8fA%3D%3D';
 
   const { data, isSuccess } = useGetPageDetail({
     pageNum: pageParams.pageNum,
@@ -79,7 +77,7 @@ const PlacePage = () => {
           >
             <EmblaCarousel
               slides={placeData.pageImage.map((item, idx) => ({
-                url: tempUrl ?? item.pageImageUrl,
+                url: item.pageImageUrl,
                 alt: `지점 이미지-${idx}`,
               }))}
             />
