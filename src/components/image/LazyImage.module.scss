@@ -1,15 +1,9 @@
-:root {
-  --lazy-img-width: 400px;
-  --lazy-img-height: 400px;
-}
-
 .lazy_img {
   background-color: #f5f5f5;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  width: var(--lazy-img-width);
-  height: var(--lazy-img-height);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 @keyframes shimmer {
@@ -33,6 +27,6 @@
   background-repeat: no-repeat;
   display: inline-block;
   animation: shimmer 1.5s infinite linear;
-  width: var(--lazy-img-width);
-  height: var(--lazy-img-height);
+  width: 100%;
+  height: 100%;
 }

@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import { EmblaOptionsType } from 'embla-carousel';
 import AutoScroll from 'embla-carousel-auto-scroll';
@@ -23,11 +23,15 @@ const ReviewCard = forwardRef<ReviewCardHandle, ReviewCardProps>(
   (props, ref) => {
     const cx = classNames.bind(styles);
     const { data, className, options, ...otherProps } = props;
-    const [emblaRef, emblaMainApi] = useEmblaCarousel(
+    const [canScrollNext, setCanScrollNext] = useState(false);
+
+    const [emblaRef, emblaApi] = useEmblaCarousel(
       {
         loop: true,
         dragFree: true,
         containScroll: 'trimSnaps',
+        active: canScrollNext,
+        align: 'start',
         ...options,
       },
       [
@@ -35,11 +39,23 @@ const ReviewCard = forwardRef<ReviewCardHandle, ReviewCardProps>(
           speed: 1,
           stopOnInteraction: false,
           stopOnMouseEnter: true,
+          active: canScrollNext,
         }),
       ]
     );
 
-    useAutoPlayObserver({ emblaApi: emblaMainApi, type: 'autoScroll' });
+    useEffect(() => {
+      if (!emblaApi) return;
+
+      const updateScrollState = () => {
+        const canScrollNext = emblaApi.canScrollNext();
+        setCanScrollNext(canScrollNext);
+      };
+
+      updateScrollState();
+    }, [emblaApi, data, canScrollNext]);
+
+    useAutoPlayObserver({ emblaApi, type: 'autoScroll' });
 
     return (
       <div className="embla_review" ref={ref}>
@@ -47,15 +63,16 @@ const ReviewCard = forwardRef<ReviewCardHandle, ReviewCardProps>(
           <div className="embla__review_container">
             {data.map((item, index) => (
               <div className="embla__review_slide" key={index}>
-                <LazyImage
-                  src={item.imgUrl}
-                  alt={item.alt}
-                  className={cx('review_card', className)}
-                  {...otherProps}
-                >
+                <div className={cx('review_card', className)}>
+                  <LazyImage
+                    src={item.imgUrl}
+                    alt={item.alt}
+                    className={cx('review_card_img')}
+                    {...otherProps}
+                  />
                   <div className={cx('category')}>{item.category}</div>
-                  <div className={cx('text')}>{item.text}</div>{' '}
-                </LazyImage>
+                  <div className={cx('text')}>{item.text}</div>
+                </div>
               </div>
             ))}
           </div>

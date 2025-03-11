@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './LazyImage.module.scss';
 
-interface LazyImageType extends React.ImgHTMLAttributes<HTMLDivElement> {
+interface LazyImageType extends React.HTMLAttributes<HTMLImageElement> {
   src: string;
   alt: string;
 }
@@ -11,13 +11,14 @@ const LazyImage = (props: LazyImageType) => {
   const cx = classNames.bind(styles);
   const { src, alt, style, className, children, ...otherProps } = props;
   const [isVisible, setIsVisible] = useState(false);
-  const imgRef = useRef(null);
+  const imgRef = useRef<HTMLDivElement>(null);
+  const [imgSrc, setImgSrc] = useState(src);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true);
+          setIsVisible(entry.isIntersecting);
           observer.unobserve(entry.target);
         }
       },
@@ -38,17 +39,13 @@ const LazyImage = (props: LazyImageType) => {
   return (
     <div ref={imgRef}>
       {isVisible ? (
-        <div
-          aria-label={alt}
-          style={{
-            ...style,
-            backgroundImage: `url(${src})`,
-          }}
+        <img
+          src={imgSrc}
+          alt={alt}
           className={cx('lazy_img', className)}
+          onError={() => setImgSrc('src/assets/images/error_image.png')}
           {...otherProps}
-        >
-          {children}
-        </div>
+        />
       ) : (
         <div className={cx('skeleton', className)}></div>
       )}

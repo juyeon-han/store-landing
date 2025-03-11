@@ -54,7 +54,7 @@ const ReviewPage = () => {
               category: item.pageReviewCategory,
               text: item.pageReviewContent,
               alt: `${item.pageReviewCategory}의 이미지`,
-              imgUrl: tempUrl ?? item.pageReviewImage[0].pageReviewImageUrl,
+              imgUrl: item.pageReviewImage[0].pageReviewImageUrl,
             }))}
           />
         </div>
