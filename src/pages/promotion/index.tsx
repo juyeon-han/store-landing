@@ -42,8 +42,6 @@ const PromotionPage = () => {
     }
   }, [promotionData, isSuccess]);
 
-  console.log(isError);
-
   return (
     <section className={cx('container')} id="promotion" data-page="promotion">
       <PageTitle

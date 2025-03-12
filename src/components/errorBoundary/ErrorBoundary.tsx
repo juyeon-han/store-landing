@@ -11,7 +11,18 @@ const ErrorBoundary = ({ children }: { children: React.ReactNode }) => {
     <ErrorBoundaryWrapper
       resetKeys={[location.pathname]}
       onReset={reset}
-      FallbackComponent={ErrorFallback}
+      FallbackComponent={({ error }) => (
+        <ErrorFallback
+          error={error}
+          resetErrorBoundary={reset}
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
+      )}
     >
       {children}
     </ErrorBoundaryWrapper>

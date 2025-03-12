@@ -1,0 +1,33 @@
+@use '@/styles/scss/mixin.scss' as *;
+
+.wrapper {
+  @include flex-column(center);
+  gap: 8px;
+  z-index: 1000;
+  flex-wrap: wrap;
+}
+
+.title {
+  color: var(--brand-color-300-main, #ff808b);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.text {
+  color: var(--Gray-Scale-700, #3f3f46);
+  font-weight: 500;
+  font-size: 14px;
+  text-wrap: wrap;
+}
+
+.resetButton {
+  @include flex-row(center);
+  @include button-status();
+
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 16px;
+}

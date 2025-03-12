@@ -60,7 +60,11 @@ const PlacePage = () => {
           isStore
         />
         {isError && (
-          <ErrorFallback error={error} resetErrorBoundary={refetch} />
+          <ErrorFallback
+            error={error}
+            resetErrorBoundary={refetch}
+            style={{ marginTop: 60 }}
+          />
         )}
         {!isError && (
           <>

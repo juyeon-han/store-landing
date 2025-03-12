@@ -85,7 +85,7 @@
         }
 
         .program_wrapper {
-          display: flex;
+          @include flex-row(center);
           gap: 24px;
           margin-bottom: 24px;
           width: 100%;

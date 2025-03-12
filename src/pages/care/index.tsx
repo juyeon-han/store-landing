@@ -258,6 +258,7 @@ const CarePage = () => {
                   <ErrorFallback
                     error={serviceSubError}
                     resetErrorBoundary={serviceSubRefetch}
+                    style={{ marginTop: 24 }}
                   />
                 )}
                 {!isServiceSubError && !isServiceListError && (
