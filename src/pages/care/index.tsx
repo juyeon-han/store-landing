@@ -126,7 +126,7 @@ const CarePage = () => {
     setSelectedServiceId(serviceId);
   };
 
-  const { data, isLoading } = useGetServiceSub({
+  const { data, isPending } = useGetServiceSub({
     pageNum: pageParams.pageNum,
     serviceCategoryCode: selectedServiceCategoryId,
     serviceCode: selectedServiceId,
@@ -233,7 +233,7 @@ const CarePage = () => {
                       serviceSubData && serviceSubData.length > 3,
                   })}
                 >
-                  {isLoading
+                  {isPending
                     ? Array.from({ length: 3 }).map((_, index) => (
                         <PayCardSkeleton key={index} />
                       ))

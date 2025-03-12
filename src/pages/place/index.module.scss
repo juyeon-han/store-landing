@@ -155,9 +155,12 @@
 
       .ledger_info {
         @include flex-column(flex-start, start);
-        height: 100%;
-        width: 100%;
+        min-height: 280px;
         flex: 1 0 0;
+
+        @include mobile {
+          min-height: auto;
+        }
 
         .name {
           color: var(--Gray-Scale-900, #18181b);
@@ -179,12 +182,11 @@
           color: var(--Gray-Scale-800, #27272a);
           font-size: 16px;
           letter-spacing: -0.16px;
-          margin-bottom: 20px;
+          margin-bottom: auto;
 
           @include mobile {
             font-size: 14px;
             letter-spacing: -0.14px;
-            margin-bottom: 16px;
           }
         }
 
@@ -200,6 +202,13 @@
             gap: 10px;
             font-size: 14px;
             letter-spacing: -0.14px;
+          }
+        }
+
+        .info_wrapper:first-of-type {
+          margin-top: 20px;
+          @include mobile {
+            margin-top: 16px;
           }
         }
 

@@ -16,3 +16,8 @@
   display: flex;
   justify-content: center;
 }
+
+.skeleton_wrapper {
+  width: 100%;
+  @include flex-row(center);
+}

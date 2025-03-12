@@ -1,4 +1,5 @@
-import { ApiResponse, PageStatusType } from '@/api/types/baseType';
+import { ApiResponse } from '@/api/types/baseType';
+import { PageStatusType } from '@/constants/page';
 
 //ServiceCategory
 export interface ServiceCategoryReq {

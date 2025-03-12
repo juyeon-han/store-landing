@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
+import ErrorImage from '@/assets/images/error_image.png';
 import styles from './LazyImage.module.scss';
 
 interface LazyImageType extends React.HTMLAttributes<HTMLImageElement> {
@@ -38,17 +39,20 @@ const LazyImage = (props: LazyImageType) => {
 
   return (
     <div ref={imgRef}>
-      {isVisible ? (
-        <img
-          src={imgSrc}
-          alt={alt}
-          className={cx('lazy_img', className)}
-          onError={() => setImgSrc('src/assets/images/error_image.png')}
-          {...otherProps}
-        />
-      ) : (
-        <div className={cx('skeleton', className)}></div>
-      )}
+      {
+        isVisible && (
+          <img
+            src={imgSrc}
+            alt={alt}
+            className={cx('lazy_img', className)}
+            onError={() => setImgSrc(ErrorImage)}
+            {...otherProps}
+          />
+        )
+        // : (
+        //   <div className={cx('skeleton', className)}></div>
+        // )
+      }
     </div>
   );
 };

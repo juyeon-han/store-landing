@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import classNames from 'classnames/bind';
 import { useGetPageFaq } from '@/api/service/page';
 import Accordion from '@/components/accordion/Accordion';
+import QnaSkeleton from '@/components/skeleton/qna/QnaSkeleton';
 import ScrollTab, { TabsType } from '@/components/tab/scroll-tab/ScrollTab';
 import { useTabController } from '@/components/tab/tabController';
 import PageTitle from '@/components/title/PageTitle';
@@ -27,7 +28,7 @@ const QnaPage = () => {
 
   const { pageParams } = usePageParams();
 
-  const { data, isSuccess } = useGetPageFaq({
+  const { data, isPending } = useGetPageFaq({
     pageNum: pageParams.pageNum,
   });
 
@@ -49,10 +50,8 @@ const QnaPage = () => {
   );
 
   useEffect(() => {
-    if (faqData && isSuccess) {
-      setElements(qnaRefs.current);
-    }
-  }, [faqData, isSuccess]);
+    setElements(qnaRefs.current);
+  }, []);
 
   return (
     <section id="qna" data-page="qna" className={cx('container')}>
@@ -68,24 +67,28 @@ const QnaPage = () => {
           handleActiveTab={handleActiveTab}
           mode="line"
         />
-        {faqData && (
-          <Accordion
-            key="accordion"
-            data={
-              activeTabId === '1'
-                ? faqData.question?.map((item) => ({
-                    id: item.pageFaqIdx,
-                    question: item.pageFaqQuestion,
-                    answer: item.pageFaqAnswer,
-                  }))
-                : faqData.notice?.map((item) => ({
-                    id: item.pageFaqIdx,
-                    question: item.pageFaqQuestion,
-                    answer: item.pageFaqAnswer,
-                  }))
-            }
-          />
-        )}
+        {isPending
+          ? Array.from({ length: 3 }).map((_, index) => (
+              <QnaSkeleton key={index} />
+            ))
+          : faqData && (
+              <Accordion
+                key="accordion"
+                data={
+                  activeTabId === '1'
+                    ? faqData.question?.map((item) => ({
+                        id: item.pageFaqIdx,
+                        question: item.pageFaqQuestion,
+                        answer: item.pageFaqAnswer,
+                      }))
+                    : faqData.notice?.map((item) => ({
+                        id: item.pageFaqIdx,
+                        question: item.pageFaqQuestion,
+                        answer: item.pageFaqAnswer,
+                      }))
+                }
+              />
+            )}
       </div>
       {/* {activeTabId === '1' && <Accordion data={QUESTION_DATA} />}
         {activeTabId === '2' && <Accordion data={NOTICE_DATA} />} */}

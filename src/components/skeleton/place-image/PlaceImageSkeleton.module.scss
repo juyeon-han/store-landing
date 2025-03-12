@@ -1,0 +1,18 @@
+@use '@/styles/scss/mixin.scss' as *;
+
+.wrapper {
+  @include skeleton;
+  width: 700px;
+  height: 304px;
+  border-radius: 8px;
+  // margin-top: 140px;
+
+  @include tablet {
+    width: 100%;
+  }
+
+  @include mobile {
+    width: 100%;
+    margin-top: 80px;
+  }
+}
