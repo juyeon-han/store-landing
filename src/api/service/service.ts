@@ -16,7 +16,6 @@ export const getServiceCategory = async ({
   pageNum = '1',
 }: ServiceCategoryReq): Promise<ServiceCategoryResDto> => {
   request();
-  //   await new Promise((resolve) => setTimeout(resolve, 10000));
   return instance
     .get(endpoints.serviceCategory.replace('{pageNum}', pageNum))
     .then((res) => res.data);
@@ -70,7 +69,6 @@ export const getServiceList = async ({
   pageNum = '1',
 }: ServiceListReq): Promise<ServiceListResDto> => {
   request();
-
   return instance
     .get(endpoints.serviceList.replace('{pageNum}', pageNum))
     .then((res) => res.data);

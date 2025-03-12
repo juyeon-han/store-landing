@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import classNames from 'classnames/bind';
 import { useGetPageReview } from '@/api/service/page';
 import ReviewCard from '@/components/card/review-card/ReviewCard';
+import ErrorFallback from '@/components/fallback/ErrorFallback';
 import ReviewCardSkeleton from '@/components/skeleton/review-card/ReviewCardSkeleton';
 import PageTitle from '@/components/title/PageTitle';
 import { RESPONSE_CODE } from '@/constants/responseCode';
@@ -15,9 +16,13 @@ const ReviewPage = () => {
   const { setElements, isVisible } = useIntersectionObserver();
   const { pageParams } = usePageParams();
 
-  const { data, isSuccess, isPending } = useGetPageReview({
-    pageNum: pageParams.pageNum,
-  });
+  const { data, isSuccess, isPending, isError, error, refetch } =
+    useGetPageReview({
+      pageNum: pageParams.pageNum,
+      options: {
+        throwOnError: false,
+      },
+    });
 
   const reviewData = useMemo(
     () =>
@@ -39,7 +44,8 @@ const ReviewPage = () => {
         category="Real Review"
         title="눈으로 확인하는 Before & After"
       />
-      {isPending ? (
+      {isError && <ErrorFallback error={error} resetErrorBoundary={refetch} />}
+      {!isError && isPending ? (
         <div className={cx('skeleton_wrapper')}>
           {Array.from({ length: 3 }).map((_, index) => (
             <ReviewCardSkeleton key={index} />

@@ -6,7 +6,7 @@ const ErrorFallback = ({
   resetErrorBoundary: () => void;
 }) => {
   return (
-    <div role="alert">
+    <div role="alert" style={{ zIndex: 1000 }}>
       <h1>문제가 발생했습니다!</h1>
       <pre>{error.message}</pre>
       <button onClick={resetErrorBoundary}>다시 시도</button>

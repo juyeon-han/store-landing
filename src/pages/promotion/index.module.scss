@@ -7,7 +7,6 @@
   background: #e4e4e7;
   background-image: url('/src/assets/images/promotion_bg.jpg');
   position: relative;
-  z-index: -1;
 
   @include tablet {
     padding: 80px 40px;
@@ -22,13 +21,13 @@
     background: rgba(239, 237, 229, 0.4);
     background-blend-mode: multiply;
     backdrop-filter: blur(47px);
-    z-index: -1;
   }
 
   .promotion_card {
     @include flex-column(center);
     gap: 40px;
     width: 100%;
+
     @include desktop {
       min-width: map.get($breakpoints, 'tablet');
     }

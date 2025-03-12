@@ -19,6 +19,7 @@ import Location from './svg/location.svg?react';
 import Menu from './svg/menu.svg?react';
 import Phone from './svg/phone.svg?react';
 import Plus from './svg/plus.svg?react';
+import Refresh from './svg/refresh.svg?react';
 import Sessions from './svg/sessions.svg?react';
 import Year from './svg/year.svg?react';
 import Youtube from './svg/youtube.svg?react';
@@ -44,6 +45,7 @@ export const icons = {
   Menu,
   Phone,
   Plus,
+  Refresh,
   Sessions,
   Year,
   Youtube,

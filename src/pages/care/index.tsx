@@ -7,8 +7,12 @@ import BottomSheet, {
 } from '@/components/bottomSheet/BottomSheet';
 import BottomSheetContent from '@/components/bottomSheet/BottomSheetContent';
 import PayCard from '@/components/card/pay-card/PayCard';
+import ProgramCard from '@/components/card/program-card/ProgramCard';
 import RecommendCard from '@/components/card/recommend-card/RecommendCard';
+import ErrorFallback from '@/components/fallback/ErrorFallback';
+import BasicSkeleton from '@/components/skeleton/basic/BasicSkeleton';
 import PayCardSkeleton from '@/components/skeleton/pay-card/PayCardSkeleton';
+import ProgramCardSkeleton from '@/components/skeleton/program-card/ProgramCardSkeleton';
 import ScrollTab from '@/components/tab/scroll-tab/ScrollTab';
 import PageTitle from '@/components/title/PageTitle';
 import { RESPONSE_CODE } from '@/constants/responseCode';
@@ -57,10 +61,27 @@ const CarePage = () => {
   const cx = classNames.bind(styles);
   const { pageParams } = usePageParams();
 
-  const { data: serviceListData, isSuccess: isServiceListSuccess } =
-    useGetServiceList({
-      pageNum: pageParams.pageNum,
-    });
+  const {
+    data: _serviceListData,
+    isSuccess,
+    isPending: isServiceListPending,
+    isError: isServiceListError,
+    error: serviceListError,
+    refetch: serviceListRefetch,
+  } = useGetServiceList({
+    pageNum: pageParams.pageNum,
+    options: {
+      throwOnError: false,
+    },
+  });
+
+  const serviceListData = useMemo(
+    () =>
+      _serviceListData?.resultCode === RESPONSE_CODE.SUCCESS
+        ? _serviceListData.body?.serviceList
+        : undefined,
+    [_serviceListData]
+  );
 
   const [selectedServiceCategoryId, setSelectedServiceCategoryId] =
     useState<string>('000');
@@ -75,16 +96,15 @@ const CarePage = () => {
 
   useEffect(() => {
     const serviceCategoryList =
-      serviceListData?.body?.serviceList.map((item) => item.serviceCategory) ??
-      [];
+      serviceListData?.map((item) => item.serviceCategory) ?? [];
 
     const initServiceCategory = serviceCategoryList?.[0];
 
-    const serviceList = serviceListData?.body?.serviceList[0].service ?? [];
+    const serviceList = serviceListData?.[0].service ?? [];
 
     const initService = serviceList?.[0];
 
-    if (serviceCategoryList !== undefined && isServiceListSuccess) {
+    if (serviceCategoryList !== undefined && isSuccess) {
       setServiceCategoryList(serviceCategoryList);
       setServiceList(serviceList);
       setSelectedServiceCategoryId(initServiceCategory?.serviceCategoryCode);
@@ -94,7 +114,7 @@ const CarePage = () => {
 
   const getMatchedService = (serviceCategoryId: string) => {
     return (
-      serviceListData?.body?.serviceList.find(
+      serviceListData?.find(
         (item) => item.serviceCategory.serviceCategoryCode === serviceCategoryId
       )?.service ?? []
     );
@@ -102,7 +122,7 @@ const CarePage = () => {
 
   const getMatchedServiceCategoryId = (serviceId: string) => {
     return (
-      serviceListData?.body?.serviceList.find((item) =>
+      serviceListData?.find((item) =>
         item.service.find((item) => item.serviceCode === serviceId)
       )?.serviceCategory?.serviceCategoryCode ?? '000'
     );
@@ -126,13 +146,20 @@ const CarePage = () => {
     setSelectedServiceId(serviceId);
   };
 
-  const { data, isPending } = useGetServiceSub({
+  const {
+    data,
+    isPending: isServiceSubPending,
+    isError: isServiceSubError,
+    error: serviceSubError,
+    refetch: serviceSubRefetch,
+  } = useGetServiceSub({
     pageNum: pageParams.pageNum,
     serviceCategoryCode: selectedServiceCategoryId,
     serviceCode: selectedServiceId,
     options: {
       enabled:
         selectedServiceCategoryId !== '000' && selectedServiceId !== '00000',
+      throwOnError: false,
     },
   });
 
@@ -187,77 +214,100 @@ const CarePage = () => {
         >
           <div className={cx('border')}>
             <div className={cx('inner')}>
-              {serviceCategoryList.length > 0 && (
-                <ScrollTab
-                  className={cx('line_tab')}
-                  tabs={serviceCategoryList.map((item) => ({
-                    id: item.serviceCategoryCode,
-                    name: item.serviceCategoryName,
-                  }))}
-                  activeTabId={selectedServiceCategoryId}
-                  handleActiveTab={handleServiceCategory}
-                  mode="line"
+              {isServiceListError && (
+                <ErrorFallback
+                  error={serviceListError}
+                  resetErrorBoundary={serviceListRefetch}
                 />
               )}
-              <ScrollTab
-                className={cx('button_tab')}
-                tabs={serviceList.map((item) => ({
-                  id: item.serviceCode,
-                  name: item.serviceName,
-                }))}
-                activeTabId={selectedServiceId}
-                handleActiveTab={handleService}
-                handleNextButton={() => bottomSheetRef.current?.open()}
-              />
+              {isServiceListPending ? (
+                <>
+                  <BasicSkeleton />
+                  <BasicSkeleton />
+                </>
+              ) : (
+                <>
+                  {serviceCategoryList.length > 0 && (
+                    <ScrollTab
+                      className={cx('line_tab')}
+                      tabs={serviceCategoryList.map((item) => ({
+                        id: item.serviceCategoryCode,
+                        name: item.serviceCategoryName,
+                      }))}
+                      activeTabId={selectedServiceCategoryId}
+                      handleActiveTab={handleServiceCategory}
+                      mode="line"
+                    />
+                  )}
+                  {serviceList.length > 0 && (
+                    <ScrollTab
+                      className={cx('button_tab')}
+                      tabs={serviceList.map((item) => ({
+                        id: item.serviceCode,
+                        name: item.serviceName,
+                      }))}
+                      activeTabId={selectedServiceId}
+                      handleActiveTab={handleService}
+                      handleNextButton={() => bottomSheetRef.current?.open()}
+                    />
+                  )}
+                </>
+              )}
               <div className={cx('program_wrapper')}>
-                <div
-                  className={cx('program_card')}
-                  style={{
-                    backgroundImage: `url('https://images.unsplash.com/photo-1739179418323-2d9517032c6f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw4fHx8ZW58MHx8fHx8)`,
-                  }}
-                >
-                  <p className={cx('title')}>
-                    작고 갸름한 얼굴형으로 관리해주는 작은 얼굴형 관리
-                  </p>
-                  <p className={cx('text')}>
-                    작은 얼굴과 V라인이 미인의 첫째 조건으로 여겨지는
-                    시대입니다. 얼굴이 작으면 전체적인 몸의 비율 좋아져 키가
-                    작아도 8등신으로 보일 수 있습니다. 또한 V라인의 계란형
-                    얼굴은 어떤 헤어스타일과도 잘 어울리는 이상적인 얼굴형이라
-                    할 수 있습니다.
-                  </p>
-                </div>
-                <div
-                  className={cx('pay_card_wrapper', {
-                    pay_card_grid_wrapper:
-                      serviceSubData && serviceSubData.length > 3,
-                  })}
-                >
-                  {isPending
-                    ? Array.from({ length: 3 }).map((_, index) => (
-                        <PayCardSkeleton key={index} />
-                      ))
-                    : serviceSubData &&
-                      serviceSubData.map((pay) => (
-                        <PayCard
-                          key={pay.serviceSubCode}
-                          data={{
-                            type_num: Number(pay.serviceSubCount),
-                            discount_per: Number(pay.serviceSubDiscountPercent),
-                            discount_price: Number(pay.serviceSubPrice),
-                            origin_price: Number(pay.serviceSubOriginalPrice),
-                            duration: Number(
-                              getMatchedServiceTime(selectedServiceId)
-                            ),
-                          }}
-                          type={
-                            serviceSubData && serviceSubData.length > 3
-                              ? 'grid'
-                              : 'column'
-                          }
-                        />
-                      ))}
-                </div>
+                {isServiceSubError && (
+                  <ErrorFallback
+                    error={serviceSubError}
+                    resetErrorBoundary={serviceSubRefetch}
+                  />
+                )}
+                {!isServiceSubError && !isServiceListError && (
+                  <>
+                    {isServiceSubPending ? (
+                      <ProgramCardSkeleton />
+                    ) : (
+                      <ProgramCard
+                        imgUrl="https://images.unsplash.com/photo-1739179418323-2d9517032c6f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw4fHx8ZW58MHx8fHx8"
+                        title="작고 갸름한 얼굴형으로 관리해주는 작은 얼굴형 관리"
+                        text="작은 얼굴과 V라인이 미인의 첫째 조건으로 여겨지는 시대입니다. 얼굴이 작으면 전체적인 몸의 비율 좋아져 키가 작아도 8등신으로 보일 수 있습니다. 또한 V라인의 계란형 얼굴은 어떤 헤어스타일과도 잘 어울리는 이상적인 얼굴형이라 할 수 있습니다."
+                      />
+                    )}
+                    <div
+                      className={cx('pay_card_wrapper', {
+                        pay_card_grid_wrapper:
+                          serviceSubData && serviceSubData.length > 3,
+                      })}
+                    >
+                      {isServiceSubPending
+                        ? Array.from({ length: 3 }).map((_, index) => (
+                            <PayCardSkeleton key={index} />
+                          ))
+                        : serviceSubData &&
+                          serviceSubData.map((pay) => (
+                            <PayCard
+                              key={pay.serviceSubCode}
+                              data={{
+                                type_num: Number(pay.serviceSubCount),
+                                discount_per: Number(
+                                  pay.serviceSubDiscountPercent
+                                ),
+                                discount_price: Number(pay.serviceSubPrice),
+                                origin_price: Number(
+                                  pay.serviceSubOriginalPrice
+                                ),
+                                duration: Number(
+                                  getMatchedServiceTime(selectedServiceId)
+                                ),
+                              }}
+                              type={
+                                serviceSubData && serviceSubData.length > 3
+                                  ? 'grid'
+                                  : 'column'
+                              }
+                            />
+                          ))}
+                    </div>
+                  </>
+                )}
               </div>
               <div className={cx('recommend_wrapper')}>
                 <div className={cx('recommend_text')}>
@@ -327,7 +377,7 @@ const CarePage = () => {
           }}
         >
           <BottomSheetContent
-            data={serviceListData?.body?.serviceList ?? []}
+            data={serviceListData ?? []}
             sheetSelectedId={sheetSelectedServiceId}
             handleSheetItem={handleSheetItem}
           />
