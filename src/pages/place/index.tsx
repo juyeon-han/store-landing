@@ -37,6 +37,14 @@ const PlacePage = () => {
     [data]
   );
 
+  const handleChat = () => {
+    window.open(
+      'http://pf.kakao.com/_DxgxaDC',
+      '_blank',
+      'noopener,noreferrer'
+    );
+  };
+
   useEffect(() => {
     if (placeData && isSuccess) {
       setElements(placeRefs.current);
@@ -138,7 +146,7 @@ const PlacePage = () => {
                       <Icon name="Phone" color="brown700" size="xs" />
                       <p>{placeData.pageBranchTel}</p>
                     </div>
-                    <button className={cx('button')}>
+                    <button className={cx('button')} onClick={handleChat}>
                       채팅 상담하기
                       <Icon name="ArrowRight" color="white" size="sm" />
                     </button>
