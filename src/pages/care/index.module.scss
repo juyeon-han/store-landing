@@ -85,7 +85,7 @@
         }
 
         .program_wrapper {
-          @include flex-row(center);
+          @include flex-row(center, flex-start);
           gap: 24px;
           margin-bottom: 24px;
           width: 100%;
