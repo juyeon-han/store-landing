@@ -24,37 +24,6 @@ import Icon from '@/styles/icons/icons';
 import { padNumber } from '@/utils/number';
 import styles from './index.module.scss';
 
-// const steps = [
-//   {
-//     id: '01',
-//     step: '상체 부분 관리',
-//   },
-//   {
-//     id: '02',
-//     step: '두피 관리',
-//   },
-//   {
-//     id: '03',
-//     step: '클렌징',
-//   },
-//   {
-//     id: '04',
-//     step: '피부 관리',
-//   },
-//   {
-//     id: '05',
-//     step: '약손테라피',
-//   },
-//   {
-//     id: '06',
-//     step: '팩',
-//   },
-//   {
-//     id: '07',
-//     step: '마무리',
-//   },
-// ];
-
 const tempUrl =
   'https://images.unsplash.com/photo-1739179418323-2d9517032c6f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw4fHx8ZW58MHx8fHx8';
 
