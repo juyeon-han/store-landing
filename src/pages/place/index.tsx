@@ -19,12 +19,6 @@ import styles from './index.module.scss';
 const PlacePage = () => {
   const cx = classNames.bind(styles);
 
-  const storeData = {
-    customers: 5000,
-    sessions: 20000,
-    year: 10,
-  };
-
   const placeRefs = useRef<Array<HTMLDivElement | null>>([]);
   const { setElements, isVisible } = useIntersectionObserver();
   const { pageParams } = usePageParams();
@@ -78,7 +72,11 @@ const PlacePage = () => {
               ) : (
                 placeData && (
                   <StoreCard
-                    data={storeData}
+                    data={{
+                      customers: Number(placeData.totalCustomerCount),
+                      sessions: Number(placeData.totalCareCount),
+                      year: placeData.pageOwnerYearsOfExperience,
+                    }}
                     ref={(el) => (placeRefs.current[0] = el)}
                     className={`reveal ${isVisible[0] ? 'visible' : ''}`}
                   />

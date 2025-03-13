@@ -26,6 +26,9 @@ export interface PageType {
   pageOwnerProfileUrl: string;
   pageIntro: string;
   pageStatus: PageStatusType;
+  totalCustomerCount: string;
+  totalCareCount: string;
+  pageOwnerYearsOfExperience: number;
   pageImage: PageImageType[];
 }
 
