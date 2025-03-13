@@ -16,46 +16,44 @@ import ProgramCardSkeleton from '@/components/skeleton/program-card/ProgramCardS
 import ScrollTab from '@/components/tab/scroll-tab/ScrollTab';
 import PageTitle from '@/components/title/PageTitle';
 import { RESPONSE_CODE } from '@/constants/responseCode';
+import { CARE_STEPS, CARE_STEPS_NOTICE } from '@/constants/text';
 import useBreakpoint from '@/hooks/useBreakPoint';
 import { useIntersectionObserver } from '@/hooks/useInteractionObserver';
 import { usePageParams } from '@/hooks/usePageParams';
 import Icon from '@/styles/icons/icons';
+import { padNumber } from '@/utils/number';
 import styles from './index.module.scss';
 
-const steps = [
-  {
-    id: '01',
-    step: '등 크림 or 가슴 복부 관리',
-  },
-  {
-    id: '02',
-    step: '팔 관리',
-  },
-  {
-    id: '03',
-    step: '데콜테',
-  },
-  {
-    id: '04',
-    step: '두피 관리',
-  },
-  {
-    id: '05',
-    step: '피부 관리',
-  },
-  {
-    id: '06',
-    step: '작은 얼굴 테라피',
-  },
-  {
-    id: '07',
-    step: '팩',
-  },
-  {
-    id: '08',
-    step: '마무리',
-  },
-];
+// const steps = [
+//   {
+//     id: '01',
+//     step: '상체 부분 관리',
+//   },
+//   {
+//     id: '02',
+//     step: '두피 관리',
+//   },
+//   {
+//     id: '03',
+//     step: '클렌징',
+//   },
+//   {
+//     id: '04',
+//     step: '피부 관리',
+//   },
+//   {
+//     id: '05',
+//     step: '약손테라피',
+//   },
+//   {
+//     id: '06',
+//     step: '팩',
+//   },
+//   {
+//     id: '07',
+//     step: '마무리',
+//   },
+// ];
 
 const tempUrl =
   'https://images.unsplash.com/photo-1739179418323-2d9517032c6f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw4fHx8ZW58MHx8fHx8';
@@ -352,24 +350,18 @@ const CarePage = () => {
                 </p>
                 <div className={cx('block')}>Total 8 Step</div>
                 <div className={cx('step_container')}>
-                  {steps.map((step) => (
+                  {CARE_STEPS.map((step, idx) => (
                     <div className={cx('step')} key={step.id}>
-                      <p className={cx('stress')}>Step {step.id}</p>
+                      <p className={cx('stress')}>Step {padNumber(idx + 1)}</p>
                       <hr className={cx('divider')} />
                       <p>{step.step}</p>
                     </div>
                   ))}
                 </div>
                 <ul className={cx('care_info_text')}>
-                  <li>
-                    관리 방법은 당일 고객님의 얼굴, 몸, 건강상태에 따라
-                    관리순서가 다를 수 있습니다.
-                  </li>
-                  <li>
-                    영양(보습,리프팅)과 테라피 관리 시, 고객님의 피부와 비대칭에
-                    따라 맞춤식 관리를 하고 있습니다.
-                  </li>
-                  <li>위 계약은 각 매장과 체결합니다.</li>
+                  {CARE_STEPS_NOTICE.map((notice) => (
+                    <li key={notice.id}>{notice.step}</li>
+                  ))}
                 </ul>
               </div>
             </div>
