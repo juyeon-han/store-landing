@@ -57,9 +57,21 @@ const steps = [
   },
 ];
 
+const tempUrl =
+  'https://images.unsplash.com/photo-1739179418323-2d9517032c6f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw4fHx8ZW58MHx8fHx8';
+
 const CarePage = () => {
   const cx = classNames.bind(styles);
   const { pageParams } = usePageParams();
+  const { setElements, isVisible } = useIntersectionObserver({
+    threshold: 0.05,
+  });
+  const breakPoint = useBreakpoint();
+  const careRef = useRef<Array<HTMLDivElement | null>>([]);
+
+  useEffect(() => {
+    setElements(careRef.current);
+  }, []);
 
   const {
     data: _serviceListData,
@@ -75,6 +87,14 @@ const CarePage = () => {
     },
   });
 
+  const [selectedServiceCategoryId, setSelectedServiceCategoryId] =
+    useState<string>('000');
+  const [selectedServiceId, setSelectedServiceId] = useState<string>('00000');
+  const [serviceCategoryList, setServiceCategoryList] = useState<
+    serviceCategoryType[]
+  >([]);
+  const [serviceList, setServiceList] = useState<ServiceType[]>([]);
+
   const serviceListData = useMemo(
     () =>
       _serviceListData?.resultCode === RESPONSE_CODE.SUCCESS
@@ -83,34 +103,10 @@ const CarePage = () => {
     [_serviceListData]
   );
 
-  const [selectedServiceCategoryId, setSelectedServiceCategoryId] =
-    useState<string>('000');
-
-  const [selectedServiceId, setSelectedServiceId] = useState<string>('00000');
-
-  const [serviceCategoryList, setServiceCategoryList] = useState<
-    serviceCategoryType[]
-  >([]);
-
-  const [serviceList, setServiceList] = useState<ServiceType[]>([]);
-
-  useEffect(() => {
-    const serviceCategoryList =
-      serviceListData?.map((item) => item.serviceCategory) ?? [];
-
-    const initServiceCategory = serviceCategoryList?.[0];
-
-    const serviceList = serviceListData?.[0].service ?? [];
-
-    const initService = serviceList?.[0];
-
-    if (serviceCategoryList !== undefined && isSuccess) {
-      setServiceCategoryList(serviceCategoryList);
-      setServiceList(serviceList);
-      setSelectedServiceCategoryId(initServiceCategory?.serviceCategoryCode);
-      setSelectedServiceId(initService?.serviceCode);
-    }
-  }, [serviceListData]);
+  const serviceProgram = useMemo(() => {
+    return serviceList.find((item) => item.serviceCode === selectedServiceId)
+      ?.serviceContent[0];
+  }, [serviceList, selectedServiceId]);
 
   const getMatchedService = (serviceCategoryId: string) => {
     return (
@@ -146,6 +142,24 @@ const CarePage = () => {
     setSelectedServiceId(serviceId);
   };
 
+  useEffect(() => {
+    const serviceCategoryList =
+      serviceListData?.map((item) => item.serviceCategory) ?? [];
+
+    const initServiceCategory = serviceCategoryList?.[0];
+
+    const serviceList = serviceListData?.[0].service ?? [];
+
+    const initService = serviceList?.[0];
+
+    if (serviceCategoryList !== undefined && isSuccess) {
+      setServiceCategoryList(serviceCategoryList);
+      setServiceList(serviceList);
+      setSelectedServiceCategoryId(initServiceCategory?.serviceCategoryCode);
+      setSelectedServiceId(initService?.serviceCode);
+    }
+  }, [serviceListData]);
+
   const {
     data,
     isPending: isServiceSubPending,
@@ -163,6 +177,9 @@ const CarePage = () => {
     },
   });
 
+  const [sheetSelectedServiceId, setSheetSelectedServiceId] =
+    useState<string>('');
+
   const serviceSubData = useMemo(
     () =>
       data?.resultCode === RESPONSE_CODE.SUCCESS
@@ -171,15 +188,7 @@ const CarePage = () => {
     [data]
   );
 
-  const careRef = useRef<Array<HTMLDivElement | null>>([]);
-  const { setElements, isVisible } = useIntersectionObserver({
-    threshold: 0.05,
-  });
-
-  const breakPoint = useBreakpoint();
-
-  const [sheetSelectedServiceId, setSheetSelectedServiceId] =
-    useState<string>('');
+  const bottomSheetRef = useRef<BottomSheetHandle>(null);
 
   const handleSheetItem = (serviceId: string) => {
     setSheetSelectedServiceId(serviceId);
@@ -195,14 +204,8 @@ const CarePage = () => {
   };
 
   useEffect(() => {
-    setElements(careRef.current);
-  }, []);
-
-  useEffect(() => {
     setSheetSelectedServiceId(selectedServiceId);
   }, [selectedServiceId]);
-
-  const bottomSheetRef = useRef<BottomSheetHandle>(null);
 
   return (
     <>
@@ -263,13 +266,19 @@ const CarePage = () => {
                 )}
                 {!isServiceSubError && !isServiceListError && (
                   <>
-                    {isServiceSubPending ? (
+                    {isServiceListPending ? (
                       <ProgramCardSkeleton />
                     ) : (
                       <ProgramCard
-                        imgUrl="https://images.unsplash.com/photo-1739179418323-2d9517032c6f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw4fHx8ZW58MHx8fHx8"
-                        title="작고 갸름한 얼굴형으로 관리해주는 작은 얼굴형 관리"
-                        text="작은 얼굴과 V라인이 미인의 첫째 조건으로 여겨지는 시대입니다. 얼굴이 작으면 전체적인 몸의 비율 좋아져 키가 작아도 8등신으로 보일 수 있습니다. 또한 V라인의 계란형 얼굴은 어떤 헤어스타일과도 잘 어울리는 이상적인 얼굴형이라 할 수 있습니다."
+                        imgUrl={tempUrl ?? serviceProgram?.serviceContentImage}
+                        title={
+                          serviceProgram?.serviceContentTitle ??
+                          '약손명가의 특별한 관리법'
+                        }
+                        text={
+                          serviceProgram?.serviceContentContent ??
+                          '프리미엄 케어라인의 관리 프로그램입니다.'
+                        }
                       />
                     )}
                     <div
