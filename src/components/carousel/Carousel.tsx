@@ -77,10 +77,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
         <div className="embla__container">
           {slides.map((el, idx) => (
             <div className="embla__slide" key={idx}>
-              <div
-                className="embla__slide__img"
-                style={{ backgroundImage: `url(${el.url})` }}
-              ></div>
+              <img className="embla__slide__img" src={el.url} alt={el.alt} />
             </div>
           ))}
         </div>

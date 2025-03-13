@@ -6,7 +6,8 @@
   max-width: var(--slide-max-size);
   width: var(--slide-size);
   margin: auto;
-  --slide-height: 19rem;
+  --slide-height-mobile: 19rem;
+  --slide-height-desktop: 30rem;
   --slide-spacing: 1rem;
   display: flex;
   flex-direction: column;
@@ -37,12 +38,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: var(--slide-height);
+  height: var(--slide-height-desktop);
   user-select: none;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
+  object-fit: cover;
+  object-position: center;
   background-color: #e4e4e7;
+  width: 100%;
+
+  @include mobile {
+    height: var(--slide-height-mobile);
+  }
 }
 
 .embla_arrow_wrapper {
