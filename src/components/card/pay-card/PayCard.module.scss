@@ -20,15 +20,18 @@
     padding: 16px 24px;
     justify-content: flex-start;
     gap: 6px;
+    height: 272px;
 
     @include tablet {
       gap: 16px;
       padding: 24px;
+      height: auto;
     }
 
     @include mobile {
       gap: 12px;
       padding: 12px;
+      height: auto;
     }
 
     .tag {
