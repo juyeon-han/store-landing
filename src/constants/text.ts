@@ -34,6 +34,10 @@ export const CARE_STEPS = [
 export const CARE_STEPS_NOTICE = [
   {
     id: uuidv4(),
+    step: '해당 관리 Step은 맞춤관리A 프로그램 기준이며 관리 프로그램에 따라 상세 Step이 다를 수 있습니다.',
+  },
+  {
+    id: uuidv4(),
     step: '관리 방법은 당일 고객님의 얼굴, 몸, 건강상태에 따라 관리순서가 다를 수 있습니다.',
   },
   {
