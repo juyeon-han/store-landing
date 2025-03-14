@@ -7,7 +7,7 @@ const ErrorFallback = ({
   resetErrorBoundary,
   style,
 }: {
-  error: Error;
+  error: Error | null;
   resetErrorBoundary: () => void;
   marginTop?: number;
   style?: React.CSSProperties;
@@ -17,7 +17,9 @@ const ErrorFallback = ({
   return (
     <div role="alert" className={cx('wrapper')} style={style}>
       <p className={cx('title')}>ERROR!</p>
-      <pre className={cx('text')}>{error.message}</pre>
+      <pre className={cx('text')}>
+        {error ? error.message : '알수없는 ERROR'}
+      </pre>
       <button className={cx('resetButton')} onClick={resetErrorBoundary}>
         다시 시도
         <Icon name="Refresh" color="white" size="sm" />

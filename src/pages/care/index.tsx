@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
 import { useGetServiceList, useGetServiceSub } from '@/api/service/service';
 import { serviceCategoryType, ServiceType } from '@/api/types/serviceType';
+import AsyncContent from '@/components/asyncContent/AsyncContent';
 import BottomSheet, {
   BottomSheetHandle,
 } from '@/components/bottomSheet/BottomSheet';
@@ -167,70 +168,91 @@ const CarePage = () => {
         >
           <div className={cx('border')}>
             <div className={cx('inner')}>
-              {isServiceListError && (
-                <ErrorFallback
-                  error={serviceListError}
-                  resetErrorBoundary={serviceListRefetch}
-                />
-              )}
-              {isServiceListPending ? (
-                <>
-                  <BasicSkeleton />
-                  <BasicSkeleton />
-                </>
-              ) : (
-                <>
-                  {serviceCategoryList.length > 0 && (
-                    <ScrollTab
-                      className={cx('line_tab')}
-                      tabs={serviceCategoryList.map((item) => ({
-                        id: item.serviceCategoryCode,
-                        name: item.serviceCategoryName,
-                      }))}
-                      activeTabId={selectedServiceCategoryId}
-                      handleActiveTab={handleServiceCategory}
-                      mode="line"
-                    />
-                  )}
-                  {serviceList.length > 0 && (
-                    <ScrollTab
-                      className={cx('button_tab')}
-                      tabs={serviceList.map((item) => ({
-                        id: item.serviceCode,
-                        name: item.serviceName,
-                      }))}
-                      activeTabId={selectedServiceId}
-                      handleActiveTab={handleService}
-                      handleNextButton={() => bottomSheetRef.current?.open()}
-                    />
-                  )}
-                </>
-              )}
-              <div className={cx('program_wrapper')}>
-                {isServiceSubError && (
+              <AsyncContent
+                isError={isServiceListError}
+                isPending={isServiceListPending}
+                ErrorComponent={
                   <ErrorFallback
-                    error={serviceSubError}
-                    resetErrorBoundary={serviceSubRefetch}
-                    style={{ marginTop: 24 }}
+                    error={serviceListError}
+                    resetErrorBoundary={serviceListRefetch}
+                  />
+                }
+                PendingComponent={
+                  <>
+                    <BasicSkeleton />
+                    <BasicSkeleton />
+                  </>
+                }
+              >
+                {serviceCategoryList.length > 0 && (
+                  <ScrollTab
+                    className={cx('line_tab')}
+                    tabs={serviceCategoryList.map((item) => ({
+                      id: item.serviceCategoryCode,
+                      name: item.serviceCategoryName,
+                    }))}
+                    activeTabId={selectedServiceCategoryId}
+                    handleActiveTab={handleServiceCategory}
+                    mode="line"
                   />
                 )}
-                {!isServiceSubError && !isServiceListError && (
-                  <>
-                    {isServiceListPending ? (
-                      <ProgramCardSkeleton />
+                {serviceList.length > 0 && (
+                  <ScrollTab
+                    className={cx('button_tab')}
+                    tabs={serviceList.map((item) => ({
+                      id: item.serviceCode,
+                      name: item.serviceName,
+                    }))}
+                    activeTabId={selectedServiceId}
+                    handleActiveTab={handleService}
+                    handleNextButton={() => bottomSheetRef.current?.open()}
+                  />
+                )}
+              </AsyncContent>
+
+              <div className={cx('program_wrapper')}>
+                <AsyncContent
+                  isError={isServiceSubError}
+                  isPending={isServiceSubPending || isServiceSubPending}
+                  ErrorComponent={
+                    <ErrorFallback
+                      error={serviceSubError}
+                      resetErrorBoundary={serviceSubRefetch}
+                      style={{ marginTop: 24 }}
+                    />
+                  }
+                  PendingComponent={
+                    !isServiceListError ? (
+                      <>
+                        <ProgramCardSkeleton />
+                        <div
+                          className={cx('pay_card_wrapper', {
+                            pay_card_grid_wrapper:
+                              serviceSubData && serviceSubData.length > 3,
+                          })}
+                        >
+                          {Array.from({ length: 3 }).map((_, index) => (
+                            <PayCardSkeleton key={index} />
+                          ))}
+                        </div>
+                      </>
                     ) : (
-                      <ProgramCard
-                        imgUrl={tempUrl ?? serviceProgram?.serviceContentImage}
-                        title={
-                          serviceProgram?.serviceContentTitle ??
-                          '약손명가의 특별한 관리법'
-                        }
-                        text={
-                          serviceProgram?.serviceContentContent ??
-                          '프리미엄 케어라인의 관리 프로그램입니다.'
-                        }
-                      />
-                    )}
+                      <></>
+                    )
+                  }
+                >
+                  <>
+                    <ProgramCard
+                      imgUrl={tempUrl ?? serviceProgram?.serviceContentImage}
+                      title={
+                        serviceProgram?.serviceContentTitle ??
+                        '약손명가의 특별한 관리법'
+                      }
+                      text={
+                        serviceProgram?.serviceContentContent ??
+                        '프리미엄 케어라인의 관리 프로그램입니다.'
+                      }
+                    />
                     <div
                       className={cx('pay_card_wrapper', {
                         pay_card_grid_wrapper:
@@ -267,7 +289,7 @@ const CarePage = () => {
                           ))}
                     </div>
                   </>
-                )}
+                </AsyncContent>
               </div>
               <div className={cx('recommend_wrapper')}>
                 <div className={cx('recommend_text')}>

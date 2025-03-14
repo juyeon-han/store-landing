@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import classNames from 'classnames/bind';
 import { useGetPagePromotion } from '@/api/service/page';
+import AsyncContent from '@/components/asyncContent/AsyncContent';
 import ErrorFallback from '@/components/fallback/ErrorFallback';
 import PromotionCard from '@/components/promotion-card/PromotionCard';
 import PromotionCardSkeleton from '@/components/skeleton/promotion-card/PromotionCardSkeleton';
@@ -45,34 +46,44 @@ const PromotionPage = () => {
         category="Present"
         title="아름다움을 위한 약손명가의 특별한 선물"
       />
-      {isError && <ErrorFallback error={error} resetErrorBoundary={refetch} />}
-      {!isError &&
-        (isPending
-          ? Array.from({ length: 2 }).map((_, index) => (
+      <AsyncContent
+        isError={isError}
+        isPending={isPending}
+        ErrorComponent={
+          <ErrorFallback error={error} resetErrorBoundary={refetch} />
+        }
+        PendingComponent={
+          <>
+            {Array.from({ length: 2 }).map((_, index) => (
               <PromotionCardSkeleton key={index} />
-            ))
-          : promotionData && (
-              <div className={cx('promotion_card')}>
-                {promotionData.map((item, index) => (
-                  <PromotionCard
-                    ref={(el) => (promotionRefs.current[index] = el)}
-                    className={`reveal ${isVisible[index] ? 'visible' : ''}`}
-                    key={index}
-                    condition={item.pagePromotionTitle}
-                    product={item.pagePromotionSubtitle}
-                    imgUrl={
-                      tempUrl ??
-                      item.pagePromotionImage[0].pagePromotionImageUrl
-                    }
-                    num={Number(item.pagePromotionIdx)}
-                    event_date={formatDateRange(
-                      item.pagePromotionStime,
-                      item.pagePromotionEtime
-                    )}
-                  />
-                ))}
-              </div>
             ))}
+          </>
+        }
+      >
+        {promotionData ? (
+          <div className={cx('promotion_card')}>
+            {promotionData.map((item, index) => (
+              <PromotionCard
+                ref={(el) => (promotionRefs.current[index] = el)}
+                className={`reveal ${isVisible[index] ? 'visible' : ''}`}
+                key={index}
+                condition={item.pagePromotionTitle}
+                product={item.pagePromotionSubtitle}
+                imgUrl={
+                  tempUrl ?? item.pagePromotionImage[0].pagePromotionImageUrl
+                }
+                num={Number(item.pagePromotionIdx)}
+                event_date={formatDateRange(
+                  item.pagePromotionStime,
+                  item.pagePromotionEtime
+                )}
+              />
+            ))}
+          </div>
+        ) : (
+          <></>
+        )}
+      </AsyncContent>
     </section>
   );
 };

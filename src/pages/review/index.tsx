@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import classNames from 'classnames/bind';
 import { useGetPageReview } from '@/api/service/page';
+import AsyncContent from '@/components/asyncContent/AsyncContent';
 import ReviewCard from '@/components/card/review-card/ReviewCard';
 import ErrorFallback from '@/components/fallback/ErrorFallback';
 import ReviewCardSkeleton from '@/components/skeleton/review-card/ReviewCardSkeleton';
@@ -41,15 +42,21 @@ const ReviewPage = () => {
         category="Real Review"
         title="눈으로 확인하는 Before & After"
       />
-      {isError && <ErrorFallback error={error} resetErrorBoundary={refetch} />}
-      {!isError && isPending ? (
-        <div className={cx('skeleton_wrapper')}>
-          {Array.from({ length: 3 }).map((_, index) => (
-            <ReviewCardSkeleton key={index} />
-          ))}
-        </div>
-      ) : (
-        reviewData && (
+      <AsyncContent
+        isError={isError}
+        isPending={isPending}
+        ErrorComponent={
+          <ErrorFallback error={error} resetErrorBoundary={refetch} />
+        }
+        PendingComponent={
+          <div className={cx('skeleton_wrapper')}>
+            {Array.from({ length: 3 }).map((_, index) => (
+              <ReviewCardSkeleton key={index} />
+            ))}
+          </div>
+        }
+      >
+        {reviewData ? (
           <div
             className={cx(
               'card_container',
@@ -66,8 +73,10 @@ const ReviewPage = () => {
               }))}
             />
           </div>
-        )
-      )}
+        ) : (
+          <></>
+        )}
+      </AsyncContent>
     </section>
   );
 };
