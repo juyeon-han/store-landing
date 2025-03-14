@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import classNames from 'classnames/bind';
 import { useGetPageFaq } from '@/api/service/page';
 import Accordion from '@/components/accordion/Accordion';
@@ -7,8 +7,6 @@ import BasicSkeleton from '@/components/skeleton/basic/BasicSkeleton';
 import ScrollTab, { TabsType } from '@/components/tab/scroll-tab/ScrollTab';
 import { useTabController } from '@/components/tab/tabController';
 import PageTitle from '@/components/title/PageTitle';
-import { PAGE_FAQ_TYPE } from '@/constants/page';
-import { RESPONSE_CODE } from '@/constants/responseCode';
 import { useIntersectionObserver } from '@/hooks/useInteractionObserver';
 import { usePageParams } from '@/hooks/usePageParams';
 import styles from './index.module.scss';
@@ -29,29 +27,18 @@ const QnaPage = () => {
 
   const { pageParams } = usePageParams();
 
-  const { data, isPending, isError, error, refetch } = useGetPageFaq({
+  const {
+    data: faqData,
+    isPending,
+    isError,
+    error,
+    refetch,
+  } = useGetPageFaq({
     pageNum: pageParams.pageNum,
     options: {
       throwOnError: false,
     },
   });
-
-  const faqData = useMemo(
-    () =>
-      data?.resultCode === RESPONSE_CODE.SUCCESS
-        ? {
-            question:
-              data.body?.pageFaq.filter(
-                (item) => item.pageFaqType === PAGE_FAQ_TYPE.QUESTION
-              ) ?? [],
-            notice:
-              data.body?.pageFaq.filter(
-                (item) => item.pageFaqType === PAGE_FAQ_TYPE.NOTICE
-              ) ?? [],
-          }
-        : undefined,
-    [data]
-  );
 
   useEffect(() => {
     setElements(qnaRefs.current);

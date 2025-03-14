@@ -3,13 +3,18 @@ import { endpoints, instance, request } from '@/api/endpoint';
 import {
   ServiceCategoryReq,
   ServiceCategoryResDto,
+  serviceCategoryType,
   ServiceListReq,
   ServiceListResDto,
+  ServiceListType,
   ServiceReq,
   ServiceResDto,
   ServiceSubReq,
   ServiceSubResDto,
+  ServiceSubType,
+  ServiceType,
 } from '@/api/types/serviceType';
+import { RESPONSE_CODE } from '@/constants/responseCode';
 
 // ServiceCategory
 export const getServiceCategory = async ({
@@ -25,11 +30,19 @@ export const useGetServiceCategory = ({
   pageNum = '1',
   options,
 }: ServiceCategoryReq & {
-  options?: Partial<QueryObserverOptions<ServiceCategoryResDto, Error>>;
+  options?: Partial<
+    QueryObserverOptions<ServiceCategoryResDto, Error, serviceCategoryType[]>
+  >;
 }) => {
   return useQuery({
     queryKey: [endpoints.serviceCategory, pageNum],
     queryFn: () => getServiceCategory({ pageNum }),
+    select: (data) => {
+      if (data.resultCode === RESPONSE_CODE.SUCCESS) {
+        return data.body?.serviceCategory;
+      }
+      return undefined;
+    },
     ...options,
   });
 };
@@ -55,11 +68,17 @@ export const useGetService = ({
   serviceCategoryCode,
   options,
 }: ServiceReq & {
-  options?: Partial<QueryObserverOptions<ServiceResDto, Error>>;
+  options?: Partial<QueryObserverOptions<ServiceResDto, Error, ServiceType[]>>;
 }) => {
   return useQuery({
     queryKey: [endpoints.service, pageNum, serviceCategoryCode],
     queryFn: () => getService({ pageNum, serviceCategoryCode }),
+    select: (data) => {
+      if (data.resultCode === RESPONSE_CODE.SUCCESS) {
+        return data.body?.service;
+      }
+      return undefined;
+    },
     ...options,
   });
 };
@@ -78,11 +97,19 @@ export const useGetServiceList = ({
   pageNum = '1',
   options,
 }: ServiceListReq & {
-  options?: Partial<QueryObserverOptions<ServiceListResDto, Error>>;
+  options?: Partial<
+    QueryObserverOptions<ServiceListResDto, Error, ServiceListType[]>
+  >;
 }) => {
   return useQuery({
     queryKey: [endpoints.serviceList, pageNum],
     queryFn: () => getServiceList({ pageNum }),
+    select: (data) => {
+      if (data.resultCode === RESPONSE_CODE.SUCCESS) {
+        return data.body?.serviceList;
+      }
+      return undefined;
+    },
     ...options,
   });
 };
@@ -110,16 +137,19 @@ export const useGetServiceSub = ({
   serviceCode,
   options,
 }: ServiceSubReq & {
-  options?: Partial<QueryObserverOptions<ServiceSubResDto, Error>>;
+  options?: Partial<
+    QueryObserverOptions<ServiceSubResDto, Error, ServiceSubType[]>
+  >;
 }) => {
   return useQuery({
     queryKey: [endpoints.serviceSub, pageNum, serviceCategoryCode, serviceCode],
-    queryFn: () =>
-      getServiceSub({
-        pageNum,
-        serviceCategoryCode,
-        serviceCode,
-      }),
+    queryFn: () => getServiceSub({ pageNum, serviceCategoryCode, serviceCode }),
+    select: (data) => {
+      if (data.resultCode === RESPONSE_CODE.SUCCESS) {
+        return data.body?.serviceSub;
+      }
+      return undefined;
+    },
     ...options,
   });
 };

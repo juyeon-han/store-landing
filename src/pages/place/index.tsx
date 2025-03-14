@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import classNames from 'classnames/bind';
 import { useGetPageDetail } from '@/api/service/page';
 import StoreCard from '@/components/card/store-card/StoreCard';
@@ -9,7 +9,6 @@ import PlaceImageSkeleton from '@/components/skeleton/place-image/PlaceImageSkel
 import PlaceIntroSkeleton from '@/components/skeleton/place-intro/PlaceIntroSkeleton';
 import StoreCardSkeleton from '@/components/skeleton/store-card/StoreCardSkeleton';
 import PageTitle from '@/components/title/PageTitle';
-import { RESPONSE_CODE } from '@/constants/responseCode';
 import { useIntersectionObserver } from '@/hooks/useInteractionObserver';
 import { usePageParams } from '@/hooks/usePageParams';
 import Icon from '@/styles/icons/icons';
@@ -23,19 +22,19 @@ const PlacePage = () => {
   const { setElements, isVisible } = useIntersectionObserver();
   const { pageParams } = usePageParams();
 
-  const { data, isSuccess, isPending, isError, error, refetch } =
-    useGetPageDetail({
-      pageNum: pageParams.pageNum,
-      options: {
-        throwOnError: false,
-      },
-    });
-
-  const placeData = useMemo(
-    () =>
-      data?.resultCode === RESPONSE_CODE.SUCCESS ? data.body?.page : undefined,
-    [data]
-  );
+  const {
+    data: placeData,
+    isSuccess,
+    isPending,
+    isError,
+    error,
+    refetch,
+  } = useGetPageDetail({
+    pageNum: pageParams.pageNum,
+    options: {
+      throwOnError: false,
+    },
+  });
 
   const handleChat = () => {
     window.open(

@@ -15,7 +15,6 @@ import PayCardSkeleton from '@/components/skeleton/pay-card/PayCardSkeleton';
 import ProgramCardSkeleton from '@/components/skeleton/program-card/ProgramCardSkeleton';
 import ScrollTab from '@/components/tab/scroll-tab/ScrollTab';
 import PageTitle from '@/components/title/PageTitle';
-import { RESPONSE_CODE } from '@/constants/responseCode';
 import { CARE_STEPS, CARE_STEPS_NOTICE } from '@/constants/text';
 import useBreakpoint from '@/hooks/useBreakPoint';
 import { useIntersectionObserver } from '@/hooks/useInteractionObserver';
@@ -41,7 +40,7 @@ const CarePage = () => {
   }, []);
 
   const {
-    data: _serviceListData,
+    data: serviceListData,
     isSuccess,
     isPending: isServiceListPending,
     isError: isServiceListError,
@@ -61,14 +60,6 @@ const CarePage = () => {
     serviceCategoryType[]
   >([]);
   const [serviceList, setServiceList] = useState<ServiceType[]>([]);
-
-  const serviceListData = useMemo(
-    () =>
-      _serviceListData?.resultCode === RESPONSE_CODE.SUCCESS
-        ? _serviceListData.body?.serviceList
-        : undefined,
-    [_serviceListData]
-  );
 
   const serviceProgram = useMemo(() => {
     return serviceList.find((item) => item.serviceCode === selectedServiceId)
@@ -128,7 +119,7 @@ const CarePage = () => {
   }, [serviceListData]);
 
   const {
-    data,
+    data: serviceSubData,
     isPending: isServiceSubPending,
     isError: isServiceSubError,
     error: serviceSubError,
@@ -146,14 +137,6 @@ const CarePage = () => {
 
   const [sheetSelectedServiceId, setSheetSelectedServiceId] =
     useState<string>('');
-
-  const serviceSubData = useMemo(
-    () =>
-      data?.resultCode === RESPONSE_CODE.SUCCESS
-        ? data.body?.serviceSub
-        : undefined,
-    [data]
-  );
 
   const bottomSheetRef = useRef<BottomSheetHandle>(null);
 

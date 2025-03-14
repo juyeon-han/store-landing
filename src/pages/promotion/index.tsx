@@ -1,11 +1,10 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import classNames from 'classnames/bind';
 import { useGetPagePromotion } from '@/api/service/page';
 import ErrorFallback from '@/components/fallback/ErrorFallback';
 import PromotionCard from '@/components/promotion-card/PromotionCard';
 import PromotionCardSkeleton from '@/components/skeleton/promotion-card/PromotionCardSkeleton';
 import PageTitle from '@/components/title/PageTitle';
-import { RESPONSE_CODE } from '@/constants/responseCode';
 import { useIntersectionObserver } from '@/hooks/useInteractionObserver';
 import { usePageParams } from '@/hooks/usePageParams';
 import { formatDateRange } from '@/utils/date';
@@ -20,21 +19,19 @@ const PromotionPage = () => {
   const tempUrl =
     'https://images.unsplash.com/photo-1737914111975-b4d513d783e0?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMXx8fGVufDB8fHx8fA%3D%3D';
 
-  const { data, isSuccess, isPending, isError, error, refetch } =
-    useGetPagePromotion({
-      pageNum: pageParams.pageNum,
-      options: {
-        throwOnError: false,
-      },
-    });
-
-  const promotionData = useMemo(
-    () =>
-      data?.resultCode === RESPONSE_CODE.SUCCESS
-        ? data.body?.pagePromotion
-        : undefined,
-    [data]
-  );
+  const {
+    data: promotionData,
+    isSuccess,
+    isPending,
+    isError,
+    error,
+    refetch,
+  } = useGetPagePromotion({
+    pageNum: pageParams.pageNum,
+    options: {
+      throwOnError: false,
+    },
+  });
 
   useEffect(() => {
     if (promotionData && isSuccess) {
