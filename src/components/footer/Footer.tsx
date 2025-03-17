@@ -59,11 +59,11 @@ const Footer = forwardRef<FooterHandle, FooterProps>((props, ref) => {
           <div>
             <span className={cx('title')}>상담전화</span>
             <span className={cx('text')}>
-              1566-8500 (평일 오전 9시 ~ 오후 8시, 토/공휴일 오전 9시 ~ 오후
-              4시)
+              02-469-7007 (평일: 오전 10시 ~ 오후 10시, 토: 오전 9시 ~ 오후 5시
+              30분, 일: 정기휴무)
             </span>
           </div>
-          <div className={cx('link')}>
+          {/* <div className={cx('link')}>
             {text_link.map((text) => (
               <a
                 key={text.id}
@@ -74,34 +74,34 @@ const Footer = forwardRef<FooterHandle, FooterProps>((props, ref) => {
                 {text.id}
               </a>
             ))}
-          </div>
+          </div> */}
         </div>
         <hr />
         <div className={cx('footer_info')}>
           <div>
             <div className={cx('info_item')}>
               <span className={cx('title')}>대표</span>
-              <span className={cx('text')}>이병철</span>
+              <span className={cx('text')}>정진연</span>
             </div>
             <div className={cx('info_item')}>
               <span className={cx('title')}>개인정보관리 책임자</span>
-              <span className={cx('text')}>김현숙</span>
+              <span className={cx('text')}>정진연</span>
             </div>
             <div className={cx('info_item')}>
-              <span className={cx('title')}>본사</span>
+              <span className={cx('title')}>주소</span>
               <span className={cx('text')}>
-                서울특별시 강남구 영동대로142길 29 약손명가 빌딩 2층
+                서울 광진구 아차산로 229 한림타워 4층 405호
               </span>
             </div>
           </div>
-          <div>
+          {/* <div>
             <div className={cx('info_item')}>
               <span className={cx('title')}>사업자등록번호</span>
               <span className={cx('text')}>211-88-34433</span>
             </div>
             <div className={cx('info_item')}>
               <span className={cx('title')}>Tel</span>
-              <span className={cx('text')}>02-546-1600</span>
+              <span className={cx('text')}>02-469-7007</span>
             </div>
             <div className={cx('info_item')}>
               <span className={cx('title')}>Fax</span>
@@ -110,13 +110,13 @@ const Footer = forwardRef<FooterHandle, FooterProps>((props, ref) => {
           </div>
           <div>
             <span className={cx('text')}>개인정보취급방침</span>
-          </div>
+          </div> */}
         </div>
         <div className={cx('footer_bottom')}>
           <span className={cx('copyright')}>
-            COPYRIGHT 2021. YAKSON ALL RIGHT RESERVED
+            COPYRIGHT 2025. YAKSONHEALTHCARE ALL RIGHT RESERVED
           </span>
-          <div className={cx('icon_btn_wrapper')}>
+          {/* <div className={cx('icon_btn_wrapper')}>
             {icons_link.map((icon) => (
               <a
                 key={icon.id}
@@ -128,7 +128,7 @@ const Footer = forwardRef<FooterHandle, FooterProps>((props, ref) => {
                 <Icon name={icon.id as IconNameType} size={40} />
               </a>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>

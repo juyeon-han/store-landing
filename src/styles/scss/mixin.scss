@@ -98,3 +98,9 @@ $breakpoints: (
   background-size: 200% 100%;
   animation: shimmer 3s infinite linear;
 }
+
+@mixin line-break() {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
