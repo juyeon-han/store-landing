@@ -44,7 +44,7 @@ const Gnb = forwardRef<GnbHandle, GnbProps>((props, ref) => {
 
   const handleReserve = () => {
     window.open(
-      'http://pf.kakao.com/_fWGAn/coupons/_krikmo44Z',
+      'http://pf.kakao.com/_fWGAn/chat',
       '_blank',
       'noopener,noreferrer'
     );
@@ -145,6 +145,7 @@ const Gnb = forwardRef<GnbHandle, GnbProps>((props, ref) => {
           menus={menus}
           activeMenu={activeMenu}
           handleMenu={handleMenu}
+          handleButton={handleReserve}
         />
       )}
     </>

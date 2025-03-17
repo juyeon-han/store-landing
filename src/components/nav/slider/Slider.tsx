@@ -12,6 +12,7 @@ interface SliderProps extends React.HTMLAttributes<HTMLDivElement> {
   menus: GnbMenusType[];
   activeMenu: string;
   handleMenu: (e: React.MouseEvent<HTMLAnchorElement>, id: string) => void;
+  handleButton: () => void;
 }
 
 const Slider = forwardRef<SliderHandle, SliderProps>((props, ref) => {
@@ -22,6 +23,7 @@ const Slider = forwardRef<SliderHandle, SliderProps>((props, ref) => {
     menus,
     activeMenu,
     handleMenu,
+    handleButton,
     ...otherProps
   } = props;
 
@@ -61,7 +63,9 @@ const Slider = forwardRef<SliderHandle, SliderProps>((props, ref) => {
           </li>
         </div>
         <div className={cx('footer')}>
-          <button className={cx('reserve_btn')}>예약하기</button>
+          <button className={cx('reserve_btn')} onClick={handleButton}>
+            예약하기
+          </button>
         </div>
       </div>
     </div>
