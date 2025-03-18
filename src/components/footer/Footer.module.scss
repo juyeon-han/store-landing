@@ -14,17 +14,12 @@
     padding: 24px;
   }
 
-  .logo {
-    width: 130px;
-    height: 28px;
+  .branch {
+    font-size: 16px;
+    font-weight: 600;
 
-    @include tablet {
-      width: 84px;
-      height: 18px;
-    }
     @include mobile {
-      width: 84px;
-      height: 18px;
+      font-size: 14px;
     }
   }
 
