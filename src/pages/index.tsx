@@ -8,7 +8,7 @@ import ReviewPage from '@/pages/review';
 
 function Home() {
   const menus: GnbMenusType[] = [
-    { id: 'intro', name: '지점 & 원장님 소개' },
+    { id: 'place', name: '지점 & 원장님 소개' },
     { id: 'review', name: '리뷰' },
     { id: 'promotion', name: '프로모션' },
     { id: 'care', name: '약손명가 관리' },

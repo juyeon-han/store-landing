@@ -52,7 +52,7 @@ const PlacePage = () => {
   }, [placeData, isSuccess]);
 
   return (
-    <section className={cx('container')} id="intro" data-page="intro">
+    <section className={cx('container')} id="place" data-page="place">
       <div className={cx('background')} />
       <div className={cx('container_inner')}>
         <PageTitle
