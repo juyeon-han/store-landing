@@ -1,0 +1,34 @@
+@use './palette.scss' as *;
+
+:export {
+  white: --Gray-Scale-White;
+
+  gray50: --Gray-Scale-50;
+  gray100: --Gray-Scale-100;
+  gray200: --Gray-Scale-200;
+  gray300: --Gray-Scale-300;
+  gray400: --Gray-Scale-400;
+  gray500: --Gray-Scale-500;
+  gray600: --Gray-Scale-600;
+  gray700: --Gray-Scale-700;
+  gray800: --Gray-Scale-800;
+  gray900: --Gray-Scale-900;
+
+  brown50: --Brown-Scale-Color-50;
+  brown100: --Brown-Scale-Color-100;
+  brown200: --Brown-Scale-Color-200;
+  brown300: --Brown-Scale-Color-300;
+  brown400: --Brown-Scale-Color-400;
+  brown500: --Brown-Scale-Color-500;
+  brown600: --Brown-Scale-Color-600;
+  brown700: --Brown-Scale-Color-700;
+  brown800: --Brown-Scale-Color-800;
+  brown900: --Brown-Scale-Color-900;
+
+  brand50: --Brand-color-50;
+  brand100: --Brand-color-100;
+  brand200: --Brand-color-200;
+  brand300: --brand-color-300-main;
+  brand400: --Brand-color-400;
+  brand500: --Brand-color-500;
+}

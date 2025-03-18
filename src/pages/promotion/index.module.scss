@@ -1,0 +1,46 @@
+@use '@/styles/scss/mixin.scss' as *;
+@use 'sass:map';
+
+.container {
+  @include flex-column(center);
+  padding: 120px 200px;
+  background: #e4e4e7;
+  background-image: url('/src/assets/images/promotion_bg.jpg');
+  position: relative;
+
+  @include tablet {
+    padding: 80px 40px;
+  }
+
+  @include mobile {
+    padding: 80px 16px;
+  }
+
+  &::before {
+    @include before();
+    background: rgba(239, 237, 229, 0.4);
+    background-blend-mode: multiply;
+    backdrop-filter: blur(47px);
+  }
+
+  .promotion_card {
+    @include flex-column(center);
+    gap: 40px;
+    width: 100%;
+
+    @include desktop {
+      min-width: map.get($breakpoints, 'tablet');
+    }
+
+    @include tablet {
+      min-width: map.get($breakpoints, 'mobile');
+      gap: 32px;
+    }
+
+    @include mobile {
+      min-width: 328px;
+      gap: 60px;
+      margin-top: 32px;
+    }
+  }
+}

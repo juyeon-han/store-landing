@@ -1,0 +1,125 @@
+@use '@/styles/scss/mixin.scss' as *;
+
+.wrapper {
+  width: 100%;
+  height: 84px;
+  padding: 24px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  max-width: 1280px;
+  margin: 0 auto;
+  z-index: 100;
+  background: white;
+
+  .logo_btn {
+    background: none;
+    img {
+      width: 130px;
+
+      @include mobile {
+        width: 84px;
+      }
+    }
+  }
+
+  @include tablet {
+    padding-right: 24px;
+  }
+
+  @include mobile {
+    padding: 12px 8px 12px 16px;
+    height: auto;
+  }
+
+  .menus {
+    display: flex;
+    gap: 32px;
+    margin-left: 48px;
+    margin-right: auto;
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      color: var(--Gray-Scale-700, #3f3f46);
+      line-height: 150%; /* 24px */
+      letter-spacing: -0.16px;
+
+      &:hover {
+        color: var(--Brand-color-400, #f16370);
+      }
+    }
+
+    .active_menu {
+      color: var(--Brand-color-500, #ee5462);
+      font-weight: 600;
+    }
+
+    @include tablet {
+      display: none;
+    }
+
+    @include mobile {
+      display: none;
+    }
+  }
+
+  .btn_wrapper {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+
+    .reserve_btn {
+      display: flex;
+      padding: 8px 16px;
+      align-items: center;
+      gap: 4px;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 150%; /* 24px */
+      letter-spacing: -0.16px;
+      @include button-status();
+
+      @include mobile {
+        position: fixed;
+        right: 16px;
+        bottom: 16px;
+        border-radius: 999px;
+        gap: 6px;
+        padding: 12px 16px;
+        box-shadow: 0px 4px 13px 0px rgba(39, 39, 42, 0.04);
+      }
+
+      .reserve_icon {
+        display: none !important;
+
+        @include mobile {
+          display: inline-flex !important;
+        }
+      }
+    }
+
+    .menu_btn {
+      display: none;
+      width: 40px;
+      height: 40px;
+      background: none;
+      @include tablet {
+        display: inline-flex;
+        justify-content: center;
+      }
+
+      @include mobile {
+        display: inline-flex;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+.wrapper.top_page {
+  background: none;
+}

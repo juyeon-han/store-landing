@@ -1,0 +1,120 @@
+@use '@/styles/scss/mixin.scss' as *;
+
+.container {
+  @include flex-column();
+  gap: 24px;
+  padding: 40px;
+  background: var(--Gray-Scale-800, #27272a);
+  color: var(--Gray-Scale-50, #fafafa);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.12px;
+
+  @include mobile {
+    padding: 24px;
+  }
+
+  .branch {
+    font-size: 16px;
+    font-weight: 600;
+
+    @include mobile {
+      font-size: 14px;
+    }
+  }
+
+  .wrapper {
+    @include flex-column();
+    width: 100%;
+
+    .title {
+      font-weight: 600;
+      margin-right: 8px;
+    }
+
+    .text {
+      margin-right: 16px;
+    }
+
+    .footer_top {
+      // @include flex-row();
+      @include flex-column();
+
+      width: 100%;
+      margin-bottom: 24px;
+      gap: 12px;
+
+      @include mobile {
+        @include flex-column();
+        gap: 12px;
+      }
+
+      .link {
+        a {
+          text-decoration: none;
+          font-weight: 600;
+          margin-right: 8px;
+          &:last-child {
+            margin-right: 0px;
+          }
+          color: var(--Gray-Scale-50, #fafafa);
+
+          &:visited,
+          &:link {
+            color: var(--Gray-Scale-50, #fafafa);
+          }
+        }
+      }
+    }
+
+    hr {
+      width: 100%;
+      border: none;
+      border-top: 1px solid var(--Gray-Scale-400, #a1a1aa);
+      margin-bottom: 20px;
+      margin-top: 0;
+    }
+
+    .footer_info {
+      @include flex-column();
+      gap: 8px;
+
+      .info_item {
+        display: inline-block;
+
+        @include mobile {
+          margin-bottom: 8px;
+        }
+      }
+
+      @include mobile {
+        gap: 0;
+      }
+    }
+
+    .footer_bottom {
+      @include flex-row(space-between, end);
+      width: 100%;
+      margin-top: 22px;
+
+      @include mobile {
+        @include flex-column();
+        margin-top: 24px;
+        gap: 12px;
+      }
+
+      .copyright {
+        color: var(--Gray-Scale-300, #d4d4d8);
+      }
+      .icon_btn_wrapper {
+        @include flex-row();
+        gap: 6px;
+
+        .icon_btn {
+          width: 40px;
+          height: 40px;
+        }
+      }
+    }
+  }
+}

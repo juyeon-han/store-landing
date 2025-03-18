@@ -1,0 +1,135 @@
+@use '@/styles/scss/mixin.scss' as *;
+
+.tab_container {
+  display: flex;
+  justify-content: center;
+  max-width: 100%;
+
+  .line_tab {
+    @include flex-row();
+    padding: 8px 24px 10px;
+    background: var(--Gray-Scale-white, #fff);
+    user-select: none;
+    margin-right: 6px;
+    color: var(--Gray-Scale-400, #a1a1aa);
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.18px;
+
+    @include mobile {
+      font-size: 14px;
+      letter-spacing: -0.14px;
+      padding: 8px 16px 10px;
+      margin-right: 4px;
+    }
+
+    &:hover {
+      color: var(--Brand-color-400, #f16370);
+    }
+
+    &:active {
+      color: var(--Brand-color-400, #f16370);
+    }
+
+    &.active_tab {
+      color: var(--Brand-color-400, #f16370);
+      border-bottom: 1px solid var(--brand-color-300-main, #ff808b);
+    }
+  }
+
+  .button_tab {
+    @include flex-row();
+    padding: 12px 24px;
+    border-radius: 6px;
+    background: var(--Gray-Scale-50, #fafafa);
+    border-radius: 6px;
+    margin-right: 16px;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 27px;
+    letter-spacing: -0.18px;
+    user-select: none;
+    color: var(--Gray-Scale-700, #3f3f46);
+
+    &:hover {
+      background: var(--Brand-color-50, #fff2f3);
+      color: var(--Brand-color-500, #ee5462);
+    }
+
+    &:active {
+      background: var(--Brand-color-200, #ffccd1);
+      color: var(--Brand-color-500, #ee5462);
+    }
+
+    &.active_tab {
+      background: var(--brand-color-300-main, #ff808b);
+      color: var(--Gray-Scale-White, #fff);
+    }
+
+    @include tablet {
+      padding: 6px 12px;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: -0.14px;
+      margin-right: 12px;
+    }
+
+    @include mobile {
+      padding: 6px 12px;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: -0.14px;
+      margin-right: 12px;
+    }
+  }
+
+  .arrow_button {
+    @include flex-row(center);
+    border: 0;
+    padding: 0;
+    margin: 0;
+    border-radius: 999px;
+    min-width: 40px;
+    height: 40px;
+
+    @include tablet {
+      min-width: 24px;
+      height: 24px;
+      margin: 6px;
+    }
+
+    @include mobile {
+      min-width: 24px;
+      height: 24px;
+      margin: 6px;
+    }
+
+    &.line {
+      background: var(--Gray-Scale-White, #fff);
+
+      &:hover {
+        background: var(--Gray-Scale-50, #fafafa);
+      }
+
+      &:active {
+        background: var(--Gray-Scale-100, #f4f4f5);
+      }
+    }
+
+    &.button {
+      background: var(--Gray-Scale-100, #f4f4f5);
+
+      &:hover {
+        background: var(--Gray-Scale-200, #e4e4e7);
+      }
+
+      &:active {
+        background: var(--Gray-Scale-300, #d4d4d8);
+      }
+
+      .arrowDown {
+        transform: rotate(90deg);
+      }
+    }
+  }
+}

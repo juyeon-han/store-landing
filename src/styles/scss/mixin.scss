@@ -1,0 +1,106 @@
+@use 'sass:map';
+
+@mixin flex-row($justify: space-between, $align: center) {
+  display: flex;
+  flex-direction: row;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+@mixin flex-column($align: flex-start, $justify: space-between) {
+  display: flex;
+  flex-direction: column;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+@mixin button-status() {
+  color: var(--Gray-Scale-White, #fff);
+  background: var(--brand-color-300-main, #ff808b);
+  &:hover {
+    background: var(--Brand-color-400, #f16370);
+  }
+  &:active {
+    background: var(--Brand-color-500, #ee5462);
+  }
+}
+
+@mixin before() {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+@mixin hide-scrollbar() {
+  &::-webkit-scrollbar {
+    display: none; // Chrome, Safari, Opera
+  }
+  -ms-overflow-style: none; // IE, Edge
+  scrollbar-width: none; // Firefox
+}
+
+$breakpoints: (
+  'mobile': 480px,
+  'tablet': 768px,
+  'desktop': 1280px,
+);
+
+@mixin respond-between($min, $max) {
+  @media (min-width: $min) and (max-width: $max) {
+    @content;
+  }
+}
+
+// 0 ~ 360px (모바일)
+@mixin mobile {
+  @include respond-between(0px, map.get($breakpoints, 'mobile')) {
+    @content;
+  }
+}
+
+// 360px ~ 768px (태블릿)
+@mixin tablet {
+  @include respond-between(
+    #{map.get($breakpoints, 'mobile') + 1px},
+    map.get($breakpoints, 'tablet')
+  ) {
+    @content;
+  }
+}
+
+// 768px (데스크탑)
+@mixin desktop {
+  @media (min-width: #{map.get($breakpoints, 'tablet') + 1px}) {
+    @content;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@mixin skeleton() {
+  background-image: linear-gradient(
+    90deg,
+    #fafafa 25%,
+    #f4f4f5 50%,
+    #fafafa 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite linear;
+}
+
+@mixin line-break() {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  white-space: normal;
+}

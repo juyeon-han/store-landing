@@ -1,0 +1,271 @@
+@use '@/styles/scss/mixin.scss' as *;
+
+.embla {
+  --slide-size: 100%;
+  --slide-max-size: 800px;
+  max-width: var(--slide-max-size);
+  width: var(--slide-size);
+  margin: auto;
+  --slide-height-mobile: 19rem;
+  --slide-height-desktop: 30rem;
+  --slide-spacing: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.embla__viewport {
+  overflow: hidden;
+  border-radius: 8px;
+  width: 100%;
+  position: relative;
+}
+.embla__container {
+  display: flex;
+  touch-action: pan-y pinch-zoom; // 터치 이벤트에서 수직 이동과 줌만 허용 (가로 슬라이드 방해 X)
+  margin-left: calc(var(--slide-spacing) * -1);
+}
+.embla__slide {
+  transform: translate3d(0, 0, 0);
+  flex: 0 0 var(--slide-size);
+  min-width: 0;
+  padding-left: var(--slide-spacing);
+}
+.embla__slide__img {
+  box-shadow: inset 0 0 0 0.2rem var(--detail-medium-contrast);
+  border-radius: 8px;
+  font-size: 4rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--slide-height-desktop);
+  user-select: none;
+  object-fit: cover;
+  object-position: center;
+  background-color: #e4e4e7;
+  width: 100%;
+
+  @include mobile {
+    height: var(--slide-height-mobile);
+  }
+}
+
+.embla_arrow_wrapper {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  right: 16px;
+  transform: translateY(-50%);
+  @include flex-row();
+}
+.embla_arrow {
+  width: 40px;
+  height: 40px;
+  @include flex-row(center);
+  border-radius: 99999px;
+  background: var(--Gray-Scale-100, #f4f4f5);
+
+  &:hover {
+    background: var(--Gray-Scale-200, #e4e4e7);
+  }
+
+  &:active {
+    background: var(--Gray-Scale-300, #d4d4d8);
+  }
+}
+
+.embla-thumbs {
+  --thumbs-img-space: 10px;
+  --thumbs-img-size: 100px;
+  --thumbs-img-border: 8px;
+  margin-top: 24px;
+  width: 100%;
+  border-radius: var(--thumbs-img-border);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+.embla-thumbs__viewport {
+  overflow: hidden;
+}
+.embla-thumbs__container {
+  display: flex;
+  flex-direction: row;
+  margin-right: calc(var(--thumbs-img-space));
+  margin-left: calc(var(--thumbs-img-space));
+}
+.embla-thumbs__slide {
+  flex: 0 0 calc(var(--thumbs-img-size) + var(--thumbs-img-space)); // 한개의 썸네일이 특정 크기만큼 크기 차지
+  min-width: 0;
+  &:last-child {
+    flex: 0 0 calc(var(--thumbs-img-size));
+  }
+}
+
+.embla-thumbs__slide__img {
+  border-radius: 1.8rem;
+  -webkit-tap-highlight-color: rgba(var(--text-high-contrast-rgb-value), 0.5);
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  touch-action: manipulation;
+  display: inline-flex;
+  text-decoration: none;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  box-shadow: inset 0 0 0 0.2rem var(--detail-medium-contrast);
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--detail-high-contrast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--thumbs-img-size);
+  height: var(--thumbs-img-size);
+  border-radius: var(--thumbs-img-border);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-color: #e4e4e7;
+  position: relative;
+
+  &::before {
+    @include before();
+    border-radius: var(--thumbs-img-border);
+    background: rgba(255, 255, 255, 0.4);
+    z-index: 1;
+  }
+}
+.embla-thumbs__slide--selected .embla-thumbs__slide__img {
+  &::before {
+    @include before();
+    border-radius: var(--thumbs-img-border);
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+  }
+}
+
+//////////////////// review slide
+.embla_review {
+  max-width: 100%;
+  margin: auto;
+  --review-spacing: 24px;
+  --review-size: 240px;
+
+  @include tablet {
+    --review-spacing: 16px;
+    --review-size: 180px;
+  }
+
+  @include mobile {
+    --review-spacing: 8px;
+    --review-size: 160px;
+  }
+}
+.embla__review_viewport {
+  overflow: hidden;
+
+  position: relative;
+  &::before {
+    @include before();
+    z-index: 10;
+    background-image: linear-gradient(
+      90deg,
+      white 1%,
+      transparent 10%,
+      transparent 90%,
+      white 99%
+    );
+  }
+}
+.embla__review_container {
+  display: flex; // 가로 슬라이드
+  touch-action: pan-y pinch-zoom;
+}
+.embla__review_slide {
+  transform: translate3d(0, 0, 0);
+  flex: 0 0 var(--review-size);
+  min-width: 0;
+  margin-right: var(--review-spacing);
+}
+
+//////////////////// tab slide
+.embla_tab {
+  max-width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.embla__tab_viewport {
+  overflow: hidden;
+
+  &.has_next {
+    position: relative;
+    &::before {
+      @include before();
+      z-index: 10;
+      background-image: linear-gradient(
+        90deg,
+        transparent 97%,
+        var(--Gray-Scale-White, #fff) 100%
+      );
+    }
+  }
+}
+.embla__tab_container {
+  display: flex;
+  touch-action: pan-y pinch-zoom;
+}
+.embla__tab_slide {
+  transform: translate3d(0, 0, 0);
+  flex-grow: 0;
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+// 인터렉션 옵저버
+.reveal {
+  width: 100%;
+  opacity: 0;
+  transform: translateY(50px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// embla dots
+.embla__dots {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+}
+
+.embla__dot {
+  -webkit-appearance: none;
+  appearance: none;
+  touch-action: manipulation;
+  display: inline-flex;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--Gray-Scale-300, #d4d4d8);
+}
+
+.embla__dot--selected {
+  background: var(--brand-color-300-main, #ff808b);
+}

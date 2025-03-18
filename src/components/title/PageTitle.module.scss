@@ -1,0 +1,66 @@
+@use '@/styles/scss/mixin.scss' as *;
+
+.wrapper {
+  @include flex-column(center);
+  gap: 4px;
+  margin-bottom: 64px;
+  z-index: 10;
+
+  @include tablet {
+    margin-bottom: 40px;
+  }
+
+  @include mobile {
+    margin-bottom: 32px;
+  }
+
+  .category {
+    font-size: 20px;
+    font-weight: 700;
+    font-family: 'Butler';
+    color: var(--Brand-color-400, #f16370);
+
+    @include tablet {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    @include mobile {
+      font-size: 14px;
+      font-weight: 600;
+    }
+  }
+
+  .title {
+    color: var(--Gray-Scale-900, #18181b);
+    font-size: 40px;
+    font-weight: 500;
+    letter-spacing: -0.4px;
+    text-align: center;
+    @include line-break();
+
+    @include tablet {
+      font-size: 32px;
+      letter-spacing: -0.32px;
+    }
+
+    @include mobile {
+      font-size: 24px;
+      letter-spacing: -0.24px;
+      gap: 12px;
+    }
+  }
+
+  &.store {
+    .title {
+      @include tablet {
+        font-size: 40px;
+      }
+
+      @include mobile {
+        font-size: 32px;
+        letter-spacing: -0.32px;
+      }
+    }
+  }
+}

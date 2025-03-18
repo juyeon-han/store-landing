@@ -1,0 +1,208 @@
+@use '@/styles/scss/mixin.scss' as *;
+
+.container {
+  width: 100%;
+  position: relative;
+}
+
+.sticker {
+  @include flex-row(center);
+  position: absolute;
+  top: 28px;
+  left: 28px;
+  border-radius: 9999px;
+  background: var(--brand-color-300-main, #ff808b);
+  width: 110px;
+  height: 110px;
+  z-index: 10;
+
+  @include tablet {
+    width: 100px;
+    height: 100px;
+  }
+
+  @include mobile {
+    width: 120px;
+    padding: 4px 4px 0px 4px;
+    height: auto;
+    border-radius: 999px 999px 0px 0px;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100%);
+  }
+
+  .sticker_inner {
+    @include flex-row(center);
+    font-family: 'Butler';
+    width: 100px;
+    height: 100px;
+    border-radius: 9999px;
+    border: 1px solid var(--Gray-Scale-White, #fff);
+    color: var(--Gray-Scale-White, #fff);
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+
+    @include tablet {
+      width: 90px;
+      height: 90px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    @include mobile {
+      height: 28px;
+      width: 100%;
+      border-radius: 999px 999px 0px 0px;
+      border: 1px solid var(--Gray-Scale-White, #fff);
+      border-bottom: none;
+      font-size: 14px;
+      font-weight: 600;
+    }
+  }
+}
+
+.wrapper {
+  @include flex-column(center);
+  width: 100%;
+  max-width: 880px;
+  background: white;
+  padding: 64px 0px 50px 0px;
+  border-radius: 16px;
+  background: var(--Gray-Scale-White, #fff);
+  box-shadow: 0px 4px 13px 0px rgba(43, 36, 31, 0.04);
+  overflow: hidden;
+  position: relative;
+
+  @include tablet {
+    padding: 50px 0;
+  }
+
+  @include mobile {
+    padding: 24px 0 32px;
+  }
+
+  .content {
+    @include flex-column(center);
+    z-index: 10;
+
+    .event_date {
+      @include flex-row();
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--brand-color-300-main, #ff808b);
+      color: var(--Brand-color-500, #ee5462);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -0.16px;
+      margin-bottom: 16px;
+
+      @include tablet {
+        margin-bottom: 20px;
+      }
+
+      @include mobile {
+        font-size: 12px;
+        letter-spacing: -0.12px;
+        padding: 6px 12px;
+        margin-bottom: 12px;
+      }
+    }
+
+    .condition {
+      color: var(--Gray-Scale-700, #3f3f46);
+      text-align: center;
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: -0.24px;
+      margin-bottom: 7px;
+
+      @include tablet {
+        font-size: 18px;
+        letter-spacing: -0.18px;
+        margin-bottom: 12px;
+      }
+
+      @include mobile {
+        font-size: 16px;
+        font-weight: 400;
+        letter-spacing: -0.16px;
+        margin-bottom: 8px;
+      }
+    }
+
+    .product {
+      @include flex-row();
+      gap: 8px;
+      color: var(--Gray-Scale-800, #27272a);
+      text-align: center;
+      font-size: 40px;
+      font-weight: 500;
+      letter-spacing: -0.4px;
+
+      @include tablet {
+        font-size: 32px;
+        letter-spacing: -0.32px;
+      }
+
+      @include mobile {
+        font-size: 20px;
+        font-weight: 500;
+        letter-spacing: -0.2px;
+      }
+
+      .stress {
+        @include flex-row();
+        gap: 6px;
+        color: var(--Brand-color-400, #f16370);
+        background: #fff2f3;
+      }
+    }
+
+    .image {
+      margin-top: 40px;
+      border-radius: 8px;
+      width: 500px;
+      height: 500px;
+      aspect-ratio: 1/1;
+
+      @include tablet {
+        margin-top: 28px;
+        width: 400px;
+        height: 400px;
+      }
+
+      @include mobile {
+        margin-top: 24px;
+        width: 260px;
+        height: 260px;
+      }
+    }
+  }
+
+  .back_circle {
+    width: 100%;
+    height: 880px;
+    position: absolute;
+    bottom: 0;
+    transform: translateY(50%);
+    border-radius: 880px;
+    background: linear-gradient(180deg, #f7f6f2 0%, #fff 100%);
+
+    @include tablet {
+      height: 688px;
+    }
+
+    @include mobile {
+      height: 328px;
+    }
+  }
+}
+
+.wrapper_with_date {
+  padding: 50px 0;
+
+  @include mobile {
+    padding: 16px 0 32px;
+  }
+}

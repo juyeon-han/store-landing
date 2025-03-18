@@ -1,0 +1,23 @@
+@use '@/styles/scss/mixin.scss' as *;
+
+.wrapper {
+  @include skeleton;
+  border-radius: 8px;
+  width: 240px;
+  min-width: 240px;
+  height: 240px;
+  display: inline-block;
+  margin-right: 24px;
+
+  @include tablet {
+    width: 180px;
+    min-width: 180px;
+    height: 180px;
+  }
+
+  @include mobile {
+    width: 160px;
+    min-width: 160px;
+    height: 160px;
+  }
+}

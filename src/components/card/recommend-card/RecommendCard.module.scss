@@ -1,0 +1,72 @@
+@use '@/styles/scss/mixin.scss' as *;
+
+.container {
+  @include flex-column(center);
+  width: 240px;
+  border-radius: 6px;
+  border: 1px solid var(--Gray-Scale-100, #f4f4f5);
+  box-shadow: 0px 4px 13px 0px rgba(43, 36, 31, 0.04);
+
+  @include tablet {
+    width: 288px;
+  }
+
+  @include mobile {
+    width: 204px;
+  }
+
+  .background {
+    @include flex-row(center);
+    width: 100%;
+    height: 220px;
+    background: var(--Brown-Scale-Color-100, #efede5);
+
+    @include tablet {
+      height: 256px;
+    }
+
+    @include mobile {
+      height: 180px;
+    }
+
+    .circle {
+      @include flex-row(center);
+      width: 160px;
+      height: 170px;
+      border-radius: 99px;
+      background: var(--Gray-Scale-White, #fff);
+
+      @include mobile {
+        width: 110px;
+        height: 120px;
+      }
+    }
+  }
+
+  .footer {
+    @include flex-row(flex-start);
+    width: 100%;
+    gap: 6px;
+    padding: 20px 16px;
+    border-radius: 0px 0px 4px 4px;
+    background: #fff;
+
+    color: var(--Gray-Scale-800, #27272a);
+    font-size: 16px;
+    font-weight: 400;
+
+    letter-spacing: -0.16px;
+    white-space: nowrap;
+
+    @include tablet {
+      padding: 20px 24px;
+    }
+
+    @include mobile {
+      padding: 16px 12px;
+      font-size: 14px;
+      letter-spacing: -0.14px;
+      gap: 4px;
+    }
+  }
+}

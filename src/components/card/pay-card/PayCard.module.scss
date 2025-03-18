@@ -1,0 +1,162 @@
+@use '@/styles/scss/mixin.scss' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 24px;
+  gap: 16px;
+  align-self: stretch;
+  border-radius: 6px;
+  background: var(--Gray-Scale-50, #fafafa);
+
+  @include mobile {
+    gap: 12px;
+    padding: 12px;
+  }
+
+  &.grid {
+    padding: 16px 24px;
+    justify-content: flex-start;
+    gap: 6px;
+    height: 272px;
+
+    @include tablet {
+      gap: 16px;
+      padding: 24px;
+      height: auto;
+    }
+
+    @include mobile {
+      gap: 12px;
+      padding: 12px;
+      height: auto;
+    }
+
+    .tag {
+      font-size: 16px;
+
+      @include tablet {
+        font-size: 18px;
+      }
+
+      @include mobile {
+        font-size: 12px;
+        letter-spacing: -0.12px;
+      }
+    }
+
+    .wrapper {
+      height: 100%;
+      flex-direction: column;
+      justify-content: space-between;
+
+      @include tablet {
+        flex-direction: row;
+      }
+
+      @include mobile {
+        flex-direction: row;
+      }
+
+      .price_wrapper {
+        margin-left: auto;
+        justify-content: flex-end;
+      }
+    }
+  }
+
+  .tag {
+    padding: 8px 16px;
+    border-radius: 6px;
+    background: var(--Brand-color-100, #ffe6e8);
+    color: var(--Brand-color-400, #f16370);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 150%; /* 27px */
+    letter-spacing: -0.18px;
+    display: inline-block;
+
+    @include tablet {
+    }
+
+    @include mobile {
+      font-size: 12px;
+      letter-spacing: -0.12px;
+      padding: 4px 8px;
+    }
+  }
+
+  .wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 4px;
+    align-self: stretch;
+
+    @include tablet {
+    }
+
+    .info_wrapper {
+      display: flex;
+      padding: 4px 0px;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-start;
+      align-self: stretch;
+      color: var(--Gray-Scale-800, #27272a);
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 150%; /* 27px */
+      letter-spacing: -0.18px;
+
+      @include mobile {
+        font-size: 14px;
+        letter-spacing: -0.14px;
+      }
+
+      .discount_rate {
+        color: var(--Brand-color-400, #f16370);
+      }
+    }
+
+    .price_wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      flex: 1 0 0;
+
+      .origin_price {
+        color: var(--Gray-Scale-400, #a1a1aa);
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 150%; /* 27px */
+        letter-spacing: -0.18px;
+        text-decoration-line: line-through;
+
+        @include mobile {
+          font-size: 16px;
+          letter-spacing: -0.16px;
+        }
+      }
+
+      .sale_price {
+        color: var(--Brand-color-400, #f16370);
+        font-size: 28px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 150%; /* 42px */
+        letter-spacing: -0.28px;
+
+        @include mobile {
+          font-size: 18px;
+          letter-spacing: -0.18px;
+        }
+      }
+    }
+  }
+}
