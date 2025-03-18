@@ -39,20 +39,17 @@ const LazyImage = (props: LazyImageType) => {
 
   return (
     <div ref={imgRef}>
-      {
-        isVisible && (
-          <img
-            src={imgSrc}
-            alt={alt}
-            className={cx('lazy_img', className)}
-            onError={() => setImgSrc(ErrorImage)}
-            {...otherProps}
-          />
-        )
-        // : (
-        //   <div className={cx('skeleton', className)}></div>
-        // )
-      }
+      {isVisible ? (
+        <img
+          src={imgSrc}
+          alt={alt}
+          className={cx('lazy_img', className)}
+          onError={() => setImgSrc(ErrorImage)}
+          {...otherProps}
+        />
+      ) : (
+        <div className={cx('skeleton', className)}></div>
+      )}
     </div>
   );
 };

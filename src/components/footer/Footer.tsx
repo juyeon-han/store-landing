@@ -1,54 +1,51 @@
 import { forwardRef } from 'react';
 import classNames from 'classnames/bind';
 import logo from '@/assets/images/yakson_logo.png';
-import { LINKS } from '@/constants/link';
-import Icon from '@/styles/icons/icons';
-import { IconNameType } from '@/styles/icons/iconType';
 import styles from './Footer.module.scss';
 
 interface FooterHandle extends HTMLDivElement {}
 interface FooterProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-const text_link = [
-  {
-    id: '스타고객',
-    link: LINKS.star_customer,
-  },
-  {
-    id: '이벤트',
-    link: LINKS.event,
-  },
-  {
-    id: '고객의 소리',
-    link: LINKS.customer_voice,
-  },
-  {
-    id: '고객님의 아이디어',
-    link: LINKS.customer_idea,
-  },
-];
-const icons_link = [
-  {
-    id: 'Facebook',
-    link: LINKS.facebook,
-  },
-  {
-    id: 'Instagram',
-    link: LINKS.instagram,
-  },
-  {
-    id: 'Cafe',
-    link: LINKS.cafe,
-  },
-  {
-    id: 'Kakaotalk',
-    link: LINKS.kakaotalk,
-  },
-  {
-    id: 'Youtube',
-    link: LINKS.youtube,
-  },
-];
+// const text_link = [
+//   {
+//     id: '스타고객',
+//     link: LINKS.star_customer,
+//   },
+//   {
+//     id: '이벤트',
+//     link: LINKS.event,
+//   },
+//   {
+//     id: '고객의 소리',
+//     link: LINKS.customer_voice,
+//   },
+//   {
+//     id: '고객님의 아이디어',
+//     link: LINKS.customer_idea,
+//   },
+// ];
+// const icons_link = [
+//   {
+//     id: 'Facebook',
+//     link: LINKS.facebook,
+//   },
+//   {
+//     id: 'Instagram',
+//     link: LINKS.instagram,
+//   },
+//   {
+//     id: 'Cafe',
+//     link: LINKS.cafe,
+//   },
+//   {
+//     id: 'Kakaotalk',
+//     link: LINKS.kakaotalk,
+//   },
+//   {
+//     id: 'Youtube',
+//     link: LINKS.youtube,
+//   },
+// ];
 const Footer = forwardRef<FooterHandle, FooterProps>((props, ref) => {
   const cx = classNames.bind(styles);
   return (
