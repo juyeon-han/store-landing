@@ -25,7 +25,7 @@ import { padNumber } from '@/utils/number';
 import styles from './index.module.scss';
 
 const tempUrl =
-  'https://images.unsplash.com/photo-1739179418323-2d9517032c6f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw4fHx8ZW58MHx8fHx8';
+  'https://image.yaksonhc.com/api/page/1/A_20250319135652_9472f94b.jpg';
 
 const CarePage = () => {
   const cx = classNames.bind(styles);
