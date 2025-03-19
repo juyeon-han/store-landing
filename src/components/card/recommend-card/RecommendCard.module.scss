@@ -44,7 +44,7 @@
   }
 
   .footer {
-    @include flex-row(flex-start);
+    @include flex-row(center);
     width: 100%;
     gap: 6px;
     padding: 20px 16px;
