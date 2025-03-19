@@ -243,7 +243,7 @@ const CarePage = () => {
                 >
                   <>
                     <ProgramCard
-                      imgUrl={tempUrl ?? serviceProgram?.serviceContentImage}
+                      imgUrl={serviceProgram?.serviceContentImage ?? tempUrl}
                       title={
                         serviceProgram?.serviceContentTitle ??
                         '약손명가의 특별한 관리법'
