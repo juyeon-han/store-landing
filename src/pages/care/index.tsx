@@ -295,22 +295,22 @@ const CarePage = () => {
                 <div className={cx('recommend_text')}>
                   <Icon name="Line" size="xxl" />
                   <Icon name="Dots" size="sm" />
-                  <p>이런 분들에게 추천드립니다</p>
+                  <p>아래의 효과를 원하시는 분들에게 추천드립니다</p>
                 </div>
                 <div className={cx('needs_wrapper')}>
-                  <RecommendCard text="작은 얼굴을 원하시는 분">
+                  <RecommendCard text="작은 얼굴">
                     <Icon
                       name="CareSmallFace"
                       size={{ mobile: 100, tablet: 140, desktop: 140 }}
                     />
                   </RecommendCard>
-                  <RecommendCard text="계란형 얼굴을 가지고 싶은 분">
+                  <RecommendCard text="균형잡힌 얼굴">
                     <Icon
                       name="CareEggFace"
                       size={{ mobile: 100, tablet: 140, desktop: 140 }}
                     />
                   </RecommendCard>
-                  <RecommendCard text="예쁜 두상을 가지고 싶은 분">
+                  <RecommendCard text="계란형 얼굴">
                     <Icon
                       name="CareHead"
                       size={{ mobile: 100, tablet: 140, desktop: 140 }}
