@@ -38,6 +38,10 @@ const PlacePage = () => {
   });
 
   const handleChat = () => {
+    if (window.karrotPixel && window.karrotPixel.track) {
+      window.karrotPixel.track('Lead');
+    }
+
     window.open(
       'http://pf.kakao.com/_DxgxaDC',
       '_blank',

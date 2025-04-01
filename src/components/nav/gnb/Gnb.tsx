@@ -43,6 +43,10 @@ const Gnb = forwardRef<GnbHandle, GnbProps>((props, ref) => {
   };
 
   const handleReserve = () => {
+    if (window.karrotPixel && window.karrotPixel.track) {
+      window.karrotPixel.track('SubmitApplication');
+    }
+
     window.open(
       'http://pf.kakao.com/_fWGAn/chat',
       '_blank',
