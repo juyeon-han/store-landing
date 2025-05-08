@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useState } from 'react';
-// import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import logo from '@/assets/images/yakson_logo.png';
 import Slider from '@/components/nav/slider/Slider';
@@ -17,6 +17,8 @@ interface GnbProps extends React.HTMLAttributes<HTMLUListElement> {
 
 const Gnb = forwardRef<GnbHandle, GnbProps>((props, ref) => {
   const cx = classNames.bind(styles);
+  const navigate = useNavigate();
+
   const { menus, ...otherProps } = props;
   const [activeMenu, setActiveMenu] = useState<string>('');
   const [isTopPage, setIsTopPage] = useState<boolean>(false);
@@ -47,11 +49,11 @@ const Gnb = forwardRef<GnbHandle, GnbProps>((props, ref) => {
       window.karrotPixel.track('SubmitApplication');
     }
 
-    window.open(
-      'http://pf.kakao.com/_fWGAn/chat',
-      '_blank',
-      'noopener,noreferrer'
-    );
+    // navigate('/reservation');
+  };
+
+  const handleReserveSlider = () => {
+    navigate('/reservation');
   };
 
   useEffect(() => {
@@ -149,7 +151,7 @@ const Gnb = forwardRef<GnbHandle, GnbProps>((props, ref) => {
           menus={menus}
           activeMenu={activeMenu}
           handleMenu={handleMenu}
-          handleButton={handleReserve}
+          handleButton={handleReserveSlider}
         />
       )}
     </>
