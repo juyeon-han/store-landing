@@ -9,6 +9,10 @@ export default defineConfig(({ command }) => {
     plugins: [react(), svgr()],
     resolve: {
       alias: [
+        {
+          find: '@/reservation_sheet',
+          replacement: path.resolve(__dirname, './reservation_sheet/src'),
+        },
         { find: '@', replacement: path.resolve(__dirname, './src') },
         {
           find: 'node_modules',

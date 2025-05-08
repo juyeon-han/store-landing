@@ -23,7 +23,8 @@
     "noUncheckedSideEffectImports": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@/reservation_sheet/*": ["./reservation_sheet/src/*"]
     },
     "typeRoots": ["./node_modules/@types", "./@types"]
   },
